@@ -11,7 +11,7 @@ export default function LoginPage({ }: LoginPageProps) {
         <div className="self-center lg:hidden">
           <Logo />
         </div>
-        <h1 className="text-center font-clash text-4xl font-semibold tracking-tight">
+        <h1 className="text-center font-clash text-2xl font-semibold lg:text-3xl">
           Welcome Back, Dude
         </h1>
         <LoginForm />

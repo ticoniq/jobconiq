@@ -98,6 +98,9 @@ const config = {
         RedHatDisplay: ["Red Hat Display", "sans-serif"],
         clash: ["Clash Display", "sans-serif"],
       },
+      backgroundImage: {
+        'login-banner': "url('/assets/images/auth/login-background.png')",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

@@ -2,16 +2,16 @@ import { RegisterForm } from "@/components/auth/registerForm";
 import { Logo } from "@/components/logo";
 import CustomLink from "@/components/ui/custom-link";
 
-type LoginPageProps = {}
+type RegisterPageProps = {}
 
-export default function LoginPage({ }: LoginPageProps) {
+export default function RegisterPage({ }: RegisterPageProps) {
   return (
-    <div className="lg:p-8 py-8 md:py-0">
+    <div className="lg:p-8 py-12 justify-self-center self-center lg:py-0">
       <div className="mx-auto flex h-screen w-full flex-col justify-center space-y-4 sm:w-[25.5rem] lg:h-full">
         <div className="flex items-center justify-center lg:hidden">
           <Logo />
         </div>
-        <h1 className="text-center font-clash text-3xl font-semibold tracking-tight lg:text-4xl">
+        <h1 className="text-center font-clash text-2xl font-semibold lg:text-3xl">
           Get more opportunities
         </h1>
         <RegisterForm />

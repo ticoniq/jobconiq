@@ -2,12 +2,15 @@
 import * as z from 'zod';
 import { useState, useTransition } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { RegisterSchema } from '@/lib/validation/auth-validation';
+import { register } from "@/actions/developer-auth/register";
+import { useForm } from "react-hook-form";
 import { ImSpinner8 } from "react-icons/im";
 import { FcGoogle } from "react-icons/fc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { FormError } from '@/components/FormError';
+import { FormSuccess } from '@/components/FormSuccess';
 import {
   Form,
   FormControl,
@@ -16,7 +19,6 @@ import {
   FormLabel,
   FormMessage
 } from "@/components/ui/form";
-import CustomLink from '../ui/custom-link';
 
 export function RegisterForm() {
   const [error, setError] = useState<string | undefined>("");
@@ -37,9 +39,8 @@ export function RegisterForm() {
     setSuccess("");
 
     startTransition(() => {
-      console.log("hello")
-      // login(values, callbackUrl)
-      // .then((data) => {
+      register(values)
+      // .then((data) => { 
       //   if (data?.error) {
       //     setError(data.error);
       //   }
@@ -141,6 +142,8 @@ export function RegisterForm() {
               </FormItem>
             )}
           />
+          <FormError message={error} />
+          <FormSuccess message={success} />
           <Button className="w-full" disabled={isPending}>
             {isPending && (
               <ImSpinner8 className="mr-2 h-4 w-4 animate-spin" />
