@@ -106,6 +106,7 @@ export default function Home() {
           <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
             Instantly deploy your Next.js site to a shareable URL with Vercel.
           </p>
+          <span className="sr-only">hello</span>
         </a>
       </div>
     </main>
