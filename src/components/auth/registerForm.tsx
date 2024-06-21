@@ -40,22 +40,18 @@ export function RegisterForm() {
 
     startTransition(() => {
       register(values)
-      // .then((data) => { 
-      //   if (data?.error) {
-      //     setError(data.error);
-      //   }
-      //   if (data?.success) {
-      //     setSuccess(data?.success);
-      //     form.reset();
-      //   }
-
-      //   if (data?.twoFactor) {
-      //     setShowTwoFactor(true);
-      //   }
-      // })
-      // .catch(() => {
-      //   setError("An error occurred. Please try again.");
-      // });
+      .then((data) => { 
+        if (data?.error) {
+          setError(data.error);
+        }
+        if (data?.success) {
+          setSuccess(data?.success);
+          form.reset();
+        }
+      })
+      .catch(() => {
+        setError("An error occurred. Please try again.");
+      });
     });
   };
 
