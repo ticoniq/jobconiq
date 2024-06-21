@@ -6,7 +6,7 @@ type LoginPageProps = {}
 
 export default function LoginPage({ }: LoginPageProps) {
   return (
-    <div className="lg:p-8 py-5 md:py-0">
+    <div className="lg:p-8 py-8 md:py-0">
       <div className="mx-auto flex h-screen w-full flex-col justify-center space-y-4 sm:w-[25.5rem] lg:h-full">
         <div className="flex items-center justify-center lg:hidden">
           <Logo />
