@@ -1,6 +1,7 @@
 import { ThemeProvider } from "@/components/theme-provider"
 import type { Metadata } from "next";
 import "./globals.css";
+import { NavBar } from "@/components/NavBar";
 
 export const metadata: Metadata = {
   title: "JobConiq: Your Ultimate Job Board for Finding Jobs and Browsing Companies",
@@ -13,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="font-Epilogue">
         <ThemeProvider
           attribute="class"

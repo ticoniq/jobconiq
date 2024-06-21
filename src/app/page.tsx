@@ -1,11 +1,14 @@
 import { ModeToggle } from "@/components/ModeToggle";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { NavBar } from "@/components/NavBar";
+import { Fragment } from "react";
 
 export default function Home() {
   return (
-    <section className="container">
-      <ModeToggle />
-    </section>
+    <Fragment>
+      <NavBar />
+      <section className="container">
+        <ModeToggle />
+      </section>
+    </Fragment>
   );
 }

@@ -43,7 +43,7 @@ const CustomLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
         {...props}
       >
         {textarea}
-        <div className={cn("bg-white h-[1.5px] w-0 group-hover:w-full transition-all duration-500", divClassName)}></div>
+        <span className={cn("block bg-white h-[1.5px] w-0 group-hover:w-full transition-all duration-500", divClassName)}></span>
       </Link>
     );
   }
