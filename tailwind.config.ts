@@ -52,6 +52,27 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        brand: {
+          primary: 'hsl(var(--brand-primary))',
+          secondary: 'hsl(var(--brand-secondary))',
+          tertiary: 'hsl(var(--brand-tertiary))',
+        },
+        accents: {
+          yellow: 'hsl(var(--accents-yellow))',
+          green: 'hsl(var(--accents-green))',
+          red: 'hsl(var(--accents-red))',
+          blue: 'hsl(var(--accents-blue))',
+          purple: 'hsl(var(--accents-purple))',
+        },
+        neutrals: {
+          900: 'hsl(var(--neutrals-900))',
+          800: 'hsl(var(--neutrals-800))',
+          700: 'hsl(var(--neutrals-700))',
+          600: 'hsl(var(--neutrals-600))',
+          500: 'hsl(var(--neutrals-500))',
+          400: 'hsl(var(--neutrals-400))',
+          300: 'hsl(var(--neutrals-300))',
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -71,6 +92,11 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      fontFamily: {
+        Epilogue: ["Epilogue", "sans-serif"],
+        RedHatDisplay: ["Red Hat Display", "sans-serif"],
+        clash: ["Clash Display", "sans-serif"],
       },
     },
   },
