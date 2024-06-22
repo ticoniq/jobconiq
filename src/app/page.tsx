@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import { ModeToggle } from "@/components/ModeToggle";
 import { NavBar } from "@/components/NavBar";
 import { Fragment } from "react";
@@ -9,6 +10,7 @@ export default function Home() {
       <section className="container">
         <ModeToggle />
       </section>
+      <Footer />
     </Fragment>
   );
 }

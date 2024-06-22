@@ -3,7 +3,7 @@ import * as z from 'zod';
 import { useState, useTransition } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterSchema } from '@/lib/validation/auth-validation';
-import { register } from "@/actions/developer-auth/register";
+import { register } from "@/actions/developer/auth/register";
 import { useForm } from "react-hook-form";
 import { ImSpinner8 } from "react-icons/im";
 import { FcGoogle } from "react-icons/fc";
