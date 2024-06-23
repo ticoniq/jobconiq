@@ -31,7 +31,7 @@ export function NavBar() {
             <Logo />
             <div className="hidden lg:flex lg:gap-x-5">
               {navigation.map((item) => (
-                <Link key={item.name} href={item.href} className="text-base font-semibold text-gray-900 leading-6">
+                <Link key={item.name} href={item.href} className="text-base font-semibold text-neutrals-800 leading-6 dark:text-neutrals-300">
                   {item.name}
                 </Link>
               ))}
@@ -63,16 +63,23 @@ export function NavBar() {
               <SheetTitle>Jobconiq</SheetTitle>
               <SheetDescription>Menu list</SheetDescription>
             </SheetHeader>
-            <nav className="grid gap-6 text-lg font-medium">
-              {navigation.map((item) => (
-                <Link key={item.name} href={item.href} className="text-base font-semibold text-gray-900 leading-6">
-                  {item.name}
-                </Link>
-              ))}
-              <Link href="#" className="hover:text-foreground">
-                Settings
-              </Link>
-            </nav>
+            <aside className="flex flex-col justify-between h-full">
+              <nav className="grid gap-6 text-lg font-medium">
+                {navigation.map((item) => (
+                  <Link key={item.name} href={item.href} className="text-base font-semibold text-neutrals-800 leading-6 dark:text-neutrals-300">
+                    {item.name}
+                  </Link>
+                ))}
+              </nav>
+              <div className="flex flex-col gap-5">
+                <Button variant="link" asChild>
+                  <Link href="/login">Login</Link>
+                </Button>
+                <Button asChild>
+                  <Link href="/signup">Sign Up</Link>
+                </Button>
+              </div>
+            </aside>
           </SheetContent>
         </Sheet>
       </header>

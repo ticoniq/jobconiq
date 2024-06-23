@@ -5,12 +5,20 @@ import {
   LayoutDashboard,
   Settings,
   CircleHelp,
+  File,
+  Search,
+  Building2,
+  UserRound
 } from "lucide-react"
 import Link from "next/link";
 
 const navigation = [
   { name: "Dashboard", href: "/developer/dashboard", icon: <LayoutDashboard className="h-4 w-4" /> },
   { name: "Messages", href: "/developer/message", icon: <MessageSquareText className="h-4 w-4" /> },
+  { name: "My Applications", href: "/developer/application-history", icon: <File className="h-4 w-4" /> },
+  { name: "Find Jobs", href: "/developer/find-job", icon: <Search className="h-4 w-4" /> },
+  { name: "Browse Companies", href: "/developer/browse-company", icon: <Building2 className="h-4 w-4" /> },
+  { name: "My Public Profile", href: "/developer/profile", icon: <UserRound className="h-4 w-4" /> },
 ];
 const settings = [
   { name: "Settings", href: "/developer/settings", icon: <Settings className="h-4 w-4" /> },
@@ -21,7 +29,7 @@ export function SideBar() {
   const pathname = usePathname();
   
   return (
-    <nav className="w-full grid items-start space-y-2 text-sm font-medium">
+    <nav className="w-full grid items-start space-y-1 text-sm font-medium">
       {navigation.map((item) => (
         <div key={item.name} className="flex justify-start items-center group/item">
           <p className={`border-r-[3.5px] h-[28px] border-brand-primary group/edt 
