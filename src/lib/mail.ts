@@ -7,7 +7,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const websiteUrl = process.env.WEBSITE_URL;
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const ConfirmLink = `${websiteUrl}/auth/confirm?token=${token}`;
+  const ConfirmLink = `${websiteUrl}/confirm?token=${token}`;
   await resend.emails.send({
     from: "Jobconiq <noreply@jobconiq.live>",
     to: email,

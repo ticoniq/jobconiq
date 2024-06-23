@@ -1,10 +1,10 @@
-import NextAuth from "next-auth"
+import NextAuth from "next-auth";
 import prisma from "@/lib/prisma";
-import authConfig from "@/auth.config"
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import { UserRole } from "@prisma/client"; 
+import authConfig from "@/auth.config";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { UserRole } from "@prisma/client";
 import { getUserById } from "@/data/user";
- 
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {
     signIn: "/login",
@@ -24,6 +24,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
 
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider !== "credentials") return true;
+      const existingUser = await getUserById(user.id!);
+      //Prevent sign in if email is not verified
+      if (!existingUser?.emailVerified) return false;
+
+      return true;
+    },
     async session({ token, session }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;
@@ -44,8 +52,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return token;
     },
   },
-  
+
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
   ...authConfig,
-})
+});
