@@ -1,6 +1,7 @@
 import { NewPasswordForm } from "@/components/auth/newPasswordForm";
 import { Logo } from "@/components/logo";
 import CustomLink from "@/components/ui/custom-link";
+import { Suspense } from "react";
 
 function newPasswordPage() {
   return (
@@ -12,7 +13,9 @@ function newPasswordPage() {
         <h1 className="text-center font-clash text-2xl font-semibold lg:text-3xl">
           Enter a new password
         </h1>
-        <NewPasswordForm />
+        <Suspense fallback={<div>Loading...</div>}>
+          <NewPasswordForm />
+        </Suspense>
         <p className="text-base text-muted-foreground">
           Return back to?{" "}
           <CustomLink

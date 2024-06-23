@@ -80,7 +80,7 @@ export function LoginForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="font-semibold text-base text-neutrals-800">Email</FormLabel>
                 <FormControl className="font-semibold text-base text-neutrals-800">
                   <Input
                     {...field}
@@ -99,7 +99,7 @@ export function LoginForm() {
             render={({ field }) => (
               <FormItem>
                 <div className="flex justify-between items-center">
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="font-semibold text-base text-neutrals-800">Password</FormLabel>
                   <CustomLink
                     href="/forgot-password"
                     className="text-brand-primary font-semibold"

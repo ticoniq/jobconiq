@@ -70,7 +70,7 @@ export function NewPasswordForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel className="font-semibold text-base text-neutrals-800">Password</FormLabel>
                 <FormControl className="font-semibold text-base text-neutrals-800">
                   <Input
                     {...field}
@@ -88,7 +88,7 @@ export function NewPasswordForm() {
             name="confirmPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Confirm Password</FormLabel>
+                <FormLabel className="font-semibold text-base text-neutrals-800">Confirm Password</FormLabel>
                 <FormControl className="font-semibold text-base text-neutrals-800">
                   <Input
                     {...field}
