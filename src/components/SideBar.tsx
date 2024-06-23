@@ -29,7 +29,7 @@ export function SideBar() {
   const pathname = usePathname();
   
   return (
-    <nav className="w-full grid items-start space-y-1 text-sm font-medium">
+    <nav className="w-full grid items-start space-y-3 text-sm font-medium">
       {navigation.map((item) => (
         <div key={item.name} className="flex justify-start items-center group/item">
           <p className={`border-r-[3.5px] h-[28px] border-brand-primary group/edt 
