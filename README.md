@@ -1,36 +1,191 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<a name="readme-top"></a>
 
-## Getting Started
+# 📗 Table of Contents
 
-First, run the development server:
+- [📖 About the Project](#about-project)
+  - [🛠 Built With](#built-with)
+    - [Tech Stack](#tech-stack)
+    - [Key Features](#key-features)
+  - [🚀 Live Demo](#live-demo)
+- [💻 Getting Started](#getting-started)
+  - [Setup](#setup)
+  - [Install](#install)
+  - [Usage](#usage)
+- [👥 Authors](#authors)
+- [🔭 Future Features](#future-features)
+- [🤝 Contributing](#contributing)
+- [⭐️ Show your support](#support)
+- [🙏 Acknowledgements](#acknowledgements)
+- [📝 License](#license)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+<!-- PROJECT DESCRIPTION -->
+
+![JobConiq Logo](./src/assets/images/logo-2.png)
+
+# 📖 JobConiq<a name="about-project"></a>
+
+**JobConiq** is an advanced online job searching platform designed to connect job seekers with potential employers. The platform provides an intuitive interface, powerful search functionalities, and various tools to streamline the job application process.
+
+## 🛠 Built With <a name="built-with"></a>
+
+### Tech Stack <a name="tech-stack"></a>
+
+> This project was built using the following technologies:
+
+  - Typescript
+  - Next.js 
+  - Authjs 
+  - Prisma 
+  - PostgreSQL 
+
+<!-- Features -->
+
+## Features
+
+- **Advanced Job Search:** Use filters such as location, industry, salary range, and experience level to find the perfect job.
+- **User Profiles:** Create and manage detailed user profiles showcasing skills, experience, and education.
+- **Job Alerts:** Receive notifications for new job postings that match your criteria.
+- **Resume Builder:** Use our built-in tools to create a professional resume.
+- **Application Tracker:** Keep track of your job applications and their status.
+- **Employer Dashboard:** Employers can post job openings, manage applications, and contact candidates.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- Screenshots -->
+
+## Screenshots
+
+### Home Page
+![Home Page](./assets/homepage.png)
+
+### Job Search
+![Job Search](./assets/jobsearch.png)
+
+### User Profile
+![User Profile](./assets/userprofile.png)
+
+<!-- Live Demo -->
+
+## 🚀 Live Demo <a name="live-demo"></a>
+<a href="https://jobconiq.live"> JobConiq 🚀</a>
+
+<!-- GETTING STARTED -->
+
+## 💻 Getting Started <a name="getting-started"></a>
+
+> In order to start with this project do as follows:
+
+To get a local copy up and running, you can follow these simple steps:
+
+
+### Install
+Clone the repository to your local machine using the following command:
+
+```sh
+  git clone git@github.com/ticoniq/jobconiq
+```
+Navigate to the project directory:
+
+```sh
+ cd jobconiq
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then run the below command to install dependencies
+```sh
+ npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Finally, run the below command to start the project.
+```sh
+ npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+You can now make changes to the project as desired and push them back to your repository using Git.
 
-## Learn More
+That's it! With these simple steps, you should be able to get up and running with the Jobconiq app in no time. Happy coding!
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Usage
+Visit [JobConiq 🚀](https://jobconiq.live) to access the JobConiq platform.
 
-## Deploy on Vercel
+Register as a job seeker, employer, or log in as an admin.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### As a Job Seeker:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Create a profile with your skills, experience, and education.
+- Use the job search feature to find relevant job postings.
+- Apply for jobs directly through the platform.
+- Set up job alerts to receive notifications about new postings.
+- Track your job applications in the application tracker.
+
+### As an Employer:
+
+- Create a company profile and post job openings.
+- Manage and review job applications from candidates.
+- Contact candidates directly through the platform.
+- Use filters to find the best candidates for your openings.
+
+### As an Admin:
+
+- Access the admin dashboard for platform-wide management.
+- Monitor and moderate all job postings and user accounts.
+- Generate and analyze platform usage reports and statistics.
+- Manage user roles and permissions across the platform.
+- Handle user support tickets and resolve disputes.
+- Implement and adjust platform-wide policies and features.
+- Oversee the verification process for employer accounts.
+- Manage featured job listings and promotional content.
+- Access and manage billing and subscription information for premium accounts.
+- Perform database maintenance and backups.
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- AUTHORS -->
+
+## 👥 Authors <a name="authors"></a>
+
+<!-- > Mention all of the collaborators of this project. -->
+
+👤 **Okolie Tochukwu**
+
+- GitHub: [@ticoniq](https://github.com/ticoniq)
+- LinkedIn: [ticoniq](https://linkedin.com/in/tochidev)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- FUTURE FEATURES -->
+
+## 🔭 Future Features <a name="future-features"></a>
+
+- [ ] **Additional pages: More pages will be added to the project to display additional content.**
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- CONTRIBUTING -->
+
+## 🤝 Contributing <a name="contributing"></a>
+
+If you'd like to contribute to this project, feel free to fork the repository and make changes as you see fit. Please submit a pull request with your changes and I'll review them as soon as possible.
+
+Feel free to check the [issues page](../../issues/).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- SUPPORT -->
+
+## ⭐️ Show your support <a name="support"></a>
+
+> I am excited to share with you my latest project on Github. As you know, Github is an essential tool for developers to showcase their skills, collaborate with others, and contribute to open-source projects.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- FAQ (optional) -->
+  
+## 📝 License <a name="license"></a>
+
+This project is [MIT](./LICENSE) licensed.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
