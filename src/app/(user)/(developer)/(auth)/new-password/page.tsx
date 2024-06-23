@@ -1,8 +1,8 @@
-import { LoginForm } from "@/components/auth/loginForm";
+import { NewPasswordForm } from "@/components/auth/newPasswordForm";
 import { Logo } from "@/components/logo";
 import CustomLink from "@/components/ui/custom-link";
 
-export default function LoginPage() {
+function newPasswordPage() {
   return (
     <div className="lg:p-8 justify-self-center self-center">
       <div className="mx-auto flex h-screen w-full flex-col justify-center space-y-4 sm:w-[25.5rem] lg:h-full">
@@ -10,15 +10,15 @@ export default function LoginPage() {
           <Logo />
         </div>
         <h1 className="text-center font-clash text-2xl font-semibold lg:text-3xl">
-          Welcome Back, Dude
+          Enter a new password
         </h1>
-        <LoginForm />
+        <NewPasswordForm />
         <p className="text-base text-muted-foreground">
-          Don’t have an account?{" "}
+          Return back to?{" "}
           <CustomLink
-            href="/register"
+            href="/login"
             className="text-brand-primary font-semibold"
-            textarea={'Register'}
+            textarea={'Login'}
             divClassName="border-brand-primary border-b-2"
           />
         </p>
@@ -26,3 +26,5 @@ export default function LoginPage() {
     </div>
   )
 }
+
+export default newPasswordPage

@@ -21,7 +21,7 @@ interface emailConfirmationProps {
 }
 
 export const emailConfirmation = ({
-  websiteUrl = "https://jobconiq.live",
+  websiteUrl,
   link
 }: emailConfirmationProps) => (
   <Html>
