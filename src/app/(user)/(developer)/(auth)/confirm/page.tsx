@@ -1,6 +1,7 @@
 import NewVerificationForm from "@/components/auth/NewVerificationForm";
 import { Logo } from "@/components/logo";
 import CustomLink from "@/components/ui/custom-link";
+import { Suspense } from "react";
 
 export default function confirmpage() {
   return (
@@ -12,7 +13,9 @@ export default function confirmpage() {
         <h1 className="text-center font-clash text-2xl font-semibold lg:text-3xl">
           Confirm your email address
         </h1>
-        <NewVerificationForm />
+        <Suspense fallback={<div>Loading...</div>}>
+          <NewVerificationForm />
+        </Suspense>
         <p className="text-base text-muted-foreground">
           {"Back to"}?{" "}
           <CustomLink
