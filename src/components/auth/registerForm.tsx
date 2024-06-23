@@ -6,7 +6,6 @@ import { RegisterSchema } from '@/lib/validation/auth-validation';
 import { register } from "@/actions/developer/auth/register";
 import { useForm } from "react-hook-form";
 import { ImSpinner8 } from "react-icons/im";
-import { FcGoogle } from "react-icons/fc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormError } from '@/components/FormError';
@@ -19,6 +18,7 @@ import {
   FormLabel,
   FormMessage
 } from "@/components/ui/form";
+import { SocialLogin } from "@/components/auth/socialLogin";
 
 export function RegisterForm() {
   const [error, setError] = useState<string | undefined>("");
@@ -57,15 +57,7 @@ export function RegisterForm() {
 
   return (
     <div className="grid gap-6">
-      <Button variant="outline" type="button" disabled={isPending}>
-        {isPending && (
-          <ImSpinner8 className="mr-2 h-4 w-4 animate-spin" />
-        )}
-        {!isPending && (
-          <FcGoogle className="mr-2 h-5 w-5" />
-        )}
-        Login with Google
-      </Button>
+      <SocialLogin />
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t-2 border-neutrals-400" />

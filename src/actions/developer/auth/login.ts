@@ -24,6 +24,12 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     return { error: "Email does not exist" };
   }
 
+  const passwordMatch = await bcrypt.compare(password, existingUser.password);
+
+  if (!passwordMatch) {
+    return { error: "Invalid email or password" };
+  }
+
   if (!existingUser.emailVerified) {
     const verificationToken = await generateVerificationToken(
       existingUser.email
