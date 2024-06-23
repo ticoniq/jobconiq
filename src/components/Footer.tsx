@@ -2,7 +2,8 @@ import Image from "next/image";
 import Logo from "@/assets/images/logo-2.png";
 import Link from "next/link";
 import { Facebook } from "lucide-react";
-import CustomLink from "./ui/custom-link";
+import CustomLink from "@/components/ui/custom-link";
+import { ModeToggle } from "@/components/ModeToggle";
 
 type Props = {}
 
@@ -12,7 +13,7 @@ export default function Footer({ }: Props) {
       <div className="container">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4 sm:w-2/3 lg:w-4/12">
-            <div className="mb-10 w-full text-neutrals-300">
+            <div className="mb-10 w-full flex flex-col justify-start items-start text-neutrals-300">
               <Link
                 href="#"
                 className="mb-6 inline-block max-w-[160px]"
@@ -26,6 +27,9 @@ export default function Footer({ }: Props) {
               <p className="mb-7 text-base">
                 Great platform for the job seeker that passionate about startups. Find your dream job easier.
               </p>
+              <div>
+                <ModeToggle />
+              </div>
             </div>
           </div>
           <div className="px-4 w-1/2 lg:w-2/12">
@@ -34,7 +38,7 @@ export default function Footer({ }: Props) {
                 About
               </h4>
               <ul className="space-y-3">
-                <li><CustomLink href="#" textarea="Companies"/></li>
+                <li><CustomLink href="#" textarea="Companies" /></li>
                 <li><CustomLink href="#" textarea="Pricing" /></li>
                 <li><CustomLink href="#" textarea="Terms" /></li>
                 <li><CustomLink href="#" textarea="Advice" /></li>

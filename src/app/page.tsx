@@ -1,5 +1,4 @@
 import Footer from "@/components/Footer";
-import { ModeToggle } from "@/components/ModeToggle";
 import { NavBar } from "@/components/NavBar";
 import { Fragment } from "react";
 
@@ -8,7 +7,7 @@ export default function Home() {
     <Fragment>
       <NavBar />
       <section className="container">
-        <ModeToggle />
+        component
       </section>
       <Footer />
     </Fragment>

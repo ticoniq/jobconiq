@@ -1,14 +1,13 @@
 "use client"
 import * as z from 'zod';
-import { Suspense, useState, useTransition } from 'react';
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { LoginSchema } from '@/lib/validation/auth-validation';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState, useTransition } from 'react';
+import { NewPasswordSchema } from '@/lib/validation/auth-validation';
+import { newPassword } from '@/actions/developer/auth/newPassword';
 import { ImSpinner8 } from "react-icons/im";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { login } from "@/actions/developer/auth/login";
-import { SocialLogin } from "@/components/auth/socialLogin";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -17,30 +16,32 @@ import {
   FormLabel,
   FormMessage
 } from "@/components/ui/form";
-import CustomLink from '@/components/ui/custom-link';
 import { FormError } from '@/components/FormError';
 import { FormSuccess } from '@/components/FormSuccess';
-import { UseSearchParamsWrapper } from '@/hooks/UseSearchParamsWrapper';
+import { useSearchParams } from 'next/navigation';
 
-export function LoginForm() {
+export function NewPasswordForm() {
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof NewPasswordSchema>>({
+    resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
-      email: "",
       password: "",
+      confirmPassword: "",
     }
   });
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
     setError("");
     setSuccess("");
 
     startTransition(() => {
-      login(values)
+      newPassword(values, token)
         .then((data) => {
           if (data?.error) {
             setError(data.error);
@@ -58,17 +59,6 @@ export function LoginForm() {
 
   return (
     <div className="flex flex-col gap-6 ">
-      <SocialLogin />
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t-2 border-neutrals-400" />
-        </div>
-        <div className="relative flex justify-center text-md text-muted">
-          <span className="bg-background px-4 text-muted-foreground">
-            Or login with email
-          </span>
-        </div>
-      </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -77,36 +67,10 @@ export function LoginForm() {
         >
           <FormField
             control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-semibold text-base text-neutrals-800">Email</FormLabel>
-                <FormControl className="font-semibold text-base text-neutrals-800">
-                  <Input
-                    {...field}
-                    disabled={isPending}
-                    placeholder="johndoe@example.com"
-                    type="email"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem>
-                <div className="flex justify-between items-center">
-                  <FormLabel className="font-semibold text-base text-neutrals-800">Password</FormLabel>
-                  <CustomLink
-                    href="/forgot-password"
-                    className="text-brand-primary font-semibold"
-                    textarea={'Forgot your password?'}
-                    divClassName="border-brand-primary border-b-2"
-                  />
-                </div>
+                <FormLabel className="font-semibold text-base text-neutrals-800">Password</FormLabel>
                 <FormControl className="font-semibold text-base text-neutrals-800">
                   <Input
                     {...field}
@@ -119,19 +83,31 @@ export function LoginForm() {
               </FormItem>
             )}
           />
-          <Suspense fallback={<div>Loading...</div>}>
-            <UseSearchParamsWrapper>
-              {({ urlError }) => (
-                <FormError message={error || urlError} />
-              )}
-            </UseSearchParamsWrapper>
-          </Suspense>
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-semibold text-base text-neutrals-800">Confirm Password</FormLabel>
+                <FormControl className="font-semibold text-base text-neutrals-800">
+                  <Input
+                    {...field}
+                    disabled={isPending}
+                    placeholder="********"
+                    type="password"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormError message={error} />
           <FormSuccess message={success} />
           <Button className="w-full" disabled={isPending}>
             {isPending && (
               <ImSpinner8 className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Login
+            Reset Password
           </Button>
         </form>
       </Form>
