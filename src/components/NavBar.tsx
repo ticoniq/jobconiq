@@ -1,9 +1,6 @@
 "use client";
 import Link from "next/link";
-import Image from "next/image";
 import { Menu } from "lucide-react"
-import logo from "@/assets/images/logo.png";
-import logoLight from "@/assets/images/logo-2.png";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -13,6 +10,7 @@ import {
   SheetHeader,
   SheetDescription
 } from "@/components/ui/sheet";
+import { Logo } from "@/components/logo";
 
 interface NavigationItem {
   name: string;
@@ -30,26 +28,7 @@ export function NavBar() {
       <header className="container flex items-center justify-between h-20">
         <nav className="w-full flex items-center justify-between" aria-label="Global">
           <div className="flex items-center justify-start gap-x-8 lg:flex-1">
-            <Link href="/">
-              <span className="sr-only">JobConiq</span>
-              <Image
-                src={logo}
-                alt="JobConiq Logo"
-                width={160}
-                height={32}
-                priority
-                className="block dark:hidden"
-              />
-              <Image
-                src={logoLight}
-                alt="JobConiq Logo"
-                width={160}
-                height={32}
-                priority
-                className="hidden dark:block"
-              />
-            </Link>
-
+            <Logo />
             <div className="hidden lg:flex lg:gap-x-5">
               {navigation.map((item) => (
                 <Link key={item.name} href={item.href} className="text-base font-semibold text-gray-900 leading-6">
