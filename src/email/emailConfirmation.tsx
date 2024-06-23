@@ -26,7 +26,8 @@ export const emailConfirmation = ({
 }: emailConfirmationProps) => (
   <Html>
     <Head />
-    <Preview>Confirm your email address</Preview>
+    <Preview>Confirm your email address and get started! 🌏
+    </Preview>
     <Body style={main}>
       <Container style={container}>
         <Section style={logoContainer}>
@@ -42,7 +43,7 @@ export const emailConfirmation = ({
           Thanks for joining Jobconiq! Please take a second to confirm your email:
         </Text>
         <Button style={button} href={link}>
-          Reset password
+          Confirm email
         </Button>
 
         <Text style={heroText}>
