@@ -5,7 +5,8 @@
  */
 export const publicRoutes: string[] = [
   "/",
-  "/error"
+  "/error",
+  "/confirm"
 ];
 
 
