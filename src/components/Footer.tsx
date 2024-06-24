@@ -20,8 +20,11 @@ export default function Footer({ }: Props) {
               >
                 <Image
                   src={Logo}
-                  alt="logo"
+                  alt="JobConiq Logo"
+                  width={160}
+                  height={32}
                   className="max-w-full"
+                  priority={true}
                 />
               </Link>
               <p className="mb-7 text-base">

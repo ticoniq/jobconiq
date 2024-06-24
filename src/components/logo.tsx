@@ -12,7 +12,7 @@ export function Logo() {
         alt="JobConiq Logo"
         width={160}
         height={32}
-        priority
+        priority={true}
         className="block dark:hidden"
       />
       <Image
@@ -20,7 +20,7 @@ export function Logo() {
         alt="JobConiq Logo"
         width={160}
         height={32}
-        priority
+        priority={true}
         className="hidden dark:block"
       />
     </Link>
