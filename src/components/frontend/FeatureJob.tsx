@@ -2,18 +2,18 @@ import {
   MoveRight,
   PencilRuler
 } from "lucide-react";
-import { Button } from "./ui/button";
-import Title from "./ui/title";
+import { Button } from "@/components/ui/button";
+import Title from "@/components/ui/title";
 import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "./ui/carousel";
-import { Badge } from "./ui/badge";
+} from "@/components/ui/carousel";
+import { Badge } from "@/components/ui/badge";
 
 interface Props {
   id: number;
