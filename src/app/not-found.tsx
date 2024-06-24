@@ -23,7 +23,7 @@ function notFound({ }: Props) {
                 The page you are looking for it maybe deleted
               </p>
               <a
-                href="javascript:void(0)"
+                href="#"
                 className="inline-block rounded-lg border border-white px-8 py-3 text-center text-base font-semibold text-white transition hover:bg-white hover:text-primary"
               >
                 Go To Home

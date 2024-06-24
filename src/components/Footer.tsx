@@ -108,7 +108,7 @@ export default function Footer({ }: Props) {
                   </Button>
                 </aside> */}
               <Link
-                href="javascript:void(0)"
+                href="#"
                 className="mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-stroke text-dark hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4"
               >
                 <Facebook />

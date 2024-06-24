@@ -3,9 +3,7 @@ import Link from "next/link";
 import logo from "@/assets/images/logo.png";
 import logoLight from "@/assets/images/logo-2.png";
 
-type Props = {}
-
-export function Logo({ }: Props) {
+export function Logo() {
   return (
     <Link href="/">
       <span className="sr-only">JobConiq</span>
