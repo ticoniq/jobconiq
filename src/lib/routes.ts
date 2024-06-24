@@ -6,7 +6,9 @@
 export const publicRoutes: string[] = [
   "/",
   "/error",
-  "/confirm"
+  "/confirm",
+  "/jobs",
+  "/companies"
 ];
 
 
