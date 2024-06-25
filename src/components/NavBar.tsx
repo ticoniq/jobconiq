@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button";
 import {
@@ -23,8 +24,29 @@ const navigation: NavigationItem[] = [
 ];
 
 export function NavBar() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showShadow, setShowShadow] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setShowShadow(true);
+      } else {
+        setShowShadow(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+  
   return (
-    <section className="sticky top-0 z-50 flex h-16 items-center gap-4 border-b bg-background">
+    <section className={`sticky top-0 z-50 flex h-16 items-center gap-4 bg-background ${
+      showShadow ? "shadow-md dark:shadow-gray-700" : ""
+    }`}>
       <header className="container flex items-center justify-between h-20">
         <nav className="w-full flex items-center justify-between" aria-label="Global">
           <div className="flex items-center justify-start gap-x-8 lg:flex-1">

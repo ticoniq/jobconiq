@@ -59,7 +59,7 @@ export default function Hero() {
                   </Select>
                 </div>
               </div>
-              <div className="col-span-2 md:col-span-1 place-self-center">
+              <div className="col-span-2 w-full md:w-auto md:col-span-1 place-self-center">
                 <Button
                   className="w-full"
                   size={"lg"}
