@@ -24,10 +24,9 @@ import { Button } from '@/components/ui/button';
 import { Filter } from '@/components/Filter';
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Fragment } from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
-import Image from "next/image";
 import { Badge } from "../ui/badge";
 import Link from "next/link";
 import { formatMoney } from "@/lib/utils";
@@ -124,7 +123,11 @@ export async function JobsList() {
                   <CardContent className="p-0 space-y-5 flex flex-col items-start justify-between sm:flex-row sm:space-y-0">
                     <div className="flex flex-row justify-start items-start gap-5">
                       <Avatar className="h-14 w-14 sm:flex">
-                        <AvatarImage src={job.companyLogoUrl || "/avatars/01.png"} alt="Avatar" />
+                        <AvatarImage
+                          src={job.companyLogoUrl || "/avatars/01.png"}
+                          className="rounded-none"
+                          alt="Avatar"
+                        />
                         <AvatarFallback>JC</AvatarFallback>
                       </Avatar>
                       <div className="grid gap-1 text-start">
