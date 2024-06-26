@@ -8,6 +8,7 @@ export const publicRoutes: string[] = [
   "/error",
   "/confirm",
   "/jobs",
+  "/jobs/.+",
   "/companies"
 ];
 

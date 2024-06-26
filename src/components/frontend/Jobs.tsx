@@ -1,4 +1,4 @@
-"use client";
+import prisma from "@/lib/prisma";
 import {
   Sheet,
   SheetContent,
@@ -11,7 +11,6 @@ import {
 import {
   ChevronDownIcon,
   FilterIcon,
-  MinusIcon,
   Grid2X2Icon
 } from 'lucide-react'
 import {
@@ -24,6 +23,14 @@ import {
 import { Button } from '@/components/ui/button';
 import { Filter } from '@/components/Filter';
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Fragment } from "react";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { AvatarImage } from "@radix-ui/react-avatar";
+import Image from "next/image";
+import { Badge } from "../ui/badge";
+import Link from "next/link";
+import { formatMoney } from "@/lib/utils";
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
@@ -33,13 +40,17 @@ const sortOptions = [
   { name: 'Price: High to Low', href: '#', current: false },
 ]
 
-export function JobsList() {
+export async function JobsList() {
+  const jobs = prisma.job.findMany({
+    orderBy: { createdAt: "desc" }
+  });
+
   return (
     <section className="pb-24 pt-6">
 
       <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
         {/* Filters */}
-        <span className="hidden lg:block">
+        <span className="hidden lg:block sticky top-10 h-fit">
           <Filter />
         </span>
 
@@ -106,7 +117,45 @@ export function JobsList() {
               </Sheet>
             </div>
           </div>
-          <p>job listing goes here</p>
+          <article className="space-y-5">
+            {(await jobs).map((job) => (
+              <Fragment key={job.id}>
+                <Card x-chunk="dashboard-01-chunk-5" className="rounded-none p-4 bg-inherit dark:border-neutrals-900 border-border">
+                  <CardContent className="p-0 space-y-5 flex flex-col items-start justify-between sm:flex-row sm:space-y-0">
+                    <div className="flex flex-row justify-start items-start gap-5">
+                      <Avatar className="h-14 w-14 sm:flex">
+                        <AvatarImage src={job.companyLogoUrl || "/avatars/01.png"} alt="Avatar" />
+                        <AvatarFallback>JC</AvatarFallback>
+                      </Avatar>
+                      <div className="grid gap-1 text-start">
+                        <p className="text-xl font-semibold leading-none">
+                          {job.title}
+                        </p>
+                        <p className="text-base text-muted-foreground">
+                          {job.location}
+                        </p>
+                        <div className="space-x-2">
+                          <Badge variant={"secondary"}>{job.type}</Badge>
+                          <Badge variant={"warning"}>{job.locationType}</Badge>
+                          <Badge variant={"info"}>{formatMoney(job.salary)}</Badge>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="w-full sm:w-auto">
+                      <Button
+                        className="px-10 w-full sm:w-auto"
+                        asChild
+                      >
+                        <Link href={"/jobs/" + job.slug}>
+                          Apply
+                        </Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Fragment>
+            ))}
+          </article>
         </div>
       </div>
     </section>

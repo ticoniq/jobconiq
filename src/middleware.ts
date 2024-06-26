@@ -13,8 +13,15 @@ export default middleware((req): any => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+  // const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoutes = authRoutes.includes(nextUrl.pathname);
+
+  // Function to check if a route matches any of the public routes using regex
+  const isPublicRoute = publicRoutes.some(route => {
+    const regex = new RegExp(`^${route.replace(/\.\+/g, '.*')}$`);
+    return regex.test(nextUrl.pathname);
+  });
+
 
   if (isApiAuthRoute) {
     return null;

@@ -117,7 +117,7 @@ export default function Footer({ }: Props) {
                 <Facebook />
               </Link>
             </div>
-            <p className="mt-4 text-base text-white sm:order-first sm:mt-0">2024 &copy; <Link href="/">JobHuntly</Link>. All rights reserved.</p>
+            <p className="mt-4 text-base text-white sm:order-first sm:mt-0">2024 &copy; <Link href="/">JobConiq</Link>. All rights reserved.</p>
           </div>
         </div>
       </div>

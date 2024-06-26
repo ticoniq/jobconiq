@@ -38,7 +38,7 @@ export default function Hero() {
                   <Search className="text-neutrals-900" size={24} />
                 </div>
                 <div className="grow grid items-center">
-                  <InputFront type="email" id="email" className="w-full p-0" placeholder="Search by email" />
+                  <InputFront type="email" id="email" className="w-full p-0" placeholder="Job title or keyword" />
                 </div>
               </div>
 
