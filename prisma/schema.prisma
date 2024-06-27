@@ -2,9 +2,15 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 enum UserRole {
@@ -14,16 +20,17 @@ enum UserRole {
 }
 
 model User {
-  id                     String                   @id @default(cuid())
-  name                   String?
-  email                  String?                  @unique
-  emailVerified          DateTime?
-  image                  String?
-  password               String?
-  role                   UserRole                 @default(DEVELOPER)
-  accounts               Account[]
-  createdAt              DateTime                 @default(now())
-  updatedAt              DateTime                 @updatedAt
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          UserRole  @default(DEVELOPER)
+  accounts      Account[]
+  jobs          Job[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   @@map("users")
 }
@@ -68,3 +75,25 @@ model PasswordResetToken {
   @@map("passwordresettokens")
 }
 
+model Job {
+  id               String   @id @default(cuid())
+  slug             String   @unique
+  title            String
+  type             String
+  locationType     String
+  location         String?
+  description      String?
+  salary           Int
+  companyName      String
+  applicationEmail String?
+  applicationUrl   String?
+  companyLogoUrl   String?
+  userId           String
+  approved         Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("jobs")
+}
