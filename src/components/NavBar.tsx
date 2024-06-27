@@ -19,8 +19,8 @@ interface NavigationItem {
 }
 
 const navigation: NavigationItem[] = [
-  { name: 'Find Jobs', href: 'jobs' },
-  { name: 'Browse Companies', href: 'companies' },
+  { name: 'Find Jobs', href: '/jobs' },
+  { name: 'Browse Companies', href: '/companies' },
 ];
 
 export function NavBar() {
