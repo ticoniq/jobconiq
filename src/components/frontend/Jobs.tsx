@@ -3,7 +3,6 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -24,12 +23,10 @@ import { Button } from '@/components/ui/button';
 import { Filter } from '@/components/Filter';
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Fragment } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "../ui/avatar";
-import { AvatarImage } from "@radix-ui/react-avatar";
-import { Badge } from "../ui/badge";
-import Link from "next/link";
-import { formatMoney } from "@/lib/utils";
+import JobListItems from "../auth/JobListItems";
+import { JobFilterValues } from "@/lib/validation/Job-validation";
+import { Prisma } from "@prisma/client";
+import { Pagination } from "./Pagination";
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
@@ -39,23 +36,72 @@ const sortOptions = [
   { name: 'Price: High to Low', href: '#', current: false },
 ]
 
-export async function JobsList() {
-  const jobs = prisma.job.findMany({
-    orderBy: { createdAt: "desc" }
+interface JobResultsProps {
+  filterValues: JobFilterValues;
+  page?: number;
+  resultsFilter?: string;
+}
+
+export async function JobResult({
+  filterValues,
+  page = 1,
+  resultsFilter,
+}: JobResultsProps) {
+  const { q, type, location, remote } = filterValues;
+
+  const jobsPerPage = 6;
+  const skip = (page - 1) * jobsPerPage;
+
+  const searchString = q
+    ?.split(" ")
+    .filter((word) => word.length > 0)
+    .join(" & ");
+
+  const searchFilter: Prisma.JobWhereInput = searchString
+    ? {
+      OR: [
+        { title: { contains: searchString } },
+        { companyName: { contains: searchString } },
+        { type: { contains: searchString } },
+        { locationType: { contains: searchString } },
+        { location: { contains: searchString } },
+      ],
+    }
+    : {};
+
+  const where: Prisma.JobWhereInput = {
+    AND: [
+      searchFilter,
+      type ? { type } : {},
+      location ? { location } : {},
+      remote ? { locationType: "Remote" } : {},
+      { approved: true },
+    ],
+  };
+
+  const jobsPromise = prisma.job.findMany({
+    where,
+    orderBy: { createdAt: "desc" },
+    take: jobsPerPage,
+    skip,
   });
+
+  const countPromise = prisma.job.count({ where });
+
+  const [jobs, totalResults] = await Promise.all([jobsPromise, countPromise]);
 
   return (
     <section className="pb-24 pt-6">
 
       <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
         {/* Filters */}
-        <span className="hidden lg:block sticky top-10 h-fit">
-          <Filter />
+        <span className="hidden lg:block sticky top-20 h-fit">
+          <Filter defaultValues={filterValues} />
         </span>
 
         <div className="lg:col-span-3 text-center">
           <div className="flex items-baseline justify-between py-6">
-            <h3 className="text-2xl font-semibold font-clash text-primary">All Jobs</h3>
+            <h3 className="text-2xl font-semibold font-clash text-primary">{resultsFilter}</h3>
 
             <div className="flex items-center">
               <DropdownMenu>
@@ -109,7 +155,7 @@ export async function JobsList() {
                   </SheetHeader>
                   <ScrollArea className="h-5/6 w-full">
                     <span className="block lg:hidden">
-                      <Filter />
+                      <Filter defaultValues={filterValues} />
                     </span>
                   </ScrollArea>
                 </SheetContent>
@@ -117,47 +163,23 @@ export async function JobsList() {
             </div>
           </div>
           <article className="space-y-5">
-            {(await jobs).map((job) => (
+            {jobs.map((job) => (
               <Fragment key={job.id}>
-                <Card x-chunk="dashboard-01-chunk-5" className="rounded-none p-4 bg-inherit dark:border-neutrals-900 border-border">
-                  <CardContent className="p-0 space-y-5 flex flex-col items-start justify-between sm:flex-row sm:space-y-0">
-                    <div className="flex flex-row justify-start items-start gap-5">
-                      <Avatar className="h-14 w-14 sm:flex">
-                        <AvatarImage
-                          src={job.companyLogoUrl || "/avatars/01.png"}
-                          className="rounded-none"
-                          alt="Avatar"
-                        />
-                        <AvatarFallback>JC</AvatarFallback>
-                      </Avatar>
-                      <div className="grid gap-1 text-start">
-                        <p className="text-xl font-semibold leading-none">
-                          {job.title}
-                        </p>
-                        <p className="text-base text-muted-foreground">
-                          {job.location}
-                        </p>
-                        <div className="space-x-2">
-                          <Badge variant={"secondary"}>{job.type}</Badge>
-                          <Badge variant={"warning"}>{job.locationType}</Badge>
-                          <Badge variant={"info"}>{formatMoney(job.salary)}</Badge>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="w-full sm:w-auto">
-                      <Button
-                        className="px-10 w-full sm:w-auto"
-                        asChild
-                      >
-                        <Link href={"/jobs/" + job.slug}>
-                          Apply
-                        </Link>
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                <JobListItems job={job} />
               </Fragment>
             ))}
+            {jobs.length === 0 && (
+              <p className="m-auto text-center">
+                No jobs found. Try adjusting your search filters.
+              </p>
+            )}
+            {jobs.length > 0 && (
+              <Pagination
+                currentPage={page}
+                totalPages={Math.ceil(totalResults / jobsPerPage)}
+                filterValues={filterValues}
+              />
+            )}
           </article>
         </div>
       </div>
