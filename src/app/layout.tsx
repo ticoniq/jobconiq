@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@/components/theme-provider"
 import type { Metadata } from "next";
 import "./globals.css";
-import { NavBar } from "@/components/NavBar";
+import Providers from "@/components/ProgressBarProvider";
 
 export const metadata: Metadata = {
   title: "JobConiq: Your Ultimate Job Board for Finding Jobs and Browsing Companies",
@@ -22,7 +22,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <Providers>
+            {children}
+          </Providers>
         </ThemeProvider>
       </body>
     </html>
