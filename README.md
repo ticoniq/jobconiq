@@ -56,7 +56,7 @@
 ## Screenshots
 
 ### Home Page
-![Home Page](./assets/homepage.png)
+![Screenshot_25-6-2024_35318_localhost](https://github.com/ticoniq/jobconiq/assets/71973088/afeb6dc8-5be6-43e5-8c19-c9afdf63b437)
 
 ### Job Search
 ![Job Search](./assets/jobsearch.png)
