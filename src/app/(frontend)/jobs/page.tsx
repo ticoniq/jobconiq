@@ -1,7 +1,7 @@
-import Footer from '@/components/Footer'
-import { NavBar } from '@/components/NavBar'
+import Footer from '@/components/Footer';
+import { NavBar } from '@/components/NavBar';
 import BreadCrumb from "@/components/frontend/BreadCrumb";
-import { JobResult } from '@/components/frontend/Jobs'
+import { JobResult } from '@/components/frontend/Jobs';
 import { JobFilterValues } from "@/lib/validation/Job-validation";
 import { Metadata } from "next";
 
@@ -13,7 +13,6 @@ interface PageProps {
     remote?: string;
     page?: string;
   };
-  resultsFilter?: string,
 }
 
 function getTitle({ q, type, location, remote }: JobFilterValues) {
@@ -43,7 +42,6 @@ export function generateMetadata({
   };
 }
 
-
 function JobsPage({
   searchParams: { q, type, location, remote, page },
 }: PageProps) {
@@ -53,6 +51,7 @@ function JobsPage({
     location,
     remote: remote === "true",
   };
+
   return (
     <>
       <NavBar />
@@ -61,12 +60,12 @@ function JobsPage({
         <JobResult
           resultsFilter={getTitle(filterValues)}
           filterValues={filterValues}
-          page={page ? parseInt(page) : undefined}
+          page={page ? parseInt(page, 10) : undefined}
         />
       </section>
       <Footer />
     </>
-  )
+  );
 }
 
-export default JobsPage
+export default JobsPage;
