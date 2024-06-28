@@ -1,9 +1,7 @@
-import { formatMoney } from "@/lib/utils";
+import { formatDate, formatMoney } from "@/lib/utils";
 import { Job } from "@prisma/client";
-import { Banknote, Briefcase, Globe2, MapPin } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 import Markdown from "@/components/Markdown";
+import { Badge } from "@/components/ui/badge";
 
 interface JobPageProps {
   job: Job;
@@ -11,66 +9,67 @@ interface JobPageProps {
 
 export default function JobPage({
   job: {
-    title,
     description,
-    companyName,
-    applicationUrl,
     type,
-    locationType,
-    location,
     salary,
-    companyLogoUrl,
+    createdAt,
   },
 }: JobPageProps) {
   return (
-    <section className="w-full grow space-y-5">
-      <div className="flex items-center gap-3">
-        {companyLogoUrl && (
-          <Image
-            src={companyLogoUrl}
-            alt="Company logo"
-            width={100}
-            height={100}
-            className="rounded-xl"
-          />
-        )}
-        <div>
-          <div>
-            <h1 className="text-xl font-bold">{title}</h1>
-            <p className="font-semibold">
-              {applicationUrl ? (
-                <Link
-                  href={new URL(applicationUrl).origin}
-                  className="text-green-500 hover:underline"
-                >
-                  {companyName}
-                </Link>
-              ) : (
-                <span>{companyName}</span>
-              )}
-            </p>
-          </div>
-          <div className="text-muted-foreground">
-            <p className="flex items-center gap-1.5">
-              <Briefcase size={16} className="shrink-0" />
-              {type}
-            </p>
-            <p className="flex items-center gap-1.5">
-              <MapPin size={16} className="shrink-0" />
-              {locationType}
-            </p>
-            <p className="flex items-center gap-1.5">
-              <Globe2 size={16} className="shrink-0" />
-              {location || "Worldwide"}
-            </p>
-            <p className="flex items-center gap-1.5">
-              <Banknote size={16} className="shrink-0" />
-              {formatMoney(salary)}
-            </p>
-          </div>
+    <section className="container pt-16 ">
+      <div className="space-y-10 lg:flex lg:gap-x-10 lg:space-y-0">
+        <div className="lg:flex-auto">
+          <section className="w-full grow space-y-5">
+            <div>{description && <Markdown>{description}</Markdown>}</div>
+          </section>
         </div>
+        <aside className="w-full lg:w-full lg:max-w-sm">
+          <div className="lg:flex lg:flex-col">
+            <div className="w-full lg:max-w-xs">
+              <dl className="divide-y divide-gray-100">
+                <div className="pb-8">
+                  <dt className="text-2xl font-clash font-semibold">About this role</dt>
+                  <dd className="mt-4 text-sm leading-6 space-y-4">
+                    <div className="flex justify-between">
+                      <span className="text-sm leading-6">Apply Before</span>
+                      <span className="text-sm font-semibold leading-6">Backend Developer</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm leading-6">Job Posted On</span>
+                      <span className="text-sm font-semibold leading-6">{formatDate(createdAt)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm leading-6">Job Type</span>
+                      <span className="text-sm font-semibold leading-6">{type}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm leading-6">Salary</span>
+                      <span className="text-sm font-semibold leading-6">{formatMoney(salary)}</span>
+                    </div>
+                  </dd>
+                </div>
+                <div className="py-8">
+                  <dt className="text-2xl font-clash font-semibold">Categories</dt>
+                  <dd className="mt-4 text-sm leading-6 space-x-2 flex-wrap">
+                    <Badge variant={"warning"}>Marketing</Badge>
+                    <Badge variant={"secondary"}>Design</Badge>
+                  </dd>
+                </div>
+                <div className="py-8">
+                  <dt className="text-2xl font-clash font-semibold">Required Skills</dt>
+                  <dd className="mt-4 w-full text-sm leading-6 flex gap-2 flex-wrap">
+                    <Badge variant={"info"} className="rounded-md whitespace-nowrap text-ellipsis px-2 font-normal">Project Management</Badge>
+                    <Badge variant={"info"} className="rounded-md whitespace-nowrap text-ellipsis px-2 font-normal">Copywriting</Badge>
+                    <Badge variant={"info"} className="rounded-md whitespace-nowrap text-ellipsis px-2 font-normal">Social Media Marketing</Badge>
+                    <Badge variant={"info"} className="rounded-md whitespace-nowrap text-ellipsis px-2 font-normal">English</Badge>
+                    <Badge variant={"info"} className="rounded-md whitespace-nowrap text-ellipsis px-2 font-normal">Copy Editing</Badge>
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </aside>
       </div>
-      <div>{description && <Markdown>{description}</Markdown>}</div>
-    </section>
+    </section >
   );
 }
