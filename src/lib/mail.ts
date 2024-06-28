@@ -10,9 +10,15 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   const ConfirmLink = `${websiteUrl}/confirm?token=${token}`;
   await resend.emails.send({
     from: `Jobconiq <${websiteEmail}>`,
-    to: email,
+    to: [email],
     subject: "Confirm your email",
     react: emailConfirmation({ websiteUrl: websiteUrl, link: ConfirmLink }),
+    tags: [
+      {
+        name: 'email_type',
+        value: 'confirm_email',
+      },
+    ],
   });
 };
 

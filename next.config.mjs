@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  env: {
-    RESEND_API_KEY: process.env.RESEND_API_KEY,
-    WEBSITE_URL: process.env.WEBSITE_URL,
-    WEBSITE_EMAIL: process.env.WEBSITE_EMAIL,
+  webpack: (config) => {
+    config.resolve.fallback = {fs: false, net: false, tls: false};
+    config.externals.push("pino-pretty", "encoding");
+    return config;
   },
 };
 
