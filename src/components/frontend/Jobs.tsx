@@ -23,7 +23,7 @@ import { Button } from '@/components/ui/button';
 import { Filter } from '@/components/Filter';
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Fragment } from "react";
-import JobListItems from "../auth/JobListItems";
+import JobListItems from "./JobListItems";
 import { JobFilterValues } from "@/lib/validation/Job-validation";
 import { Prisma } from "@prisma/client";
 import { Pagination } from "./Pagination";
