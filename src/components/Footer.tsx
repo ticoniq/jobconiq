@@ -4,6 +4,8 @@ import Link from "next/link";
 import { Facebook } from "lucide-react";
 import CustomLink from "@/components/ui/custom-link";
 import { ModeToggle } from "@/components/ModeToggle";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
 type Props = {}
 
@@ -62,30 +64,20 @@ export default function Footer({ }: Props) {
               </ul>
             </div>
           </div>
-          <div className="px-4 w-1/2 lg:w-2/12">
+          <div className="px-4 w-full lg:w-4/12">
             <div className="mb-10 w-full">
               <h4 className="mb-9 text-lg font-semibold text-white">
-                For developers
+                Get job notifications
               </h4>
-              <ul className="space-y-3">
-                <li><CustomLink href="#" textarea="Help Docs" /></li>
-                <li><CustomLink href="#" textarea="Guide" /></li>
-                <li><CustomLink href="#" textarea="Updates" /></li>
-                <li><CustomLink href="#" textarea="Contact Us" /></li>
-              </ul>
-            </div>
-          </div>
-          <div className="px-4 w-1/2 lg:w-2/12">
-            <div className="mb-10 w-full">
-              <h4 className="mb-9 text-lg font-semibold text-white">
-                Company
-              </h4>
-              <ul className="space-y-3">
-                <li><CustomLink href="#" textarea="Help Docs" /></li>
-                <li><CustomLink href="#" textarea="Guide" /></li>
-                <li><CustomLink href="#" textarea="Updates" /></li>
-                <li><CustomLink href="#" textarea="Contact Us" /></li>
-              </ul>
+              <p className="mb-8 text-white">
+                The latest job news, articles, sent to your inbox weekly.
+              </p>
+              <form action="">
+                <div className="flex items-center gap-2">
+                  <Input type="text" />
+                  <Button>Subscribe</Button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
