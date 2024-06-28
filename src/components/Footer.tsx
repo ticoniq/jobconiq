@@ -15,7 +15,7 @@ export default function Footer({ }: Props) {
           <div className="w-full px-4 sm:w-2/3 lg:w-4/12">
             <div className="mb-10 w-full flex flex-col justify-start items-start text-neutrals-300">
               <Link
-                href="#"
+                href="/"
                 className="mb-6 inline-block max-w-[160px]"
               >
                 <Image
