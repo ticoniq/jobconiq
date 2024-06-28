@@ -59,7 +59,7 @@
 ![Screenshot_25-6-2024_35318_localhost](https://github.com/ticoniq/jobconiq/assets/71973088/afeb6dc8-5be6-43e5-8c19-c9afdf63b437)
 
 ### Job Search
-![Job Search](./assets/jobsearch.png)
+![Screenshot_28-6-2024_2093_www jobconiq live](https://github.com/ticoniq/jobconiq/assets/71973088/71e17af4-3c31-4adf-8c19-2c468a4ccf85)
 
 ### User Profile
 ![User Profile](./assets/userprofile.png)
