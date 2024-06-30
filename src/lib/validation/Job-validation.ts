@@ -46,11 +46,10 @@ const locationSchema = z
     type: z.string().nonempty({ message: "Type is required" }),
     locationType: z.string().nonempty({ message: "Location Type is required" }),
     location: z.string().optional(),
+    categories: z.string(),
     description: z.string().optional(),
     salary: numericRequiredString.max(
       9,
       "Number can't be longer than 9 digits"
     ),
-    companyName: z.string().nonempty({ message: "Company Name is required" }),
-    companyLogoUrl: z.string().url({ message: "Invalid URL" }).optional(),
   });

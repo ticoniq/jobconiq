@@ -17,14 +17,13 @@ export const createJobPosting = async (values: z.infer<typeof createJobSchema>) 
   const {
     title,
     type,
-    companyName,
-    companyLogoUrl,
     locationType,
     location,
     description,
     salary,
   } = createJobSchema.parse(values);
   const userId = user?.id;
+  const companyName = user?.name ?? "Unknown Company";
 
   if (!userId) {
     return { error: "User not found" };
@@ -37,8 +36,7 @@ export const createJobPosting = async (values: z.infer<typeof createJobSchema>) 
       slug,
       title: title.trim(),
       type,
-      companyName: companyName.trim(),
-      companyLogoUrl,
+      companyName,
       locationType,
       location,
       description: description?.trim(),
@@ -47,6 +45,6 @@ export const createJobPosting = async (values: z.infer<typeof createJobSchema>) 
     },
   });
 
-  redirect("/job-submitted");
+  return { success: "created successfully!" };
   
 }

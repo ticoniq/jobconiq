@@ -21,7 +21,7 @@ function JobListItems({ job }: JobListItemProps) {
         <div className="flex flex-row justify-start items-start gap-5">
           <Avatar className="h-14 w-14 sm:flex rounded-none">
             <AvatarImage
-              src={job.companyLogoUrl || "/avatars/01.png"}
+              src={"/avatars/01.png"}
               className="rounded-none"
               alt="Avatar"
             />

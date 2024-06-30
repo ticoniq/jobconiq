@@ -2,6 +2,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import type { Metadata } from "next";
 import "./globals.css";
 import Providers from "@/components/ProgressBarProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: {
@@ -26,6 +27,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Providers>
+            <Toaster />
             {children}
           </Providers>
         </ThemeProvider>

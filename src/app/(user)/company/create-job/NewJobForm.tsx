@@ -21,12 +21,10 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FormError } from '@/components/FormError';
-import { FormSuccess } from '@/components/FormSuccess';
+import { toast } from "sonner";
 import { jobTypes, locationTypes } from "@/lib/job-types";
 import { draftToMarkdown } from "markdown-draft-js";
 import RichTextEditor from "@/components/RichTextEditor";
@@ -34,8 +32,6 @@ import RichTextEditor from "@/components/RichTextEditor";
 interface Props { }
 
 export function NewJobForm({ }: Props) {
-  const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
 
   const form = useForm<z.infer<typeof createJobSchema>>({
     resolver: zodResolver(createJobSchema),
@@ -45,8 +41,8 @@ export function NewJobForm({ }: Props) {
       locationType: "",
       location: "Location 123",
       description: "",
+      categories: "",
       salary: undefined,
-      companyName: "Company Name",
     }
   });
 
@@ -54,21 +50,18 @@ export function NewJobForm({ }: Props) {
     formState: { isSubmitting },
   } = form;
 
-  const onSubmit = (values: z.infer<typeof createJobSchema>) => {
-    setError("");
-    setSuccess("");
-
-    createJobPosting(values)
-      // .then((response) => {
-      //   if (response.error) {
-      //     setError(response.error);
-      //   } else {
-      //     setSuccess("Job created successfully");
-      //   }
-      // })
-      // .catch((error) => {
-      //   setError("Something went wrong, please try again");
-      // });
+  const onSubmit = async (values: z.infer<typeof createJobSchema>) => {
+    try {
+      const data = await createJobPosting(values);
+      if (data?.error) {
+        toast.error(data.error);
+      } else {
+        toast.success("Job created successfully!");
+        form.reset();
+      }
+    } catch {
+      toast.error("An error occurred. Please try again.");
+    }
   };
 
   return (
@@ -81,7 +74,6 @@ export function NewJobForm({ }: Props) {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6"
             noValidate
           >
             <dl className="divide-y divide-gray-100">
@@ -135,27 +127,6 @@ export function NewJobForm({ }: Props) {
                             </SelectGroup>
                           </SelectContent>
                         </Select>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </dd>
-              </div>
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
-                <dt className="leading-6">
-                  <h3 className="font-semibold leading-7">Company Name</h3>
-                  <p className="mt-1">Job titles must be describe one position</p>
-                </dt>
-                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 md:w-2/3">
-                  <FormField
-                    control={form.control}
-                    name="companyName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input {...field} placeholder="e.g. Company" />
-                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -192,7 +163,6 @@ export function NewJobForm({ }: Props) {
                             </SelectGroup>
                           </SelectContent>
                         </Select>
-
                         <FormMessage />
                       </FormItem>
                     )}
@@ -201,49 +171,7 @@ export function NewJobForm({ }: Props) {
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
                 <dt className="leading-6">
-                  <h3 className="font-semibold leading-7">Salary</h3>
-                  <p className="mt-1">Please specify the estimated salary range for the role. *You can leave this blank</p>
-                </dt>
-                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0">
-                  {/* <FormField
-                    control={form.control}
-                    name="companyLogoUrl"
-                    render={({ field: { value, ...fieldValues } }) => (
-                      <FormItem>
-                        <FormLabel>Company logo</FormLabel>
-                        <FormControl>
-                          <Input
-                            {...fieldValues}
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              fieldValues.onChange(file);
-                            }}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  /> */}
-                  <FormField
-                    control={form.control}
-                    name="companyLogoUrl"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Input {...field} placeholder="e.g. Company" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </dd>
-              </div>
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
-                <dt className="leading-6">
-                  <h3 className="font-semibold leading-7">Job Title</h3>
-                  <p className="mt-1">Job titles must be describe one position</p>
+                  <h3 className="font-semibold leading-7">Description</h3>
                 </dt>
                 <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 md:w-2/3">
                   <FormField
@@ -293,11 +221,10 @@ export function NewJobForm({ }: Props) {
                 <dt className="leading-6" />
                 <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 sm:w-2/3">
                   <Button type="submit" className="w-full" disabled={isSubmitting}>
-                    {isSubmitting ? (
-                      <ImSpinner8 className="animate-spin" />
-                    ) : (
-                      "Create Job"
+                    {isSubmitting && (
+                      <ImSpinner8 className="mr-2 h-4 w-4 animate-spin" />
                     )}
+                    Create Job
                   </Button>
                 </dd>
               </div>

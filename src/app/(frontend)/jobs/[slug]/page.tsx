@@ -83,7 +83,7 @@ async function Page({ params: { slug } }: PageProps) {
               <div className="text-2xl flex items-center gap-5 font-clash font-semibold">
                 <Avatar className="h-14 w-14 sm:flex rounded-none">
                   <AvatarImage
-                    src={job.companyLogoUrl || "/avatars/01.png"}
+                    src={"/avatars/01.png"}
                     className="rounded-none"
                     alt="Avatar"
                   />

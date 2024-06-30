@@ -46,7 +46,6 @@ Stripe is an equal opportunity employer. We value diversity and are committed to
 `,
     salary: 150000,
     companyName: "Stripe",
-    companyLogoUrl: null,
     approved: true,
 
     userId: "clxte4uzr0000jc80lfxtujj5",
@@ -102,7 +101,6 @@ Join us at Vercel and be a part of shaping the future of web development!
 `,
     salary: 120000,
     companyName: "Vercel",
-    companyLogoUrl: null,
     approved: true,
 
     userId: "clxte4uzr0000jc80lfxtujj5",
@@ -156,7 +154,6 @@ If you're passionate about AI and want to contribute to cutting-edge technology 
 `,
     salary: 250000,
     companyName: "OpenAI",
-    companyLogoUrl: null,
     approved: true,
 
     userId: "clxte4uzr0000jc80lfxtujj5",
@@ -174,7 +171,6 @@ I might not be able to pay you a lot, but I can offer you a lot of experience an
 `,
     salary: 500,
     companyName: "Coding in Flow",
-    companyLogoUrl: null,
     approved: true,
 
     userId: "clxte4uzr0000jc80lfxtujj5",
@@ -194,7 +190,6 @@ Try it out for free at [https://smartdiary.co](https://smartdiary.co).
 `,
     salary: 30000,
     companyName: "SmartDiary.co",
-    companyLogoUrl: null,
     approved: true,
 
     userId: "clxte4uzr0000jc80lfxtujj5",
@@ -246,7 +241,6 @@ As a Microsoft contractor, you'll have the opportunity to work on exciting proje
 `,
     salary: 180000,
     companyName: "Microsoft",
-    companyLogoUrl: null,
     approved: true,
 
     userId: "clxte4uzr0000jc80lfxtujj5",
@@ -301,7 +295,6 @@ Join Apple and be a part of a team that's dedicated to making a difference in th
 `,
     salary: 200000,
     companyName: "Apple Inc.",
-    companyLogoUrl: null,
     approved: true,
 
     userId: "clxte4uzr0000jc80lfxtujj5",
@@ -353,7 +346,6 @@ This is a fantastic opportunity for those looking to kickstart their career in w
 `,
     salary: 90000,
     companyName: "Shopify",
-    companyLogoUrl: null,
     approved: true,
 
     userId: "clxte4uzr0000jc80lfxtujj5",
