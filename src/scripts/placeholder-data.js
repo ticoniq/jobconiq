@@ -46,8 +46,6 @@ Stripe is an equal opportunity employer. We value diversity and are committed to
 `,
     salary: 150000,
     companyName: "Stripe",
-    applicationEmail: "apply@stripe.com",
-    applicationUrl: "https://stripe.com/apply",
     companyLogoUrl: null,
     approved: true,
 
@@ -104,8 +102,6 @@ Join us at Vercel and be a part of shaping the future of web development!
 `,
     salary: 120000,
     companyName: "Vercel",
-    applicationEmail: "apply@vercel.com",
-    applicationUrl: "https://vercel.com/apply",
     companyLogoUrl: null,
     approved: true,
 
@@ -160,8 +156,6 @@ If you're passionate about AI and want to contribute to cutting-edge technology 
 `,
     salary: 250000,
     companyName: "OpenAI",
-    applicationEmail: null,
-    applicationUrl: "https://openai.com/apply",
     companyLogoUrl: null,
     approved: true,
 
@@ -180,8 +174,6 @@ I might not be able to pay you a lot, but I can offer you a lot of experience an
 `,
     salary: 500,
     companyName: "Coding in Flow",
-    applicationEmail: null,
-    applicationUrl: "https://codinginflow.com",
     companyLogoUrl: null,
     approved: true,
 
@@ -202,8 +194,6 @@ Try it out for free at [https://smartdiary.co](https://smartdiary.co).
 `,
     salary: 30000,
     companyName: "SmartDiary.co",
-    applicationEmail: null,
-    applicationUrl: "https://smartdiary.co",
     companyLogoUrl: null,
     approved: true,
 
@@ -256,8 +246,6 @@ As a Microsoft contractor, you'll have the opportunity to work on exciting proje
 `,
     salary: 180000,
     companyName: "Microsoft",
-    applicationEmail: "applications@microsoft.com",
-    applicationUrl: "https://careers.microsoft.com",
     companyLogoUrl: null,
     approved: true,
 
@@ -313,8 +301,6 @@ Join Apple and be a part of a team that's dedicated to making a difference in th
 `,
     salary: 200000,
     companyName: "Apple Inc.",
-    applicationEmail: null,
-    applicationUrl: "https://apple.com/apply",
     companyLogoUrl: null,
     approved: true,
 
@@ -367,8 +353,6 @@ This is a fantastic opportunity for those looking to kickstart their career in w
 `,
     salary: 90000,
     companyName: "Shopify",
-    applicationEmail: "career@shopify.com",
-    applicationUrl: "https://shopify.com/apply",
     companyLogoUrl: null,
     approved: true,
 

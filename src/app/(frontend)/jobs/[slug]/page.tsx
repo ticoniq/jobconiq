@@ -54,16 +54,6 @@ export async function generateMetadata({
 async function Page({ params: { slug } }: PageProps) {
   const job = await getJob(slug);
 
-  const { applicationEmail, applicationUrl } = job;
-
-  const applicationLink = applicationEmail
-    ? `mailto:${applicationEmail}`
-    : applicationUrl;
-
-  if (!applicationLink) {
-    notFound();
-  }
-
   return (
     <>
       <NavBar />
@@ -134,13 +124,13 @@ async function Page({ params: { slug } }: PageProps) {
                   asChild
                   className="p-0"
                 >
-                  <a href={applicationLink} target="_blank">
+                  <a href={"/"} target="_blank">
                     <Share2 className="w-6 h-6" />
                   </a>
                 </Button>
                 <div className="border-r-2" />
                 <Button asChild>
-                  <a href={applicationLink} className="px-8">
+                  <a href={"/"} className="px-8">
                     Apply
                   </a>
                 </Button>
