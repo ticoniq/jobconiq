@@ -85,8 +85,6 @@ model Job {
   description      String?
   salary           Int
   companyName      String
-  applicationEmail String?
-  applicationUrl   String?
   companyLogoUrl   String?
   userId           String
   approved         Boolean  @default(false)
