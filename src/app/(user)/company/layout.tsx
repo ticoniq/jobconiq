@@ -26,8 +26,8 @@ export default function DashboardLayout({ children }: DashboardProps) {
 
   return (
     <section className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[230px_1fr]">
-      <aside className="hidden bg-muted/40 md:block">
-        <div className="flex h-full min-h-screen flex-col gap-2">
+      <aside className="hidden bg-muted md:block">
+        <div className="flex sticky top-0 z-50 h-full min-h-screen flex-col gap-2">
           <div className="flex h-14 px-4 items-center justify-center border-r lg:h-24 lg:px-6">
             <Logo />
           </div>
@@ -42,7 +42,7 @@ export default function DashboardLayout({ children }: DashboardProps) {
         </div>
       </aside>
       <div className="flex flex-col">
-        <header className="flex h-14 items-center justify-between gap-4 bg-muted/40 px-4 lg:h-24 lg:px-6">
+        <header className="sticky top-0 z-50 flex h-14 items-center justify-between gap-4 bg-muted px-4 lg:h-24 lg:px-6">
           <Sheet>
             <div className="flex justify-center items-center gap-5">
               <SheetTrigger asChild>

@@ -2,6 +2,7 @@
 import { currentUser } from "@/lib/auths";
 import { getLastWord } from "@/lib/utils";
 
+
 async function Dashboardpage() {
   const user = await currentUser();
 
