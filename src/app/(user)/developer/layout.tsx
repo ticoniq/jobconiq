@@ -15,12 +15,22 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { Logo } from "@/components/logo"
 import UserButton from "@/components/auth/userButton"
 import { SideBar } from "@/components/SideBar";
+import { currentRole, currentUser } from "@/lib/auths"
+import { redirect } from "next/navigation"
+import { UserRole } from "@prisma/client"
 
 interface DashboardProps {
   children: React.ReactNode;
 }
 
-export default function DashboardLayout({ children }: DashboardProps) {
+export default async function DashboardLayout({ children }: DashboardProps) {
+  const role = await currentRole();
+  if (role === UserRole.COMPANY) {
+    redirect("/company/dashboard");
+  }
+  if (role === UserRole.ADMIN) {
+    redirect("/admin/dashboard");
+  }
 
   return (
     <section className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[230px_1fr]">
@@ -33,6 +43,7 @@ export default function DashboardLayout({ children }: DashboardProps) {
             <div className="flex flex-col justify-between space-y-10 items-center h-full">
               <SideBar />
               <div className="mx-auto p-2">
+                {role}
                 <UserButton />
               </div>
             </div>
