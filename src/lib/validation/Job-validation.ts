@@ -1,7 +1,5 @@
 import { z } from "zod";
-import { locationTypes as importedLocationTypes, jobTypes } from "../job-types";
-
-const locationTypes = ["Remote", "On-site", "Hybrid"];
+import { locationTypes, jobTypes } from "../job-types";
 
 export const jobFilterSchema = z.object({
   q: z.string().optional(),
@@ -41,15 +39,19 @@ const locationSchema = z
     }
   );
 
-  export const createJobSchema = z.object({
-    title: z.string().nonempty({ message: "Title is required" }),
-    type: z.string().nonempty({ message: "Type is required" }),
-    locationType: z.string().nonempty({ message: "Location Type is required" }),
-    location: z.string().optional(),
-    categories: z.string(),
-    description: z.string().optional(),
-    salary: numericRequiredString.max(
-      9,
-      "Number can't be longer than 9 digits"
-    ),
-  });
+export const createJobSchema = z.object({
+  title: z.string().nonempty({ message: "Title is required" }),
+  type: z.string().nonempty({ message: "Type is required" }),
+  locationType: z.string().nonempty({ message: "Location Type is required" }),
+  location: z.string().optional(),
+  categories: z
+    .array(z.string().min(1))
+    .min(1)
+    .nonempty("Please select at least one category."),
+  skills: z
+    .array(z.string().min(1))
+    .min(1)
+    .nonempty("Please select at least one skill."),
+  description: z.string().optional(),
+  salary: numericRequiredString.max(9, "Number can't be longer than 9 digits"),
+});

@@ -26,8 +26,8 @@ export default function DashboardLayout({ children }: DashboardProps) {
 
   return (
     <section className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[230px_1fr]">
-      <aside className="hidden bg-muted md:block">
-        <div className="flex sticky top-0 z-50 h-full min-h-screen flex-col gap-2">
+      <aside className="hidden sticky top-0 z-50 h-screen bg-muted md:block">
+        <div className="flex h-full min-h-screen flex-col gap-2">
           <div className="flex h-14 px-4 items-center justify-center border-r lg:h-24 lg:px-6">
             <Logo />
           </div>

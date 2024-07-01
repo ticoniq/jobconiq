@@ -21,7 +21,9 @@ export const createJobPosting = async (values: z.infer<typeof createJobSchema>) 
     location,
     description,
     salary,
-  } = createJobSchema.parse(values);
+    categories,
+    skills,
+  } = validatedFields.data;
   const userId = user?.id;
   const companyName = user?.name ?? "Unknown Company";
 
@@ -41,6 +43,8 @@ export const createJobPosting = async (values: z.infer<typeof createJobSchema>) 
       location,
       description: description?.trim(),
       salary: parseInt(salary),
+      categories,
+      skills,
       userId,
     },
   });

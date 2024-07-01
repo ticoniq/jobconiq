@@ -25,9 +25,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { jobTypes, locationTypes } from "@/lib/job-types";
+import { jobTypes, locationTypes, skillList, jobCategoriesList } from "@/lib/job-types";
 import { draftToMarkdown } from "markdown-draft-js";
 import RichTextEditor from "@/components/RichTextEditor";
+import { MultiSelect } from "@/components/MultiSelect";
 
 interface Props { }
 
@@ -41,7 +42,8 @@ export function NewJobForm({ }: Props) {
       locationType: "",
       location: "Location 123",
       description: "",
-      categories: "",
+      categories: [],
+      skills: [],
       salary: undefined,
     }
   });
@@ -171,7 +173,68 @@ export function NewJobForm({ }: Props) {
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
                 <dt className="leading-6">
-                  <h3 className="font-semibold leading-7">Description</h3>
+                  <h3 className="font-semibold leading-7">Category</h3>
+                  <p className="mt-1">You can select multiple job categories</p>
+                </dt>
+                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 md:w-2/3">
+                  <FormField
+                    control={form.control}
+                    name="categories"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Select Job Categories</FormLabel>
+                        <FormControl>
+                          <MultiSelect
+                            {...field}
+                            options={jobCategoriesList}
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                            placeholder="Select Job Categories"
+                            variant="inverted"
+                            animation={2}
+                            maxCount={10}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </dd>
+              </div>
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
+                <dt className="leading-6">
+                  <h3 className="font-semibold leading-7">Required Skills</h3>
+                  <p className="mt-1">Add required skills for the job</p>
+                </dt>
+                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 md:w-2/3">
+                  <FormField
+                    control={form.control}
+                    name="skills"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Select Required Skills</FormLabel>
+                        <FormControl>
+                          <MultiSelect
+                            {...field}
+                            options={skillList}
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                            placeholder="Select Required Skills"
+                            variant="inverted"
+                            animation={2}
+                            maxCount={10}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </dd>
+              </div>
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
+                <dt className="leading-6">
+                  <h3 className="font-semibold leading-7">Job Descriptions</h3>
+                  <p className="mt-1">Job titles must be describe one position</p>
                 </dt>
                 <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 md:w-2/3">
                   <FormField

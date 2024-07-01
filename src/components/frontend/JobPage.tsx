@@ -12,11 +12,13 @@ export default function JobPage({
     description,
     type,
     salary,
+    categories,
+    skills,
     createdAt,
   },
 }: JobPageProps) {
   return (
-    <section className="container pt-16 ">
+    <section className="container pt-16">
       <div className="space-y-10 lg:flex lg:gap-x-10 lg:space-y-0">
         <div className="lg:flex-auto">
           <section className="w-full grow space-y-5">
@@ -50,19 +52,24 @@ export default function JobPage({
                 </div>
                 <div className="py-8">
                   <dt className="text-2xl font-clash font-semibold">Categories</dt>
-                  <dd className="mt-4 text-sm leading-6 space-x-2 flex-wrap">
-                    <Badge variant={"warning"}>Marketing</Badge>
-                    <Badge variant={"secondary"}>Design</Badge>
+                  <dd className="mt-4 text-sm leading-6 flex flex-wrap gap-2">
+                    {categories.map((category) => (
+                      <Badge key={category} variant={"warning"}>{category}</Badge>
+                    ))}
                   </dd>
                 </div>
                 <div className="py-8">
                   <dt className="text-2xl font-clash font-semibold">Required Skills</dt>
                   <dd className="mt-4 w-full text-sm leading-6 flex gap-2 flex-wrap">
-                    <Badge variant={"info"} className="rounded-md whitespace-nowrap text-ellipsis px-2 font-normal">Project Management</Badge>
-                    <Badge variant={"info"} className="rounded-md whitespace-nowrap text-ellipsis px-2 font-normal">Copywriting</Badge>
-                    <Badge variant={"info"} className="rounded-md whitespace-nowrap text-ellipsis px-2 font-normal">Social Media Marketing</Badge>
-                    <Badge variant={"info"} className="rounded-md whitespace-nowrap text-ellipsis px-2 font-normal">English</Badge>
-                    <Badge variant={"info"} className="rounded-md whitespace-nowrap text-ellipsis px-2 font-normal">Copy Editing</Badge>
+                    {skills.map((skill) => (
+                      <Badge
+                        key={skill}
+                        variant={"info"}
+                        className="rounded-md whitespace-nowrap text-ellipsis px-2 font-normal"
+                      >
+                        {skill.charAt(0).toUpperCase() + skill.slice(1)}
+                      </Badge>
+                    ))}
                   </dd>
                 </div>
               </dl>

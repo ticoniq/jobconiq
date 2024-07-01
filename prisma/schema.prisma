@@ -85,7 +85,8 @@ model Job {
   description  String?
   salary       Int
   companyName  String
-  categories   String
+  categories   String[]
+  skills       String[]
   userId       String
   approved     Boolean  @default(false)
   createdAt    DateTime @default(now())

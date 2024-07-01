@@ -28,7 +28,7 @@ function JobListItems({ job }: JobListItemProps) {
             <AvatarFallback className="rounded-none">JC</AvatarFallback>
           </Avatar>
           <div className="grid gap-y-2  text-start">
-            <p className="text-xl font-semibold leading-none">
+            <p className="text-xl font-semibold leading-none md:w-4/5">
               {job.title}
             </p>
             <Breadcrumb className="font-normal">
