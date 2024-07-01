@@ -84,7 +84,6 @@ model Job {
   location     String?
   description  String?
   salary       Int
-  companyName  String
   categories   String[]
   skills       String[]
   userId       String

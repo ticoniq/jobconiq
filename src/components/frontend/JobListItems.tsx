@@ -5,14 +5,17 @@ import { Badge } from "../ui/badge";
 import Link from "next/link";
 import { formatMoney } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Job } from "@prisma/client";
+import { Job, User } from "@prisma/client";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "../ui/breadcrumb";
 import { Dot } from "lucide-react";
 
-interface JobListItemProps {
-  job: Job;
+interface JobWithUser extends Job {
+  user?: User;
 }
 
+interface JobListItemProps {
+  job: JobWithUser;
+}
 
 function JobListItems({ job }: JobListItemProps) {
   return (
@@ -21,7 +24,7 @@ function JobListItems({ job }: JobListItemProps) {
         <div className="flex flex-row justify-start items-start gap-5">
           <Avatar className="h-14 w-14 sm:flex rounded-none">
             <AvatarImage
-              src={"/avatars/01.png"}
+              src={job.user?.image || "/avatars/01.png"}
               className="rounded-none"
               alt="Avatar"
             />
@@ -34,7 +37,7 @@ function JobListItems({ job }: JobListItemProps) {
             <Breadcrumb className="font-normal">
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink>{job.companyName}</BreadcrumbLink>
+                  <BreadcrumbLink>{job.user?.name}</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator>
                   <Dot />
