@@ -25,7 +25,6 @@ export const createJobPosting = async (values: z.infer<typeof createJobSchema>) 
     skills,
   } = validatedFields.data;
   const userId = user?.id;
-  const companyName = user?.name ?? "Unknown Company";
 
   if (!userId) {
     return { error: "User not found" };
@@ -38,7 +37,6 @@ export const createJobPosting = async (values: z.infer<typeof createJobSchema>) 
       slug,
       title: title.trim(),
       type,
-      companyName,
       locationType,
       location,
       description: description?.trim(),

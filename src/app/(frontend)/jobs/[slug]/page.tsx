@@ -25,6 +25,7 @@ interface PageProps {
 const getJob = cache(async (slug: string) => {
   const job = await prisma.job.findUnique({
     where: { slug },
+    include: { user: true },
   });
 
   if (!job) notFound();
@@ -36,6 +37,7 @@ export async function generateStaticParams() {
   const jobs = await prisma.job.findMany({
     where: { approved: true },
     select: { slug: true },
+    
   });
 
   return jobs.map(({ slug }) => slug);
@@ -83,18 +85,20 @@ async function Page({ params: { slug } }: PageProps) {
               <div className="text-2xl flex items-center gap-5 font-clash font-semibold">
                 <Avatar className="h-14 w-14 sm:flex rounded-none">
                   <AvatarImage
-                    src={"/avatars/01.png"}
+                    src={job.user?.image || "/avatars/01.png"}
                     className="rounded-none"
                     alt="Avatar"
                   />
-                  <AvatarFallback className="rounded-none">JC</AvatarFallback>
+                  <AvatarFallback className="rounded-none uppercase">
+                    {`${job.user?.name?.[0]}${job.user?.name?.[1]}` || "JC"}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="text-neutrals-900 space-y-1">
                   <h1 className="text-xl font-bold">{job.title}</h1>
                   <Breadcrumb className="font-normal">
                     <BreadcrumbList>
                       <BreadcrumbItem>
-                        <BreadcrumbLink>{job.companyName}</BreadcrumbLink>
+                        <BreadcrumbLink>{job.user?.name}</BreadcrumbLink>
                       </BreadcrumbItem>
                       <BreadcrumbSeparator>
                         <Dot />
