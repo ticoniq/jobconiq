@@ -8,17 +8,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import {
-  ChevronDownIcon,
   FilterIcon,
   Grid2X2Icon
 } from 'lucide-react'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Filter } from '@/components/Filter';
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -27,14 +19,6 @@ import JobListItems from "./JobListItems";
 import { JobFilterValues } from "@/lib/validation/Job-validation";
 import { Prisma } from "@prisma/client";
 import { Pagination } from "./Pagination";
-
-const sortOptions = [
-  { name: 'Most Popular', href: '#', current: true },
-  { name: 'Best Rating', href: '#', current: false },
-  { name: 'Newest', href: '#', current: false },
-  { name: 'Price: Low to High', href: '#', current: false },
-  { name: 'Price: High to Low', href: '#', current: false },
-]
 
 interface JobResultsProps {
   filterValues: JobFilterValues;
@@ -49,7 +33,7 @@ export async function JobResult({
 }: JobResultsProps) {
   const { q, type, location, remote } = filterValues;
 
-  const jobsPerPage = 6;
+  const jobsPerPage = 10;
   const skip = (page - 1) * jobsPerPage;
 
   const searchString = q
@@ -61,10 +45,17 @@ export async function JobResult({
     ? {
       OR: [
         { title: { contains: searchString } },
-        { companyName: { contains: searchString } },
         { type: { contains: searchString } },
         { locationType: { contains: searchString } },
         { location: { contains: searchString } },
+        {
+          user: {
+            OR: [
+              { name: { contains: searchString, mode: 'insensitive' } },
+            ]
+          }
+        },
+
       ],
     }
     : {};
@@ -79,16 +70,38 @@ export async function JobResult({
     ],
   };
 
-  const jobsPromise = prisma.job.findMany({
+  const jobsPromise = await prisma.job.findMany({
     where,
     orderBy: { createdAt: "desc" },
     take: jobsPerPage,
     skip,
+    include: {
+      user: {
+        select: {
+          name: true,
+        }
+      }
+    },
   });
+
+  const userIds = jobsPromise.map(job => job.userId);
+
+  const users = await prisma.user.findMany({
+    where: {
+      id: {
+        in: userIds,
+      },
+    },
+  });
+
+  const jobsWithUsers = jobsPromise.map(job => ({
+    ...job,
+    user: users.find(user => user.id === job.userId),
+  }));
 
   const countPromise = prisma.job.count({ where });
 
-  const [jobs, totalResults] = await Promise.all([jobsPromise, countPromise]);
+  const [jobs, totalResults] = await Promise.all([jobsWithUsers, countPromise]);
 
   return (
     <section className="pb-24 pt-6">
