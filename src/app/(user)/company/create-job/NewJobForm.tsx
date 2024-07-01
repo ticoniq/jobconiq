@@ -1,6 +1,5 @@
 "use client";
 import * as z from 'zod';
-import { useState } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { createJobSchema } from "@/lib/validation/Job-validation";
@@ -14,7 +13,8 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
+  FormDescription
 } from "@/components/ui/form";
 import {
   Select,
@@ -236,7 +236,7 @@ export function NewJobForm({ }: Props) {
                   <h3 className="font-semibold leading-7">Job Descriptions</h3>
                   <p className="mt-1">Job titles must be describe one position</p>
                 </dt>
-                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 md:w-2/3">
+                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0">
                   <FormField
                     control={form.control}
                     name="description"
@@ -252,6 +252,7 @@ export function NewJobForm({ }: Props) {
                             ref={field.ref}
                           />
                         </FormControl>
+                        <FormDescription> Maximum 500 characters </FormDescription>
                         <FormMessage>{fieldState.error?.message}</FormMessage>
                       </FormItem>
                     )}
@@ -272,7 +273,7 @@ export function NewJobForm({ }: Props) {
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <Input {...field} type="number" />
+                          <Input {...field} type="number" placeholder="eg. 1000" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

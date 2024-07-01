@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { locationTypes, jobTypes } from "../job-types";
+import { max } from "date-fns";
 
 export const jobFilterSchema = z.object({
   q: z.string().optional(),
@@ -52,6 +53,6 @@ export const createJobSchema = z.object({
     .array(z.string().min(1))
     .min(1)
     .nonempty("Please select at least one skill."),
-  description: z.string().optional(),
+  description: z.string().min(1, "Description is required").max(5000, "Description can't be longer than 5000 characters"),
   salary: numericRequiredString.max(9, "Number can't be longer than 9 digits"),
 });
