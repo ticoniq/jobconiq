@@ -49,10 +49,14 @@ export const createJobSchema = z.object({
     .array(z.string().min(1))
     .min(1)
     .nonempty("Please select at least one category."),
+  approved: z.boolean().optional(),
   skills: z
     .array(z.string().min(1))
     .min(1)
     .nonempty("Please select at least one skill."),
-  description: z.string().min(1, "Description is required").max(5000, "Description can't be longer than 5000 characters"),
+  description: z
+    .string()
+    .min(1, "Description is required")
+    .max(5000, "Description can't be longer than 5000 characters"),
   salary: numericRequiredString.max(9, "Number can't be longer than 9 digits"),
 });

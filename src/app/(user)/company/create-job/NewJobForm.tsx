@@ -29,6 +29,7 @@ import { jobTypes, locationTypes, skillList, jobCategoriesList } from "@/lib/job
 import { draftToMarkdown } from "markdown-draft-js";
 import RichTextEditor from "@/components/RichTextEditor";
 import { MultiSelect } from "@/components/MultiSelect";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 interface Props { }
 
@@ -45,6 +46,7 @@ export function NewJobForm({ }: Props) {
       categories: [],
       skills: [],
       salary: undefined,
+      approved: false,
     }
   });
 
@@ -233,6 +235,48 @@ export function NewJobForm({ }: Props) {
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
                 <dt className="leading-6">
+                  <h3 className="font-semibold leading-7">Job Visibility</h3>
+                  <p className="mt-1">{"Choose whether this job should be visible to job seekers or saved as a draft."}</p>
+                </dt>
+                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 md:w-2/3">
+                  <FormField
+                    control={form.control}
+                    name="approved"
+                    render={({ field }) => (
+                      <FormItem className="space-y-3">
+                        <FormLabel>Job Status</FormLabel>
+                        <FormControl>
+                          <RadioGroup
+                            onValueChange={(value) => field.onChange(value === 'true')}
+                            value={field.value ? 'true' : 'false'}
+                            className="flex flex-col space-y-1"
+                          >
+                            <FormItem className="flex items-center space-x-3 space-y-0">
+                              <FormControl>
+                                <RadioGroupItem value="true" />
+                              </FormControl>
+                              <FormLabel className="font-normal">
+                                Published (Visible to job seekers)
+                              </FormLabel>
+                            </FormItem>
+                            <FormItem className="flex items-center space-x-3 space-y-0">
+                              <FormControl>
+                                <RadioGroupItem value="false" />
+                              </FormControl>
+                              <FormLabel className="font-normal">
+                                Draft (Not visible to job seekers)
+                              </FormLabel>
+                            </FormItem>
+                          </RadioGroup>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </dd>
+              </div>
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
+                <dt className="leading-6">
                   <h3 className="font-semibold leading-7">Job Descriptions</h3>
                   <p className="mt-1">Job titles must be describe one position</p>
                 </dt>
@@ -252,7 +296,7 @@ export function NewJobForm({ }: Props) {
                             ref={field.ref}
                           />
                         </FormControl>
-                        <FormDescription> Maximum 500 characters </FormDescription>
+                        <FormDescription> Maximum 5000 characters </FormDescription>
                         <FormMessage>{fieldState.error?.message}</FormMessage>
                       </FormItem>
                     )}

@@ -23,6 +23,7 @@ export const createJobPosting = async (values: z.infer<typeof createJobSchema>) 
     salary,
     categories,
     skills,
+    approved,
   } = validatedFields.data;
   const userId = user?.id;
 
@@ -44,6 +45,7 @@ export const createJobPosting = async (values: z.infer<typeof createJobSchema>) 
       categories,
       skills,
       userId,
+      approved,
     },
   });
 
