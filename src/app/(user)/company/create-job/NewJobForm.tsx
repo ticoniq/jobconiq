@@ -24,16 +24,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { jobTypes, locationTypes, skillList, jobCategoriesList } from "@/lib/job-types";
 import { draftToMarkdown } from "markdown-draft-js";
 import RichTextEditor from "@/components/RichTextEditor";
 import { MultiSelect } from "@/components/MultiSelect";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { useState } from "react";
+import { CheckCircle2 } from "lucide-react";
 
-interface Props { }
-
-export function NewJobForm({ }: Props) {
+export function NewJobForm() {
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
 
   const form = useForm<z.infer<typeof createJobSchema>>({
     resolver: zodResolver(createJobSchema),
@@ -60,7 +69,8 @@ export function NewJobForm({ }: Props) {
       if (data?.error) {
         toast.error(data.error);
       } else {
-        toast.success("Job created successfully!");
+        // toast.success(data.success);
+        setShowSuccessDialog(true);
         form.reset();
       }
     } catch {
@@ -340,6 +350,28 @@ export function NewJobForm({ }: Props) {
           </form>
         </Form>
       </div>
+      <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+        <DialogContent className="rounded-none">
+          <DialogHeader className="space-y-5 py-6">
+            <CheckCircle2 className="mx-auto h-16 w-16 text-green-500" />
+            <DialogTitle className="font-clash tracking-widest text-xl text-green-500 font-semibold text-center">
+              Job Posted Successfully!
+            </DialogTitle>
+            <DialogDescription className="text-center text-neutrals-900 dark:text-neutrals-300">
+              Your job has been successfully created.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant={"default"}
+              onClick={() => setShowSuccessDialog(false)}
+              className="w-full font-normal"
+            >
+              Got it
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

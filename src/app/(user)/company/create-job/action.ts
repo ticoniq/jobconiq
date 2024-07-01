@@ -50,5 +50,4 @@ export const createJobPosting = async (values: z.infer<typeof createJobSchema>) 
   });
 
   return { success: "created successfully!" };
-  
 }
