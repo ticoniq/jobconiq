@@ -17,7 +17,7 @@ const navigation = [
   { name: "Messages", href: "/company/message", icon: <MessageSquareText className="h-4 w-4" /> },
   { name: "Company Profile", href: "/company/company-profile", icon: <Building2 className="h-4 w-4" /> },
   { name: "All Applications", href: "/company/all-applicant", icon: <Users2 className="h-4 w-4" /> },
-  { name: "Job Listing", href: "/company/find-job", icon: <File className="h-4 w-4" /> },
+  { name: "Job Listing", href: "/company/job-listing", icon: <File className="h-4 w-4" /> },
   { name: "My Schedule", href: "/company/profile", icon: <CalendarCheck className="h-4 w-4" /> },
 ];
 const settings = [
