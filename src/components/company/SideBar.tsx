@@ -20,6 +20,7 @@ const navigation = [
   { name: "Job Listing", href: "/company/job-listing", icon: <File className="h-4 w-4" /> },
   { name: "My Schedule", href: "/company/profile", icon: <CalendarCheck className="h-4 w-4" /> },
 ];
+
 const settings = [
   { name: "Settings", href: "/company/settings", icon: <Settings className="h-4 w-4" /> },
   { name: "Help", href: "/company/help", icon: <CircleHelp className="h-4 w-4" /> },
@@ -27,17 +28,24 @@ const settings = [
 
 export function SideBar() {
   const pathname = usePathname();
-  
+
+  const isActive = (href: string) => {
+    if (href === "/company/dashboard") {
+      return pathname === href;
+    }
+    return pathname.startsWith(href);
+  };
+
   return (
     <nav className="w-full grid items-start space-y-3 text-sm font-medium">
       {navigation.map((item) => (
         <div key={item.name} className="flex justify-start items-center group/item">
           <p className={`border-r-[3.5px] h-[28px] border-brand-primary group/edt 
-                      ${pathname === item.href ? 'visible' : 'invisible group-hover/item:visible'}`} />
+                      ${isActive(item.href) ? 'visible' : 'invisible group-hover/item:visible'}`} />
           <Link
             href={item.href}
             className={`w-full mx-2 flex items-center justify-start px-5 gap-3 rounded-lg py-2 transition-all hover:text-brand-primary hover:bg-blue-100
-                    ${pathname === item.href ? "bg-blue-100 text-brand-primary" : ""}`}
+                    ${isActive(item.href) ? "bg-blue-100 text-brand-primary" : ""}`}
           >
             {item.icon}
             <span>{item.name}</span>
@@ -51,11 +59,11 @@ export function SideBar() {
       {settings.map((item) => (
         <div key={item.name} className="flex justify-start items-center group/item">
           <p className={`border-r-[3.5px] h-[28px] border-brand-primary group/edt 
-                      ${pathname === item.href ? 'visible' : 'invisible group-hover/item:visible'}`} />
+                      ${isActive(item.href) ? 'visible' : 'invisible group-hover/item:visible'}`} />
           <Link
             href={item.href}
             className={`w-full mx-2 flex items-center font-medium justify-start px-5 gap-3 rounded-lg py-2 transition-all hover:text-brand-primary hover:bg-blue-100
-                    ${pathname === item.href ? "bg-blue-100 text-brand-primary" : ""}`}
+                    ${isActive(item.href) ? "bg-blue-100 text-brand-primary" : ""}`}
           >
             {item.icon}
             <span>{item.name}</span>
