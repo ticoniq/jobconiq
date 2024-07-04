@@ -136,9 +136,9 @@ async function Page({ params: { slug } }: PageProps) {
                 </Button>
                 <div className="border-r-2" />
                 <Button asChild className="px-10">
-                  <Link href={"/jobs/apply/" + job.slug}>
+                  {/* <Link href={"/jobs/apply/" + job.slug}>
                     Apply
-                  </Link>
+                  </Link> */}
                 </Button>
               </aside>
             </div>
