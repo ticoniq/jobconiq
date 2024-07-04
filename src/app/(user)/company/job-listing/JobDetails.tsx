@@ -50,7 +50,7 @@ export async function JobDetails({ params: { slug } }: JobDetailsProps) {
     <>
       <section className="bg-neutrals-300 dark:bg-background">
         <div className="container mt-10">
-          <div className="flex justify-between items-center bg-white drop-shadow-lg max-w-full p-5 w-full dark:bg-neutrals-300">
+          <div className="flex flex-col space-y-4 justify-between items-start bg-white drop-shadow-lg max-w-full p-5 w-full dark:bg-neutrals-300 md:flex-row md:items-center">
             <div className="text-2xl flex items-center gap-5 font-clash font-semibold">
               <Avatar className="h-14 w-14 sm:flex rounded-none">
                 <AvatarImage
