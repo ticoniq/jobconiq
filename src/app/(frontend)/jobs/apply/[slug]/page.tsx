@@ -52,10 +52,11 @@ async function ApplyPage({ params: { slug } }: PageProps) {
   const session = await auth();
   const user = await currentRole();
 
-  if (user !== UserRole.DEVELOPER) return permanentRedirect("/login");
-
+  
   if (!session) return permanentRedirect("/login?error=unauthorized");
-
+  
+  if (user !== UserRole.DEVELOPER) return permanentRedirect("/login");
+  
   const job = await getJob(slug);
 
   return (

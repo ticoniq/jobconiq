@@ -28,6 +28,7 @@ interface ApplyFormProps {
 
 function ApplyForm({ job }: ApplyFormProps) {
   const user = useCurrentUser();
+  
   const form = useForm<z.infer<typeof JobApplicationSchema>>({
     resolver: zodResolver(JobApplicationSchema),
     defaultValues: {
