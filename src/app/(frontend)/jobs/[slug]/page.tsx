@@ -53,7 +53,7 @@ export async function generateMetadata({
   return {
     title: job.title,
   };
-}
+} 
 
 async function Page({ params: { slug } }: PageProps) {
   const job = await getJob(slug);
@@ -145,7 +145,7 @@ async function Page({ params: { slug } }: PageProps) {
           </div>
         </div>
       </section>
-      <JobPage job={job} />
+      {/* <JobPage job={job} /> */}
       <Feature />
       <Footer />
     </>

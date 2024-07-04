@@ -44,10 +44,9 @@ export function NavBar() {
 
   return (
     <section
-      className={`sticky top-0 z-50 flex h-16 items-center gap-4 bg-background ${
-        showShadow ? 'shadow-md dark:shadow-gray-700' : ''
+      className={`flex h-16 items-center gap-4 bg-background ${
+        showShadow ? 'shadow-md dark:shadow-gray-700 sticky top-0 z-50' : ''
       }`}
-      style={{ position: 'relative' }} // Ensure correct positioning
     >
       <header className="container flex items-center justify-between h-20">
         <nav className="w-full flex items-center justify-between" aria-label="Global">
