@@ -15,13 +15,11 @@ import { useForm } from "react-hook-form";
 import { Paperclip } from "lucide-react";
 import { toast } from "sonner";
 import { Form, FormDescription, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 interface JobWithUser extends PrismaJob {
   user?: {
     name: string | null;
     image: string | null;
-    email: string | null;
   };
 }
 
@@ -30,13 +28,12 @@ interface ApplyFormProps {
 }
 
 function ApplyForm({ job }: ApplyFormProps) {
-  const user = useCurrentUser();
   
   const form = useForm<z.infer<typeof JobApplicationSchema>>({
     resolver: zodResolver(JobApplicationSchema),
     defaultValues: {
-      fullName: user?.name || "",
-      emailAddress: user?.email || "",
+      fullName: "",
+      emailAddress: "",
       phoneNumber: "",
       currentJobTitle: "",
       linkedInURL: "",
