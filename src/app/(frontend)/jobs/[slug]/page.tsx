@@ -61,7 +61,7 @@ async function Page({ params: { slug } }: PageProps) {
   return (
     <>
       <NavBar />
-      {/* <section className="bg-neutrals-300 dark:bg-background dark:border-b dark:border-neutrals-800">
+      <section className="bg-neutrals-300 dark:bg-background dark:border-b dark:border-neutrals-800">
         <div className="container flex flex-col justify-center items-start py-10 sm:py-20 space-y-7">
           <Breadcrumb>
             <BreadcrumbList>
@@ -144,7 +144,7 @@ async function Page({ params: { slug } }: PageProps) {
             </div>
           </div>
         </div>
-      </section> */}
+      </section>
       <JobPage job={job} />
       <Feature />
       <Footer />
