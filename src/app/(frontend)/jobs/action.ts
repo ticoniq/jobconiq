@@ -9,7 +9,7 @@ import { JobApplicationSchema } from "@/lib/validation/Job-validation";
 import prisma from "@/lib/prisma";
 import { UserRole } from "@prisma/client";
 import { sendJobApplicationEmail } from "@/lib/mail";
-import { send } from "process";
+import { revalidatePath } from "next/cache";
 
 export const jobApplication = async (formData: FormData) => {
   const values = Object.fromEntries(formData.entries());
@@ -90,6 +90,7 @@ export const jobApplication = async (formData: FormData) => {
   });
 
   sendJobApplicationEmail(emailAddress, fullName, job?.title || "", phoneNumber, resumeAttachment || "");
-
+  
+  revalidatePath(`/jobs/apply/${job?.slug}`);
   return { success: `Applied successfully for the position of ${job?.title}` };
 };
