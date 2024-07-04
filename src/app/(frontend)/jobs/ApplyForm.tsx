@@ -1,10 +1,8 @@
 "use client";
 import * as z from 'zod';
 import { JobApplicationSchema } from "@/lib/validation/Job-validation";
-import RichTextEditor from "@/components/RichTextEditor";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CustomLink from "@/components/ui/custom-link";
-import { draftToMarkdown } from "markdown-draft-js";
 import { Job as PrismaJob } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -174,12 +172,10 @@ function ApplyForm({ job }: ApplyFormProps) {
                   <FormItem>
                     <FormLabel className="text-base">Description</FormLabel>
                     <FormControl>
-                      <RichTextEditor
+                      <textarea
+                        className="w-full bg-transparent border-2 border-brand-secondary text-base p-4 focus:ring-brand-primary focus:border-brand-primary"
+                        rows={5}
                         {...field}
-                        onChange={(draft) =>
-                          field.onChange(draftToMarkdown(draft))
-                        }
-                        ref={field.ref}
                       />
                     </FormControl>
                     <FormDescription> Maximum 500 characters </FormDescription>
