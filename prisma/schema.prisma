@@ -20,17 +20,18 @@ enum UserRole {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  password      String?
-  role          UserRole  @default(DEVELOPER)
-  accounts      Account[]
-  jobs          Job[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id              String           @id @default(cuid())
+  name            String?
+  email           String?          @unique
+  emailVerified   DateTime?
+  image           String?
+  password        String?
+  role            UserRole         @default(DEVELOPER)
+  accounts        Account[]
+  jobs            Job[]
+  jobApplication  JobApplication[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
 
   @@map("users")
 }
@@ -76,22 +77,45 @@ model PasswordResetToken {
 }
 
 model Job {
-  id           String   @id @default(cuid())
-  slug         String   @unique
-  title        String
-  type         String
-  locationType String
-  location     String?
-  description  String?
-  salary       Int
-  categories   String[]
-  skills       String[]
-  userId       String
-  approved     Boolean  @default(false)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id              String           @id @default(cuid())
+  slug            String           @unique
+  title           String
+  type            String
+  locationType    String
+  location        String?
+  description     String?
+  salary          Int
+  categories      String[]
+  skills          String[]
+  userId          String
+  jobapplications JobApplication[]
+  approved        Boolean          @default(false)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("jobs")
+}
+
+model JobApplication {
+  id               String   @id @default(cuid())
+  jobId            String
+  userId           String
+  fullName         String
+  emailAddress     String
+  phoneNumber      String
+  currentJobTitle  String
+  linkedInURL      String?
+  portfolioURL     String?
+  additionalInfo   String?
+  resumeAttachment String?
+  status           String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  job  Job  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("jobapplications")
 }
