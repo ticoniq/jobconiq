@@ -26,7 +26,10 @@ interface PageProps {
 
 const getJob = cache(async (slug: string) => {
   const job = await prisma.job.findUnique({
-    where: { slug },
+    where: { 
+      slug,
+      approved: true
+     },
     include: { user: true },
   });
 
@@ -35,25 +38,25 @@ const getJob = cache(async (slug: string) => {
   return job;
 });
 
-export async function generateStaticParams() {
-  const jobs = await prisma.job.findMany({
-    where: { approved: true },
-    select: { slug: true },
+// export async function generateStaticParams() {
+//   const jobs = await prisma.job.findMany({
+//     where: { approved: true },
+//     select: { slug: true },
 
-  });
+//   });
 
-  return jobs.map(({ slug }) => slug);
-}
+//   return jobs.map(({ slug }) => slug);
+// }
 
-export async function generateMetadata({
-  params: { slug },
-}: PageProps): Promise<Metadata> {
-  const job = await getJob(slug);
+// export async function generateMetadata({
+//   params: { slug },
+// }: PageProps): Promise<Metadata> {
+//   const job = await getJob(slug);
 
-  return {
-    title: job.title,
-  };
-} 
+//   return {
+//     title: job.title,
+//   };
+// } 
 
 async function Page({ params: { slug } }: PageProps) {
   const job = await getJob(slug);
@@ -145,7 +148,7 @@ async function Page({ params: { slug } }: PageProps) {
           </div>
         </div>
       </section>
-      {/* <JobPage job={job} /> */}
+      <JobPage job={job} />
       <Feature />
       <Footer />
     </>
