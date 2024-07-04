@@ -17,6 +17,8 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import ApplyForm from "../ApplyForm";
+import Link from "next/link";
 
 interface PageProps {
   params: { slug: string };
@@ -37,7 +39,7 @@ export async function generateStaticParams() {
   const jobs = await prisma.job.findMany({
     where: { approved: true },
     select: { slug: true },
-    
+
   });
 
   return jobs.map(({ slug }) => slug);
@@ -133,10 +135,10 @@ async function Page({ params: { slug } }: PageProps) {
                   </a>
                 </Button>
                 <div className="border-r-2" />
-                <Button asChild>
-                  <a href={"/"} className="px-8">
+                <Button asChild className="px-10">
+                  <Link href={"/jobs/apply/" + job.slug}>
                     Apply
-                  </a>
+                  </Link>
                 </Button>
               </aside>
             </div>

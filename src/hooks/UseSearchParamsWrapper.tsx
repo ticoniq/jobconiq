@@ -8,11 +8,15 @@ type UseSearchParamsWrapperProps = {
 
 export function UseSearchParamsWrapper({ children }: UseSearchParamsWrapperProps) {
   const searchParams = useSearchParams();
-  const urlError =
-    searchParams.get("error") === "OAuthAccountNotLinked"
-      ? "Email already in use with other provider!"
-      : "";
+  let urlError = "";
 
+  const error = searchParams.get("error");
+
+  if (error === "OAuthAccountNotLinked") {
+    urlError = "Email already in use with other provider!";
+  } else if (error === "unauthorized") {
+    urlError = "Login or create an account to apply for jobs";
+  }
   return (
     <>
       {children({ urlError })}
