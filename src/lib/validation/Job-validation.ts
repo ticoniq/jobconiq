@@ -23,6 +23,7 @@ const companyLogoSchema = z
 
 const requiredString = z.string().min(1, "Required");
 const numericRequiredString = requiredString.regex(/^\d+$/, "Must be a number");
+
 const locationSchema = z
   .object({
     locationType: requiredString.refine(
@@ -41,9 +42,9 @@ const locationSchema = z
   );
 
 export const createJobSchema = z.object({
-  title: z.string().nonempty({ message: "Title is required" }),
-  type: z.string().nonempty({ message: "Type is required" }),
-  locationType: z.string().nonempty({ message: "Location Type is required" }),
+  title: z.string().min(1, "Title is required"),
+  type: z.string().min(1, "Type is required"),
+  locationType: z.string().min(1, "Location type is required"),
   location: z.string().optional(),
   categories: z
     .array(z.string().min(1))
@@ -59,4 +60,26 @@ export const createJobSchema = z.object({
     .min(1, "Description is required")
     .max(5000, "Description can't be longer than 5000 characters"),
   salary: numericRequiredString.max(9, "Number can't be longer than 9 digits"),
+});
+
+const resumeAttachmentSchema = z
+  .instanceof(File)
+  .refine((file) => file.type === "application/pdf", {
+    message: "Only PDF files are allowed",
+  })
+  .refine((file) => file.size <= 1024 * 1024 * 2, {
+    message: "File must be less than 2MB",
+  });
+
+export const JobApplicationSchema = z.object({
+  fullName: z.string().min(1, "Full name is required"),
+  emailAddress: z.string().email(),
+  phoneNumber: z.string().min(1, "Phone number is required"),
+  currentJobTitle: z.string().min(1, "Current job title is required"),
+  linkedInURL: z.string().url().min(1, "linkedIn URL title is required"),
+  portfolioURL: z.string().url().min(1, "portfolio URL title is required"),
+  additionalInfo: z.string().optional(),
+  resumeAttachmentUrl: resumeAttachmentSchema,
+  jobId: z.string(),
+  status: z.string(),
 });
