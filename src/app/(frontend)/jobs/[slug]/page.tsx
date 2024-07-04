@@ -26,10 +26,10 @@ interface PageProps {
 
 const getJob = cache(async (slug: string) => {
   const job = await prisma.job.findUnique({
-    where: { 
+    where: {
       slug,
       approved: true
-     },
+    },
     include: { user: true },
   });
 
@@ -46,7 +46,7 @@ export async function generateMetadata({
   return {
     title: job.title,
   };
-} 
+}
 
 async function Page({ params: { slug } }: PageProps) {
   const job = await getJob(slug);
