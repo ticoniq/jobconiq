@@ -25,6 +25,11 @@ export default async function Page({ params: { slug } }: PageProps) {
               name: true,
               image: true,
             }
+          },
+          job: {
+            select: {
+              title: true,
+            }
           }
         }
       }
@@ -39,6 +44,7 @@ export default async function Page({ params: { slug } }: PageProps) {
     id: app.user.id,
     name: app.user.name || "",
     resume: app.resumeAttachment || "",
+    jobTitle: app.job.title || "",
     image: app.user.image || "",
     status: app.status,
     appliedAt: app.createdAt,

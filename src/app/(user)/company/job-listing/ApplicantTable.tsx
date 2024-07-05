@@ -47,6 +47,7 @@ interface Applicant {
   image: string
   status: string
   resume: string
+  jobTitle: string
   appliedAt: Date
 }
 
@@ -129,7 +130,7 @@ const columns: ColumnDef<Applicant>[] = [
             return `${baseClasses} bg-gray-100 text-gray-800 border border-gray-300`;
         }
       };
-  
+
       return (
         <span className={getBadgeClasses(row.getValue("status"))}>
           {row.getValue("status")}
@@ -141,6 +142,23 @@ const columns: ColumnDef<Applicant>[] = [
     accessorKey: "appliedAt",
     header: "Applied Date",
     cell: ({ row }) => <div>{formatDate(row.getValue("appliedAt"))}</div>,
+  },
+  {
+    accessorKey: "jobTitle",
+    header: "Job Role",
+    // cell: ({ row }) => <div className="w-36 truncate">{row.getValue("jobTitle")}</div>,
+    cell: ({ row }) => {
+      return (
+        <div className="relative group">
+          <span className="block w-36 truncate cursor-pointer">
+            {row.getValue("jobTitle")}
+          </span>
+          <span className="absolute left-0 top-full mt-1 w-auto p-2 bg-gray-800 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10 whitespace-nowrap">
+            {row.getValue("jobTitle")}
+          </span>
+        </div>
+      )
+    },
   },
   {
     id: "actions",
