@@ -1,17 +1,17 @@
-"use client";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { Menu } from "lucide-react"
-import { Button } from "@/components/ui/button";
+'use client';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { Menu } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
   SheetTitle,
   SheetHeader,
-  SheetDescription
-} from "@/components/ui/sheet";
-import { Logo } from "@/components/logo";
+  SheetDescription,
+} from '@/components/ui/sheet';
+import { Logo } from '@/components/logo';
 
 interface NavigationItem {
   name: string;
@@ -24,7 +24,6 @@ const navigation: NavigationItem[] = [
 ];
 
 export function NavBar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showShadow, setShowShadow] = useState(false);
 
   useEffect(() => {
@@ -36,24 +35,30 @@ export function NavBar() {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  
+
   return (
-    <section className={`sticky top-0 z-50 flex h-16 items-center gap-4 bg-background ${
-      showShadow ? "shadow-md dark:shadow-gray-700" : ""
-    }`}>
+    <section
+      className={`flex h-16 items-center gap-4 bg-background ${
+        showShadow ? 'shadow-md dark:shadow-gray-700 sticky top-0 z-50' : ''
+      }`}
+    >
       <header className="container flex items-center justify-between h-20">
         <nav className="w-full flex items-center justify-between" aria-label="Global">
           <div className="flex items-center justify-start gap-x-8 lg:flex-1">
             <Logo />
             <div className="hidden lg:flex lg:gap-x-5">
               {navigation.map((item) => (
-                <Link key={item.name} href={item.href} className="text-base font-semibold text-neutrals-800 leading-6 dark:text-neutrals-300">
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="text-base font-semibold text-neutrals-800 leading-6 dark:text-neutrals-300"
+                >
                   {item.name}
                 </Link>
               ))}
@@ -71,11 +76,7 @@ export function NavBar() {
         </nav>
         <Sheet>
           <SheetTrigger asChild>
-            <Button
-              variant="outline"
-              size="icon"
-              className="shrink-0 lg:hidden"
-            >
+            <Button variant="outline" size="icon" className="shrink-0 lg:hidden">
               <Menu className="h-5 w-5" />
               <span className="sr-only">Toggle navigation menu</span>
             </Button>
@@ -88,7 +89,11 @@ export function NavBar() {
             <aside className="flex flex-col justify-between h-full">
               <nav className="grid gap-6 text-lg font-medium">
                 {navigation.map((item) => (
-                  <Link key={item.name} href={item.href} className="text-base font-semibold text-neutrals-800 leading-6 dark:text-neutrals-300">
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="text-base font-semibold text-neutrals-800 leading-6 dark:text-neutrals-300"
+                  >
                     {item.name}
                   </Link>
                 ))}
@@ -106,5 +111,5 @@ export function NavBar() {
         </Sheet>
       </header>
     </section>
-  )
+  );
 }

@@ -1,19 +1,28 @@
 import { ThemeProvider } from "@/components/theme-provider"
-import type { Metadata } from "next";
-import "./globals.css";
 import Providers from "@/components/ProgressBarProvider";
+import { SessionProvider } from "next-auth/react";
+import { Toaster } from "@/components/ui/sonner";
+import type { Metadata } from "next";
+import { auth } from "@/auth";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "JobConiq: Your Ultimate Job Board for Finding Jobs and Browsing Companies",
+  title: {
+    default: "JobConiq: Your Ultimate Job Board for Finding Jobs and Browsing Companies",
+    template: "%s | Jobconiq",
+  },
   description: "Discover your next career opportunity with JobConiq, the comprehensive job board that connects job seekers with top employers. Browse job listings, explore companies, and apply for your dream job today",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+  
   return (
+    <SessionProvider session={session}>
     <html lang="en" suppressHydrationWarning>
       <body className="font-Epilogue">
         <ThemeProvider
@@ -23,10 +32,12 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Providers>
+            <Toaster />
             {children}
           </Providers>
         </ThemeProvider>
       </body>
     </html>
+    </SessionProvider>
   );
 }

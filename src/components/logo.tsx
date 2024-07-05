@@ -3,9 +3,13 @@ import Link from "next/link";
 import logo from "@/assets/images/logo.png";
 import logoLight from "@/assets/images/logo-2.png";
 
-export function Logo() {
+interface LogoProps {
+  link?: string;
+}
+
+export function Logo({ link = "/" }: LogoProps) {
   return (
-    <Link href="/">
+    <Link href={link}>
       <span className="sr-only">JobConiq</span>
       <Image
         src={logo}

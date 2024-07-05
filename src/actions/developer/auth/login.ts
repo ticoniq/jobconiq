@@ -41,10 +41,16 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   }
 
   try {
+    // Determine the redirect URL based on user role
+    const redirectTo =
+      existingUser.role === "COMPANY"
+        ? "/company/dashboard" // Redirect company users to company dashboard
+        : DEFAULT_LOGIN_REDIRECT; // Use default redirect for other users
+
     await signIn("credentials", {
       email,
       password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
+      redirectTo
     });
   } catch (error) {
     if (error instanceof AuthError) {

@@ -1,8 +1,5 @@
 import Footer from "@/components/Footer"
 import { NavBar } from "@/components/NavBar"
-import Feature from "@/components/frontend/Feature";
-import JobPage from "@/components/frontend/JobPage";
-import { Button } from "@/components/ui/button";
 import prisma from "@/lib/prisma";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -17,7 +14,11 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Link from "next/link";
+import ApplyForm from "../../ApplyForm";
+import { auth } from "@/auth"
+import { permanentRedirect } from 'next/navigation'
+import { currentRole, currentUser } from "@/lib/auths";
+import { UserRole } from "@prisma/client";
 
 interface PageProps {
   params: { slug: string };
@@ -47,7 +48,15 @@ export async function generateMetadata({
   };
 }
 
-async function Page({ params: { slug } }: PageProps) {
+async function ApplyPage({ params: { slug } }: PageProps) {
+  const session = await auth();
+  const user = await currentRole();
+
+  
+  if (!session) return permanentRedirect("/login?error=unauthorized");
+  
+  if (user !== UserRole.DEVELOPER) return permanentRedirect("/login");
+  
   const job = await getJob(slug);
 
   return (
@@ -116,32 +125,14 @@ async function Page({ params: { slug } }: PageProps) {
                   </Breadcrumb>
                 </div>
               </div>
-              <aside className="flex gap-5">
-                <Button
-                  variant={"ghost"}
-                  asChild
-                  className="p-0"
-                >
-                  <a href={"/"} target="_blank">
-                    <Share2 className="w-6 h-6" />
-                  </a>
-                </Button>
-                <div className="border-r-2" />
-                <Button asChild className="px-10">
-                  <Link href={"/jobs/apply/" + job.slug}>
-                    Apply
-                  </Link>
-                </Button>
-              </aside>
             </div>
           </div>
         </div>
       </section>
-      <JobPage job={job} />
-      <Feature />
+      <ApplyForm job={job} />
       <Footer />
     </>
   )
 }
 
-export default Page
+export default ApplyPage

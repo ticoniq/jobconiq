@@ -1,6 +1,7 @@
 import {
   Bell,
   Menu,
+  Plus,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -14,36 +15,26 @@ import {
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Logo } from "@/components/logo"
 import UserButton from "@/components/auth/userButton"
-import { SideBar } from "@/components/SideBar";
-import { currentRole, currentUser } from "@/lib/auths"
-import { redirect } from "next/navigation"
-import { UserRole } from "@prisma/client"
+import { SideBar } from "@/components/company/SideBar";
+import Link from "next/link"
 
 interface DashboardProps {
   children: React.ReactNode;
 }
 
-export default async function DashboardLayout({ children }: DashboardProps) {
-  const role = await currentRole();
-  if (role === UserRole.COMPANY) {
-    redirect("/company/dashboard");
-  }
-  if (role === UserRole.ADMIN) {
-    redirect("/admin/dashboard");
-  }
+export default function DashboardLayout({ children }: DashboardProps) {
 
   return (
     <section className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[230px_1fr]">
-      <aside className="hidden bg-muted/40 md:block">
+      <aside className="hidden sticky top-0 z-50 h-screen bg-muted md:block">
         <div className="flex h-full min-h-screen flex-col gap-2">
           <div className="flex h-14 px-4 items-center justify-center border-r lg:h-24 lg:px-6">
-            <Logo />
+            <Logo link="/company/dashboard" />
           </div>
           <div className="flex-1">
             <div className="flex flex-col justify-between space-y-10 items-center h-full">
               <SideBar />
               <div className="mx-auto p-2">
-                {role}
                 <UserButton />
               </div>
             </div>
@@ -51,7 +42,7 @@ export default async function DashboardLayout({ children }: DashboardProps) {
         </div>
       </aside>
       <div className="flex flex-col">
-        <header className="flex h-14 items-center justify-between gap-4 bg-muted/40 px-4 lg:h-24 lg:px-6">
+        <header className="sticky top-0 z-50 flex h-14 items-center justify-between gap-4 bg-muted px-4 lg:h-24 lg:px-6">
           <Sheet>
             <div className="flex justify-center items-center gap-5">
               <SheetTrigger asChild>
@@ -79,18 +70,29 @@ export default async function DashboardLayout({ children }: DashboardProps) {
               </div>
             </SheetContent>
           </Sheet>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="icon" className="rounded-full">
-                <Bell className="h-5 w-5" />
-                <span className="sr-only">Toggle user menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-96">
-              <DropdownMenuLabel className="font-semibold text-xl">Notifications</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className="flex gap-x-5">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="secondary" size="icon" className="rounded-full">
+                  <Bell className="h-5 w-5" />
+                  <span className="sr-only">Toggle user menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-96">
+                <DropdownMenuLabel className="font-semibold text-xl">Notifications</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <Button asChild className="hidden sm:flex">
+              <Link
+                href="/company/create-job"
+                className="space-x-2"
+              >
+                <Plus className="h-5 w-5" />
+                Post a job
+              </Link>
+            </Button>
+          </div>
         </header>
         {children}
       </div>
