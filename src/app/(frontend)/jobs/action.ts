@@ -76,6 +76,7 @@ export const jobApplication = async (formData: FormData) => {
   await prisma.jobApplication.create({
     data: {
       jobId,
+      slug,
       userId: userId!,
       fullName,
       emailAddress,

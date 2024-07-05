@@ -5,7 +5,6 @@ import { currentUser } from "@/lib/auths";
 
 async function JobListingPage() {
   const user = await currentUser();
-  console.log(user?.id);
   
   const jobs = await prisma.job.findMany({
     orderBy: { createdAt: "desc" },
