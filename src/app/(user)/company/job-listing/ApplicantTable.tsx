@@ -69,7 +69,7 @@ const columns: ColumnDef<Applicant>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "name" && "image",
+    accessorKey: "name",
     header: ({ column }) => {
       return (
         <Button
@@ -82,12 +82,13 @@ const columns: ColumnDef<Applicant>[] = [
         </Button>
       )
     },
-    // cell: ({ row }) => <div>{row.getValue("name")}</div>,
     cell: ({ row }) => {
+      const applicant = row.original;
+    
       return (
         <div className="flex items-center gap-4">
           <Avatar className="hidden h-12 w-12 sm:flex">
-            <AvatarImage src={row.getValue("image")} alt="Avatar" />
+            <AvatarImage src={applicant.image} alt={`Avatar of ${applicant.name}`} />
             <AvatarFallback>JC</AvatarFallback>
           </Avatar>
           <div className="grid gap-1">
