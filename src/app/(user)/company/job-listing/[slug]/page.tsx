@@ -38,6 +38,7 @@ export default async function Page({ params: { slug } }: PageProps) {
   const applicants = job.jobapplications.map(app => ({
     id: app.user.id,
     name: app.user.name || "",
+    resume: app.resumeAttachment || "",
     image: app.user.image || "",
     status: app.status,
     appliedAt: app.createdAt,

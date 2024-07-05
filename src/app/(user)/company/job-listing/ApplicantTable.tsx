@@ -39,12 +39,14 @@ import { formatDate } from "@/lib/utils"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import CustomLink from "@/components/ui/custom-link"
 
 interface Applicant {
   id: string
   name: string
   image: string
   status: string
+  resume: string
   appliedAt: Date
 }
 
@@ -74,7 +76,7 @@ const columns: ColumnDef<Applicant>[] = [
       return (
         <Button
           variant="ghost"
-          className="p-0"
+          className="p-0 font-medium text-sm"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Full Name
@@ -84,7 +86,7 @@ const columns: ColumnDef<Applicant>[] = [
     },
     cell: ({ row }) => {
       const applicant = row.original;
-    
+
       return (
         <div className="flex items-center gap-4">
           <Avatar className="hidden h-12 w-12 sm:flex">
@@ -101,23 +103,43 @@ const columns: ColumnDef<Applicant>[] = [
     },
   },
   {
+    accessorKey: "resume",
+    header: "Resume",
+    cell: ({ row }) => <CustomLink href={row.getValue("resume")} className="text-sm" textarea={"Resume"} />,
+  },
+  {
     accessorKey: "status",
     header: "Hiring Stage",
     cell: ({ row }) => {
+      const status = row.getValue("status");
+      const getBadgeClasses = (status: string) => {
+        const baseClasses = "px-2 py-1 rounded-full text-xs font-semibold";
+        switch (status.toLowerCase()) {
+          case "in review":
+            return `${baseClasses} border border-yellow-500 bg-yellow-500/10 text-yellow-500`;
+          case "shortlisted":
+            return `${baseClasses} bg-blue-100 text-blue-800 border border-blue-500`;
+          case "declined":
+            return `${baseClasses} border border-red-500 bg-red-500/10 text-red-500`;
+          case "hired":
+            return `${baseClasses} border border-green-500 bg-green-500/10 text-green-500`;
+          case "interviewing":
+            return `${baseClasses} border border-blue-300 bg-blue-300/10 text-blue-300`;
+          default:
+            return `${baseClasses} bg-gray-100 text-gray-800 border border-gray-300`;
+        }
+      };
+  
       return (
-        <Badge
-          variant={"danger"}
-          className="border border-red-500"
-        >
+        <span className={getBadgeClasses(row.getValue("status"))}>
           {row.getValue("status")}
-        </Badge>
-      )
-
-    },
+        </span>
+      );
+    }
   },
   {
     accessorKey: "appliedAt",
-    header: "Applied At",
+    header: "Applied Date",
     cell: ({ row }) => <div>{formatDate(row.getValue("appliedAt"))}</div>,
   },
   {
@@ -246,7 +268,7 @@ export function ApplicantDataTable({ applicants }: ApplicantDataTableProps) {
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
+          <TableBody className="">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
