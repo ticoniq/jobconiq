@@ -29,7 +29,7 @@ export default function DashboardLayout({ children }: DashboardProps) {
       <aside className="hidden sticky top-0 z-50 h-screen bg-muted md:block">
         <div className="flex h-full min-h-screen flex-col gap-2">
           <div className="flex h-14 px-4 items-center justify-center border-r lg:h-24 lg:px-6">
-            <Logo />
+            <Logo link="/company/dashboard" />
           </div>
           <div className="flex-1">
             <div className="flex flex-col justify-between space-y-10 items-center h-full">
@@ -70,7 +70,7 @@ export default function DashboardLayout({ children }: DashboardProps) {
               </div>
             </SheetContent>
           </Sheet>
-          <div>
+          <div className="flex gap-x-5">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="secondary" size="icon" className="rounded-full">
@@ -83,7 +83,7 @@ export default function DashboardLayout({ children }: DashboardProps) {
                 <DropdownMenuSeparator />
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button asChild>
+            <Button asChild className="hidden sm:flex">
               <Link
                 href="/company/create-job"
                 className="space-x-2"

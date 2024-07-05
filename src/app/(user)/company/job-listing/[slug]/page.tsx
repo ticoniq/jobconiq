@@ -3,6 +3,8 @@ import { JobDetails } from "../JobDetails"
 import { ApplicantDataTable } from "../ApplicantTable"
 import prisma from "@/lib/prisma"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 interface PageProps {
   params: { slug: string };
@@ -51,7 +53,17 @@ export default async function Page({ params: { slug } }: PageProps) {
   }));
 
   return (
-    <section className="container py-10">
+    <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10">
+      <div className="flex flex-col justify-start items-start space-y-2">
+        <Link
+          href={"/company/job-listing/"}
+          className="flex items-center gap-2"
+        >
+          <ArrowLeft />
+          <p className="text-sm font-clash font-semibold md:text-2xl">{job.title}</p>
+        </Link>
+        <p>Here is your jobs listing status</p>
+      </div>
       <Tabs defaultValue="applicants">
         <TabsList className="grid w-4/5 grid-cols-3 md:w-2/5">
           <TabsTrigger value="applicants" className="shadow-none bg-transparent">Applicants</TabsTrigger>
@@ -79,6 +91,6 @@ export default async function Page({ params: { slug } }: PageProps) {
           </Card>
         </TabsContent>
       </Tabs>
-    </section>
+    </main>
   )
 }

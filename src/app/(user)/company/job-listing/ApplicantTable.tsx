@@ -13,7 +13,13 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { ArrowUpDown, ChevronDown, ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -146,17 +152,21 @@ const columns: ColumnDef<Applicant>[] = [
   {
     accessorKey: "jobTitle",
     header: "Job Role",
-    // cell: ({ row }) => <div className="w-36 truncate">{row.getValue("jobTitle")}</div>,
     cell: ({ row }) => {
       return (
-        <div className="relative group">
-          <span className="block w-36 truncate cursor-pointer">
-            {row.getValue("jobTitle")}
-          </span>
-          <span className="absolute left-0 top-full mt-1 w-auto p-2 bg-gray-800 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10 whitespace-nowrap">
-            {row.getValue("jobTitle")}
-          </span>
-        </div>
+        <>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger className="w-36 truncate">
+                {row.getValue("jobTitle")}
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{row.getValue("jobTitle")}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
+        </>
       )
     },
   },
@@ -229,15 +239,15 @@ export function ApplicantDataTable({ applicants }: ApplicantDataTableProps) {
   })
 
   return (
-    <div className="w-full border border-neutrals-600">
-      <div className="flex items-center p-4">
+    <div className="w-full space-y-4">
+      <div className="flex items-center p-4 border border-brand-secondary">
         <Input
           placeholder="Filter names..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-[15rem]"
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -266,7 +276,7 @@ export function ApplicantDataTable({ applicants }: ApplicantDataTableProps) {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="">
+      <div className="border border-brand-secondary">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -321,7 +331,7 @@ export function ApplicantDataTable({ applicants }: ApplicantDataTableProps) {
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            <ChevronLeft />
           </Button>
           <Button
             className="rounded-sm"
@@ -329,7 +339,7 @@ export function ApplicantDataTable({ applicants }: ApplicantDataTableProps) {
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            <ChevronRight />
           </Button>
         </div>
       </div>
