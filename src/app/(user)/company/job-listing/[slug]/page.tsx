@@ -48,7 +48,7 @@ export default async function Page({ params: { slug } }: PageProps) {
     resume: app.resumeAttachment || "",
     jobTitle: app.job.title || "",
     image: app.user.image || "",
-    slugg: app.slug || app.id,
+    slugg: app.id,
     status: app.status,
     appliedAt: app.createdAt,
   }));

@@ -12,6 +12,7 @@ async function ApplicantsPage() {
   }
 
   const jobApplications = await prisma.jobApplication.findMany({
+    orderBy: { createdAt: "desc" },
     where: {
       job: {
         userId: userId
@@ -39,7 +40,7 @@ async function ApplicantsPage() {
     resume: app.resumeAttachment || "",
     jobTitle: app.job.title || "",
     image: app.user.image || "",
-    slugg: app.slug || app.id,
+    slugg: app.id,
     status: app.status,
     appliedAt: app.createdAt,
   }));

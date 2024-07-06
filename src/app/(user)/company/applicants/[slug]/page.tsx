@@ -1,14 +1,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PDFViewer from "@/components/PdfViewer";
-import { ArrowLeft, Dot } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { formatDate, relativeDate } from "@/lib/utils";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import UserProfile from "../UserProfile";
+import PersonalInfo from "../PersonalInfo";
 
 interface PageProps {
   params: { slug: string };
@@ -18,9 +15,17 @@ export default async function Page({ params: { slug } }: PageProps) {
   const jobApplication = await prisma.jobApplication.findUnique({
     where: { id: slug },
     include: {
-      user: true,
+      user: {
+        include: {
+          developers: true,
+        }
+      },
       job: true
     }
+  });
+
+  const developers = await prisma.developer.findUnique({
+    where: { userId: jobApplication?.userId }
   });
 
   if (!jobApplication) {
@@ -39,28 +44,14 @@ export default async function Page({ params: { slug } }: PageProps) {
         <UserProfile jobApplication={jobApplication} />
         <Card className="xl:col-span-2 rounded-none bg-transparent border border-card-foreground shadow-none">
           <Tabs defaultValue="applicant-profile">
-            <TabsList className="grid w-full grid-cols-4 md:w-4/5 p-3">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 md:w-4/5 p-[0.9rem]">
               <TabsTrigger value="applicant-profile" className="shadow-none bg-transparent">Applicant Profile</TabsTrigger>
               <TabsTrigger value="resume" className="shadow-none bg-transparent">Resume</TabsTrigger>
               <TabsTrigger value="hiring-progress" className="shadow-none bg-transparent">Hiring Progress</TabsTrigger>
               <TabsTrigger value="interview-schedule" className="shadow-none bg-transparent">Interview Schedule</TabsTrigger>
             </TabsList>
             <TabsContent value="applicant-profile">
-              <Card className="rounded-none bg-transparent border-t border-t-card-foreground shadow-none">
-                <CardHeader>
-                  <CardTitle>Applicant Profile</CardTitle>
-                  <CardDescription>View Applicant Profile for this user.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <p>Full Name: {jobApplication.fullName}</p>
-                  <p>Email: {jobApplication.emailAddress}</p>
-                  <p>Phone: {jobApplication.phoneNumber}</p>
-                  <p>Current Job Title: {jobApplication.currentJobTitle}</p>
-                  {jobApplication.linkedInURL && <p>LinkedIn: <a href={jobApplication.linkedInURL} target="_blank" rel="noopener noreferrer">{jobApplication.linkedInURL}</a></p>}
-                  {jobApplication.portfolioURL && <p>Portfolio: <a href={jobApplication.portfolioURL} target="_blank" rel="noopener noreferrer">{jobApplication.portfolioURL}</a></p>}
-                  {jobApplication.additionalInfo && <p>Additional Info: {jobApplication.additionalInfo}</p>}
-                </CardContent>
-              </Card>
+              <PersonalInfo jobApplication={jobApplication} developers={developers} />
             </TabsContent>
             <TabsContent value="resume" className="">
               <Card className="rounded-none bg-transparent border-t border-t-card-foreground shadow-none">
@@ -81,7 +72,7 @@ export default async function Page({ params: { slug } }: PageProps) {
                 </CardHeader>
                 <CardContent className="space-y-2">
                   <p>Current Status: {jobApplication.status}</p>
-                  {/* Add more hiring progress details here */}
+                  <p>Hiring progress Schedule coming soon...</p>
                 </CardContent>
               </Card>
             </TabsContent>
