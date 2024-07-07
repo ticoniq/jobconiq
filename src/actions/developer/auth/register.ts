@@ -16,7 +16,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 
   const { name, email, password } = validatedFields.data;
   const hashedPassword = await bcrypt.hash(password, 10);
-  const existingUser = await getUserByEmail(email);
+  const lowercaseEmail = email.toLowerCase();
+  const existingUser = await getUserByEmail(lowercaseEmail);
 
   if (existingUser) {
     return { error: "Email already exists" };
@@ -26,7 +27,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     const newUser = await prisma.user.create({
       data: {
         name,
-        email,
+        email: lowercaseEmail,
         password: hashedPassword,
         role: UserRole.DEVELOPER,
       },
@@ -39,7 +40,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       },
     });
 
-    const verificationToken = await generateVerificationToken(email);
+    const verificationToken = await generateVerificationToken(lowercaseEmail);
 
     await sendVerificationEmail(verificationToken.email, verificationToken.token);
 

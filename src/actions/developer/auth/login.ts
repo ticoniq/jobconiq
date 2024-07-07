@@ -18,7 +18,8 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 
   const { email, password, code } = validatedFields.data;
 
-  const existingUser = await getUserByEmail(email);
+  const lowercaseEmail = email.toLowerCase();
+  const existingUser = await getUserByEmail(lowercaseEmail);
 
   if (!existingUser || !existingUser.email || !existingUser.password) {
     return { error: "Email does not exist" };
@@ -48,7 +49,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
         : DEFAULT_LOGIN_REDIRECT; // Use default redirect for other users
 
     await signIn("credentials", {
-      email,
+      email: lowercaseEmail,
       password,
       redirectTo
     });
@@ -65,5 +66,6 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     }
 
     throw error;
+    
   }
 };

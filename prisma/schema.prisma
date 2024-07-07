@@ -24,7 +24,7 @@ model User {
   role           UserRole         @default(DEVELOPER)
   accounts       Account[]
   developers     Developer[]
-  companies     Company[]
+  companies      Company[]
   jobs           Job[]
   jobApplication JobApplication[]
   createdAt      DateTime         @default(now())
@@ -77,11 +77,12 @@ model Developer {
 
   @@map("developers")
 }
+
 model Company {
-  id            String    @id @default(cuid())
-  userId        String    @unique
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

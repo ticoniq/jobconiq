@@ -4,17 +4,16 @@ import { JobDataTable } from "./JobTable"
 import { currentUser } from "@/lib/auths";
 
 async function JobListingPage() {
-  const user = await currentUser();
+  const activeUser = await currentUser();
   
   const jobs = await prisma.job.findMany({
     orderBy: { createdAt: "desc" },
     include: {
-      user: {
-        select: {
-          name: true,
-        }
-      }
+      user: true
     },
+    where: {
+      userId: activeUser?.id
+    }
   });
   
   return (
