@@ -21,6 +21,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         where: { id: user.id! },
         data: { emailVerified: new Date() },
       });
+
+      // Create a corresponding entry in the developer table
+      await prisma.developer.create({
+        data: {
+          userId: user.id!,
+        },
+      });
     },
   },
 

@@ -2,10 +2,11 @@
 import * as z from "zod";
 import bcrypt from "bcryptjs";
 import prisma from "@/lib/prisma";
-import { RegisterSchema } from "@/lib/validation/auth-validation";
+import { UserRole } from "@prisma/client";
 import { getUserByEmail } from "@/data/user";
-import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
+import { generateVerificationToken } from "@/lib/tokens";
+import { RegisterSchema } from "@/lib/validation/auth-validation";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(values);
@@ -21,17 +22,30 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     return { error: "Email already exists" };
   }
 
-  await prisma.user.create({
-    data: {
-      name,
-      email,
-      password: hashedPassword,
-    },
-  });
+  try {
+    const newUser = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        role: UserRole.DEVELOPER,
+      },
+    });
 
-  const verificationToken = await generateVerificationToken(email);
+    // Create a corresponding entry in the developer table
+    await prisma.developer.create({
+      data: {
+        userId: newUser.id,
+      },
+    });
 
-  sendVerificationEmail(verificationToken.email, verificationToken.token);
+    const verificationToken = await generateVerificationToken(email);
 
-  return { success: "Confirmation email sent!" };
+    await sendVerificationEmail(verificationToken.email, verificationToken.token);
+
+    return { success: "Confirmation email sent!" };
+  } catch (error) {
+    console.error("Error during registration:", error);
+    return { error: "An error occurred during registration" };
+  }
 };

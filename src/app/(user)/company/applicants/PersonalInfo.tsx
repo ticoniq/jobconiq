@@ -44,10 +44,6 @@ function PersonalInfo({ jobApplication, developers }: PersonalInfoProps) {
               <dt className="w-full sm:w-1/2">
                 <div className="text-muted-foreground">Date of Birth</div>
                 <div className="font-medium text-sm">
-                  {/* {formatDate(developers.dob)} <span className="text-muted-foreground font-normal">({calculateAge(developers.dob)} y.o)</span> */}
-                  {/* {developers?.dob
-                    ? `${formatDate(developers.dob)} (${calculateAge(developers.dob)} y.o)`
-                    : "Not specified"} */}
                   {developers.dob ? (
                     <>
                       {formatDate(developers.dob)}
@@ -99,7 +95,7 @@ function PersonalInfo({ jobApplication, developers }: PersonalInfoProps) {
               <dt className="w-full sm:w-1/2">
                 <div className="text-muted-foreground">Current Job</div>
                 <div className="font-medium text-sm">
-                  Product Designer
+                  {developers?.title ? developers.title : "Not specified"}
                 </div>
               </dt>
               <dd className="w-full sm:w-1/2 justify-self-start">

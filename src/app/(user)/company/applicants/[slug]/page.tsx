@@ -41,7 +41,7 @@ export default async function Page({ params: { slug } }: PageProps) {
         </Link>
       </div>
       <div className="grid gap-4 md:gap-8 lg:grid-cols-1 xl:grid-cols-3">
-        <UserProfile jobApplication={jobApplication} />
+        <UserProfile jobApplication={jobApplication} developers={developers} />
         <Card className="xl:col-span-2 rounded-none bg-transparent border border-card-foreground shadow-none">
           <Tabs defaultValue="applicant-profile">
             <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 md:w-4/5 p-[0.9rem]">
