@@ -1,11 +1,12 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import PDFViewer from "@/components/PdfViewer";
 import { ArrowLeft } from "lucide-react";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import UserProfile from "../UserProfile";
 import PersonalInfo from "../PersonalInfo";
+
+import PDFViewer from "@/components/PdfViewer";
 
 interface PageProps {
   params: { slug: string };
@@ -56,11 +57,7 @@ export default async function Page({ params: { slug } }: PageProps) {
             <TabsContent value="resume" className="">
               <Card className="rounded-none bg-transparent border-t border-t-card-foreground shadow-none">
                 <CardContent className="py-4">
-                  {jobApplication.resumeAttachment ? (
-                    <PDFViewer pdfUrl={jobApplication.resumeAttachment} />
-                  ) : (
-                    <p>No resume attached</p>
-                  )}
+                  <PDFViewer pdfUrl={jobApplication.resumeAttachment || ""} />
                 </CardContent>
               </Card>
             </TabsContent>

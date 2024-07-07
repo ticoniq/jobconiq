@@ -115,42 +115,50 @@ function UserProfile({ jobApplication, developers }: UserProfileProps) {
                 <p className="text-sm leading-6break-all">{jobApplication.user.email}</p>
               </aside>
             </div>
-            <div className="flex gap-4">
-              <Phone />
-              <aside className="flex flex-col">
-                <span className="text-base leading-6">Phone</span>
-                <p className="text-sm leading-6break-all">
-                  {developers?.phone ? developers.phone : "Not specified"}
-                </p>
-              </aside>
-            </div>
-            <div className="flex gap-4">
-              <Github />
-              <aside className="flex flex-col">
-                <span className="text-base leading-6">Github</span>
-                <p className="text-sm leading-6break-all">
-                  {developers?.github ? developers.github : "Not specified"}
-                </p>
-              </aside>
-            </div>
-            <article className="flex gap-4 ">
-              <Linkedin />
-              <aside className="flex flex-col">
-                <span className="text-base leading-6">LinkedIn</span>
-                <p className="text-md leading-6 break-all">
-                  {developers?.linkedin ? developers.linkedin : "Not specified"}
-                </p>
-              </aside>
-            </article>
-            <article className="flex gap-4 flex-wrap w-full">
-              <Globe />
-              <aside className="flex flex-col flex-wrap">
-                <span className="text-base leading-6">Portfolio</span>
-                <p className="text-sm leading-6 break-all">
-                  {developers?.website ? developers.website : "Not specified"}
-                </p>
-              </aside>
-            </article>
+            {developers === null ? (
+              <section className="py-5 grid place-content-center">
+                Details not found
+              </section>
+            ) : (
+              <>
+                <div className="flex gap-4">
+                  <Phone />
+                  <aside className="flex flex-col">
+                    <span className="text-base leading-6">Phone</span>
+                    <p className="text-sm leading-6break-all">
+                      {developers?.phone ? developers.phone : "Not specified"}
+                    </p>
+                  </aside>
+                </div>
+                <div className="flex gap-4">
+                  <Github />
+                  <aside className="flex flex-col">
+                    <span className="text-base leading-6">Github</span>
+                    <p className="text-sm leading-6break-all">
+                      {developers?.github ? developers.github : "Not specified"}
+                    </p>
+                  </aside>
+                </div>
+                <article className="flex gap-4 ">
+                  <Linkedin />
+                  <aside className="flex flex-col">
+                    <span className="text-base leading-6">LinkedIn</span>
+                    <p className="text-md leading-6 break-all">
+                      {developers?.linkedin ? developers.linkedin : "Not specified"}
+                    </p>
+                  </aside>
+                </article>
+                <article className="flex gap-4 flex-wrap w-full">
+                  <Globe />
+                  <aside className="flex flex-col flex-wrap">
+                    <span className="text-base leading-6">Portfolio</span>
+                    <p className="text-sm leading-6 break-all">
+                      {developers?.website ? developers.website : "Not specified"}
+                    </p>
+                  </aside>
+                </article>
+              </>
+            )}
           </dd>
         </dl>
       </CardContent>
