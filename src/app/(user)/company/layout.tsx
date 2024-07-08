@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Logo } from "@/components/logo"
-import UserButton from "@/components/auth/userButton"
+import UserButton from "@/components/company/userButton"
 import { SideBar } from "@/components/company/SideBar";
 import Link from "next/link"
 
@@ -35,7 +35,7 @@ export default function DashboardLayout({ children }: DashboardProps) {
             <div className="flex flex-col justify-between space-y-10 items-center h-full">
               <SideBar />
               <div className="mx-auto p-2">
-                <UserButton />
+                
               </div>
             </div>
           </div>
@@ -55,7 +55,7 @@ export default function DashboardLayout({ children }: DashboardProps) {
                   <span className="sr-only">Toggle navigation menu</span>
                 </Button>
               </SheetTrigger>
-              <h1 className="text-2xl font-semibold md:text-2xl uppercase font-clash">Dashboard</h1>
+              <h1 className="text-2xl font-semibold md:text-2xl uppercase font-clash"><UserButton /></h1>
             </div>
             <SheetContent side="left" className="flex flex-col px-10 py-28 lg:hidden">
               <SheetHeader className="sr-only">

@@ -35,5 +35,12 @@ const imageSchema = z.instanceof(File).superRefine((f, ctx) => {
 
 export const companySchema = z.object({
   imageurl: imageSchema,
-  // name: z.string().min(1, "Company name field is required").max(30, "Maximum character 30"),
+  name: z.string().min(1, "Company name field is required").max(30, "Maximum character 30"),
+  website: z.string().url().min(1, "Website URL field is required").max(30, "Maximum character 50"),
+  location: z.string().min(1, "Location field is required").max(30, "Maximum character 100"),
+
+  bio: z
+    .string()
+    .min(1, "Description is required")
+    .max(5000, "Description can't be longer than 5000 characters"),
 });

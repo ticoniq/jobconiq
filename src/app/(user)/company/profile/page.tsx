@@ -122,7 +122,7 @@ async function ProfilePage() {
                   asChild
                   variant={"outline"}
                 >
-                  <Link href={"/jobs/apply/"} className="space-x-2">
+                  <Link href={"/company/settings"} className="space-x-2">
                     <SettingsIcon className="w-5 h-5" />
                     <span>Profile Settings</span>
                   </Link>

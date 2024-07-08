@@ -3,8 +3,17 @@ import prisma from "@/lib/prisma"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import OverviewForm from "./OverviewForm";
+import { currentUser } from "@/lib/auths";
 
-export default function CompanyPage() {
+export default async function CompanyPage() {
+  const activeUser = await currentUser();
+
+  const companyDetails = await prisma.company.findUnique({
+    where: { userId: activeUser?.id },
+    include: {
+      user: true,
+    }
+  });
 
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10">
@@ -23,7 +32,7 @@ export default function CompanyPage() {
           <TabsTrigger value="team" className="shadow-none bg-transparent">Team</TabsTrigger>
         </TabsList>
         <TabsContent value="overview">
-          <OverviewForm />
+          <OverviewForm companyDetails={companyDetails} />
         </TabsContent>
         <TabsContent value="social-links">
           <p>Tab 2</p>

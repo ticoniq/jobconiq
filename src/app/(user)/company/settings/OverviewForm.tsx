@@ -23,15 +23,15 @@ import { companySchema } from "@/lib/validation/company-validation";
 import { ImageIcon, Paperclip } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { UpdateCompanyDetails } from "./action";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
 import companyLogoPlaceholder from "@/assets/images/avatar_placeholder.png";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
 
-type Props = {}
+interface OverviewFormProps {
+  companyDetails: any;
+}
 
-export default function OverviewForm({ }: Props) {
-  const userDetails = useCurrentUser();
+export default function OverviewForm({ companyDetails }: OverviewFormProps) {
 
   const [fileName, setFileName] = useState('');
 
@@ -39,6 +39,11 @@ export default function OverviewForm({ }: Props) {
     resolver: zodResolver(companySchema),
     defaultValues: {
       imageurl: undefined,
+      name: companyDetails.user.name || "",
+      website: companyDetails.website || "",
+      location: companyDetails.location || "",
+
+      bio: companyDetails.bio || "",
     }
   });
 
@@ -95,10 +100,10 @@ export default function OverviewForm({ }: Props) {
                     name="imageurl"
                     render={({ field: { value, ...fieldValues } }) => (
                       <FormItem>
-                        <div className="flex flex-col justify-between items-start space-y-2 sm:items-center sm:flex-row">
-                          <Avatar className="h-32 w-32 sm:flex rounded-none bg-transparent">
+                        <div className="flex flex-col justify-between items-start gap-x-4 space-y-2 sm:items-center md:flex-row">
+                          <Avatar className="h-24 w-24 sm:flex rounded-none bg-transparent">
                             <AvatarImage
-                              src={userDetails?.image || ""}
+                              src={companyDetails.user?.image || ""}
                               className="rounded-none bg-transparent"
                               alt="Avatar"
                             />
@@ -144,14 +149,13 @@ export default function OverviewForm({ }: Props) {
                   />
                 </dd>
               </div>
-            </dl>
-            <dl className="divide-y divide-gray-100">
-              {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
+              
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
                 <dt className="leading-6">
                   <h3 className="font-medium leading-7">Company Details</h3>
                   <p className="mt-1">Introduce your company core info quickly to users by fill up company details</p>
                 </dt>
-                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 md:w-2/3">
+                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 space-y-6 md:w-2/3">
                   <FormField
                     control={control}
                     name="name"
@@ -159,24 +163,65 @@ export default function OverviewForm({ }: Props) {
                       <FormItem>
                         <FormLabel>Company Name</FormLabel>
                         <FormControl>
-                          <Input {...field} placeholder="Company Name" />
+                          <Input type="text" {...field} placeholder="Company Name" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
+                  <FormField
+                    control={control}
+                    name="website"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Website</FormLabel>
+                        <FormControl>
+                          <Input type="url" {...field} placeholder="eg. https://jobconiq.com" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="flex w-full">
+                    <FormField
+                      control={control}
+                      name="location"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Location</FormLabel>
+                          <FormControl>
+                            <Input type="text" {...field} placeholder="eg. Accra ghanna" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={control}
+                      name="location"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Location</FormLabel>
+                          <FormControl>
+                            <Input type="text" {...field} placeholder="eg. Accra ghanna" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                 </dd>
-              </div> */}
+              </div>
 
-              {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
                 <dt className="leading-6">
-                  <h3 className="font-semibold leading-7">Job Descriptions</h3>
-                  <p className="mt-1">Job titles must be describe one position</p>
+                  <h3 className="font-semibold leading-7">About Company</h3>
+                  <p className="mt-1">Brief description for your company. URLs are hyperlinked.</p>
                 </dt>
                 <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0">
                   <FormField
                     control={form.control}
-                    name="description"
+                    name="bio"
                     render={({ field, fieldState }) => (
                       <FormItem>
                         <FormLabel>Description</FormLabel>
@@ -195,7 +240,7 @@ export default function OverviewForm({ }: Props) {
                     )}
                   />
                 </dd>
-              </div> */}
+              </div>
             </dl>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
               <dt className="leading-6" />
