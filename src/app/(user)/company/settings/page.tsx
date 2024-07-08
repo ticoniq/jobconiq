@@ -40,7 +40,7 @@ export default async function CompanyPage() {
         <TabsContent value="team">
           <Card>
             <CardHeader>
-              <CardTitle>Analytics</CardTitle>
+              <CardTitle>Company Team</CardTitle>
               <CardDescription>
                 Company Teams.
               </CardDescription>

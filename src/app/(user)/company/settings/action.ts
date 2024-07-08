@@ -12,27 +12,52 @@ import { revalidatePath } from "next/cache";
 export const UpdateCompanyDetails = async (formData: FormData) => {
   try {
     const values = Object.fromEntries(formData.entries());
-    const validatedFields = companySchema.safeParse(values);
+    
+    // Parse techstack separately
+    const techstackString = formData.get('techstack') as string;
+    const techstack = techstackString ? JSON.parse(techstackString) : [];
+
+    // Parse date
+    const dateString = formData.get('date') as string;
+    const date = dateString ? new Date(dateString) : undefined;
+
+    // Merge parsed values
+    const parsedValues = {
+      ...values,
+      techstack,
+      date,
+    };
+
+    const validatedFields = companySchema.safeParse(parsedValues);
 
     if (!validatedFields.success) {
+      console.error('Validation errors:', validatedFields.error.errors);
       return { error: "Invalid fields" };
     }
 
     const user = await currentUser();
     const userId = user?.id;
-    const name = user?.name || "";
+    const userName = user?.name || "";
 
     if (!userId) {
       return { error: "User not found" };
     }
 
-    const { imageurl } = validatedFields.data;
+    const {
+      imageurl,
+      name,
+      website,
+      size,
+      industry,
+      location,
+      bio,
+    } = validatedFields.data;
 
     if (user?.image) {
       await del(user?.image);
     }
 
-    const slug = `${toSlug(name)}-${nanoid(10)}`;
+    const slug = `${toSlug(userName)}-${nanoid(10)}`;
     let image: string | undefined = undefined;
 
     if (imageurl) {
@@ -42,7 +67,7 @@ export const UpdateCompanyDetails = async (formData: FormData) => {
         {
           access: "public",
           addRandomSuffix: false,
-        },
+        }
       );
       image = blob.url;
     }
@@ -52,7 +77,23 @@ export const UpdateCompanyDetails = async (formData: FormData) => {
         id: userId,
       },
       data: {
-        image
+        name,
+        image,
+      },
+    });
+
+    await prisma.company.update({
+      where: {
+        userId: userId,
+      },
+      data: {
+        website,
+        size,
+        industry,
+        location,
+        techStack: techstack,
+        dateFounded: date,
+        bio,
       },
     });
 
