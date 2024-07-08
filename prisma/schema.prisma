@@ -81,6 +81,18 @@ model Developer {
 model Company {
   id        String   @id @default(cuid())
   userId    String   @unique
+  bio       String?
+  location  String?
+  size      String?
+  industry  String?
+  dateFounded DateTime?
+  techStack String[]
+  website   String?
+  facebook  String?
+  twitter   String?
+  linkedin  String?
+  youtube   String?
+  instagram String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
