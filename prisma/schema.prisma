@@ -2,11 +2,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// datasource db {
-//   provider = "postgresql"
-//   url      = env("DATABASE_URL")
-// }
-
 datasource db {
   provider  = "postgresql"
   url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
@@ -20,18 +15,20 @@ enum UserRole {
 }
 
 model User {
-  id              String           @id @default(cuid())
-  name            String?
-  email           String?          @unique
-  emailVerified   DateTime?
-  image           String?
-  password        String?
-  role            UserRole         @default(DEVELOPER)
-  accounts        Account[]
-  jobs            Job[]
-  jobApplication  JobApplication[]
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
+  id             String           @id @default(cuid())
+  name           String?
+  email          String?          @unique
+  emailVerified  DateTime?
+  image          String?
+  password       String?
+  role           UserRole         @default(DEVELOPER)
+  accounts       Account[]
+  developers     Developer[]
+  companies      Company[]
+  jobs           Job[]
+  jobApplication JobApplication[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
 
   @@map("users")
 }
@@ -54,6 +51,54 @@ model Account {
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
+}
+
+model Developer {
+  id            String    @id @default(cuid())
+  userId        String    @unique
+  phone         String?
+  title         String?
+  gender        String?
+  dob           DateTime?
+  bio           String?
+  experience    String?
+  qualification String?
+  location      String?
+  skills        String[]
+  languages     String[]
+  resumeUrl     String?
+  website       String?
+  github        String?
+  linkedin      String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("developers")
+}
+
+model Company {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  bio       String?
+  location  String?
+  size      String?
+  industry  String?
+  dateFounded DateTime?
+  techStack String[]
+  website   String?
+  facebook  String?
+  twitter   String?
+  linkedin  String?
+  youtube   String?
+  instagram String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("companies")
 }
 
 model VerificationToken {
@@ -100,6 +145,7 @@ model Job {
 
 model JobApplication {
   id               String   @id @default(cuid())
+  slug             String   @unique
   jobId            String
   userId           String
   fullName         String

@@ -54,6 +54,7 @@ interface Applicant {
   status: string
   resume: string
   jobTitle: string
+  slugg: string
   appliedAt: Date
 }
 
@@ -180,7 +181,7 @@ const columns: ColumnDef<Applicant>[] = [
       return (
         <>
           <Button variant="outline" asChild className="m-0 text-base font-medium">
-            <Link href={`/applicants/${applicant.id}`}>
+            <Link href={`/company/applicants/${applicant.slugg}`}>
               <span className="sr-only">See Application</span>
               See Application
             </Link>

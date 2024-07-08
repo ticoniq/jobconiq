@@ -12,6 +12,9 @@ import {
   SheetDescription,
 } from '@/components/ui/sheet';
 import { Logo } from '@/components/logo';
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import UserButton from "@/components/frontend/UserButton";
+import { UserRole } from "@prisma/client";
 
 interface NavigationItem {
   name: string;
@@ -24,6 +27,7 @@ const navigation: NavigationItem[] = [
 ];
 
 export function NavBar() {
+  const user = useCurrentUser();
   const [showShadow, setShowShadow] = useState(false);
 
   useEffect(() => {
@@ -44,9 +48,8 @@ export function NavBar() {
 
   return (
     <section
-      className={`flex h-16 items-center gap-4 bg-background ${
-        showShadow ? 'shadow-md dark:shadow-gray-700 sticky top-0 z-50' : ''
-      }`}
+      className={`flex h-16 items-center gap-4 bg-background ${showShadow ? 'shadow-md dark:shadow-gray-700 sticky top-0 z-50' : ''
+        }`}
     >
       <header className="container flex items-center justify-between h-20">
         <nav className="w-full flex items-center justify-between" aria-label="Global">
@@ -65,13 +68,29 @@ export function NavBar() {
             </div>
           </div>
           <div className="hidden lg:flex lg:gap-5">
-            <Button variant="link" className="border-r-2 border-gray-300" asChild>
-              <Link href="/login">Login</Link>
-            </Button>
-            <div className="bg-gray-500 w-full h-[1px] lg:hidden"></div>
-            <Button asChild>
-              <Link href="/signup">Sign Up</Link>
-            </Button>
+            {user ? (
+              <>
+                {user.role === UserRole.DEVELOPER && <UserButton user={user} 
+                  dashboard="/developer/dashboard" settings="/developer/settings" />}
+                {user.role === UserRole.COMPANY && <UserButton user={user} 
+                  dashboard="/company/dashboard" settings="/company/settings" />}
+                {user.role === UserRole.ADMIN && <UserButton user={user}  
+                  dashboard="/admin/dashboard" settings="/admin/settings" />}
+                {!["DEVELOPER", "ADMIN", "COMPANY"].includes(user.role) && (
+                  <p>Access Denied</p>
+                )}
+              </>
+            ) : (
+              <>
+                <Button variant="link" className="border-r-2 border-gray-300" asChild>
+                  <Link href="/login">Login</Link>
+                </Button>
+                <div className="bg-gray-500 w-full h-[1px] lg:hidden"></div>
+                <Button asChild>
+                  <Link href="/signup">Sign Up</Link>
+                </Button>
+              </>
+            )}
           </div>
         </nav>
         <Sheet>

@@ -21,6 +21,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         where: { id: user.id! },
         data: { emailVerified: new Date() },
       });
+
+      // Create a corresponding entry in the developer table
+      await prisma.developer.create({
+        data: {
+          userId: user.id!,
+        },
+      });
     },
   },
 
@@ -45,6 +52,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (session.user && token.name && token.email) {
         session.user.name = token.name;
         session.user.email = token.email;
+        session.user.image = token.image as string;
       }
 
       if (session.user) {
@@ -64,6 +72,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       token.isOAuth = !!existingAccount;
       token.name = existingUser.name;
       token.email = existingUser.email;
+      token.image = existingUser.image;
       token.role = existingUser.role;
       return token;
     },
