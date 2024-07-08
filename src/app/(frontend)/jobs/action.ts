@@ -16,7 +16,6 @@ export const jobApplication = async (formData: FormData) => {
   const validatedFields = JobApplicationSchema.safeParse(values);
 
   if (!validatedFields.success) {
-    console.log("error");
     return { error: "Invalid fields" };
   }
 

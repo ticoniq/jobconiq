@@ -45,3 +45,7 @@ export function toSlug(str: string) {
     .replace(/ /g, "-")
     .replace(/[^\w-]+/g, "");
 }
+
+export function removeHttpsWww(url: String) {
+  return url.replace(/^https?:\/\/(www\.)?/i, '');
+}

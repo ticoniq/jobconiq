@@ -1,18 +1,17 @@
 "use client";
-
 import { useState } from 'react';
-import dynamic from 'next/dynamic';
+import { Document, Page } from 'react-pdf';
 
-// Dynamic import of react-pdf to prevent SSR issues
-const Document = dynamic(() => import('react-pdf').then(mod => mod.Document), { ssr: false });
-const Page = dynamic(() => import('react-pdf').then(mod => mod.Page), { ssr: false });
+import { pdfjs } from 'react-pdf';
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 interface PDFViewerProps {
-  pdfUrl: string | null | undefined;
+  pdfUrl: File | string;
 }
 
 export default function PDFViewer({ pdfUrl }: PDFViewerProps) {
-  const [numPages, setNumPages] = useState<number | undefined>(undefined);
+  const [numPages, setNumPages] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number>(1);
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
@@ -21,18 +20,12 @@ export default function PDFViewer({ pdfUrl }: PDFViewerProps) {
 
   return (
     <div>
-      {pdfUrl ? (
-        <>
-          <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
-            <Page pageNumber={pageNumber} />
-          </Document>
-          <p>
-            Page {pageNumber} of {numPages}
-          </p>
-        </>
-      ) : (
-        <p>No PDF file specified</p>
-      )}
+      <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
+        <Page pageNumber={pageNumber} />
+      </Document>
+      <p>
+        Page {pageNumber} of {numPages}
+      </p>
     </div>
   );
 }
