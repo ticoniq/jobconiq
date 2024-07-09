@@ -46,7 +46,6 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 
     return { success: "Confirmation email sent!" };
   } catch (error) {
-    console.error("Error during registration:", error);
     return { error: "An error occurred during registration" };
   }
 };
