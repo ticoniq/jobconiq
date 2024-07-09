@@ -1,6 +1,5 @@
 "use client";
 import * as z from 'zod';
-import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { ImSpinner8 } from "react-icons/im";
@@ -15,17 +14,23 @@ import {
   FormMessage,
   FormDescription
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { toast } from "sonner";
-import { draftToMarkdown } from "markdown-draft-js";
-import RichTextEditor from "@/components/RichTextEditor";
 import { MultiSelect } from "@/components/MultiSelect";
 import { companySchema } from "@/lib/validation/company-validation";
-import { ImageIcon, Paperclip } from "lucide-react";
+import { ImageIcon } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { UpdateCompanyDetails } from "./action";
-import companyLogoPlaceholder from "@/assets/images/avatar_placeholder.png";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
+import { industries, skillList } from "@/lib/job-types";
 
 interface OverviewFormProps {
   companyDetails: any;
@@ -41,8 +46,11 @@ export default function OverviewForm({ companyDetails }: OverviewFormProps) {
       imageurl: undefined,
       name: companyDetails.user.name || "",
       website: companyDetails.website || "",
+      size: companyDetails.size || "",
+      industry: companyDetails.industry || "",
       location: companyDetails.location || "",
-
+      techstack: companyDetails.techStack || [],
+      date: companyDetails.dateFounded ? new Date(companyDetails.dateFounded) : undefined,
       bio: companyDetails.bio || "",
     }
   });
@@ -57,8 +65,14 @@ export default function OverviewForm({ companyDetails }: OverviewFormProps) {
     const formData = new FormData();
 
     Object.entries(values).forEach(([key, value]) => {
-      if (value) {
-        formData.append(key, value);
+      if (value !== undefined && value !== null) {
+        if (key === 'techstack') {
+          formData.append(key, JSON.stringify(value));
+        } else if (value instanceof File) {
+          formData.append(key, value);
+        } else {
+          formData.append(key, value.toString());
+        }
       }
     });
     try {
@@ -67,7 +81,6 @@ export default function OverviewForm({ companyDetails }: OverviewFormProps) {
         toast.error(data.error);
       } else {
         toast.success(data.success);
-        form.reset();
       }
     } catch {
       toast.error("An error occurred. Please try again.");
@@ -149,7 +162,7 @@ export default function OverviewForm({ companyDetails }: OverviewFormProps) {
                   />
                 </dd>
               </div>
-              
+
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
                 <dt className="leading-6">
                   <h3 className="font-medium leading-7">Company Details</h3>
@@ -182,34 +195,125 @@ export default function OverviewForm({ companyDetails }: OverviewFormProps) {
                       </FormItem>
                     )}
                   />
-                  <div className="flex w-full">
+                  <FormField
+                    control={control}
+                    name="location"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Location</FormLabel>
+                        <FormControl>
+                          <Input type="text" {...field} placeholder="eg. Accra ghanna" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="flex w-full space-y-5 md:gap-4 md:space-y-0">
                     <FormField
-                      control={control}
-                      name="location"
+                      control={form.control}
+                      name="size"
                       render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Location</FormLabel>
-                          <FormControl>
-                            <Input type="text" {...field} placeholder="eg. Accra ghanna" />
-                          </FormControl>
+                        <FormItem className="w-full md:1/2">
+                          <Select
+                            {...field}
+                            defaultValue=""
+                            onValueChange={field.onChange}
+                          >
+                            <FormLabel>Employee</FormLabel>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select Company Size" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectItem value={"1+"}>1-10</SelectItem>
+                                <SelectItem value={"10+"}>11-50</SelectItem>
+                                <SelectItem value={"150+"}>51-200</SelectItem>
+                                <SelectItem value={"350+"}>201-500</SelectItem>
+                                <SelectItem value={"500+"}>501-1000</SelectItem>
+                                <SelectItem value={"2500+"}>1001-5000</SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                     <FormField
-                      control={control}
-                      name="location"
+                      control={form.control}
+                      name="industry"
                       render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Location</FormLabel>
-                          <FormControl>
-                            <Input type="text" {...field} placeholder="eg. Accra ghanna" />
-                          </FormControl>
+                        <FormItem className="w-full md:1/2">
+                          <Select
+                            {...field}
+                            defaultValue=""
+                            onValueChange={field.onChange}
+                          >
+                            <FormLabel>Industry</FormLabel>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select Industry" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectGroup>
+                                {industries.map((industry) => (
+                                  <SelectItem key={industry.value} value={industry.value}>
+                                    {industry.value}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                   </div>
+                  <FormField
+                    control={control}
+                    name="date"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Date Founded</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="date"
+                            {...field}
+                            value={field.value instanceof Date ? field.value.toISOString().split('T')[0] : ''}
+                            onChange={(e) => {
+                              const date = new Date(e.target.value);
+                              field.onChange(isNaN(date.getTime()) ? undefined : date);
+                            }}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="techstack"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Select Tech Stacks</FormLabel>
+                        <FormControl>
+                          <MultiSelect
+                            {...field}
+                            options={skillList}
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                            placeholder="Select Required Skills"
+                            variant="inverted"
+                            animation={2}
+                            maxCount={10}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </dd>
               </div>
 
@@ -226,12 +330,10 @@ export default function OverviewForm({ companyDetails }: OverviewFormProps) {
                       <FormItem>
                         <FormLabel>Description</FormLabel>
                         <FormControl>
-                          <RichTextEditor
+                          <textarea
+                            className="w-full bg-transparent border-2 border-brand-secondary text-base p-4 focus:ring-brand-primary focus:border-brand-primary"
+                            rows={5}
                             {...field}
-                            onChange={(draft) =>
-                              field.onChange(draftToMarkdown(draft))
-                            }
-                            ref={field.ref}
                           />
                         </FormControl>
                         <FormDescription> Maximum 5000 characters </FormDescription>
@@ -241,18 +343,15 @@ export default function OverviewForm({ companyDetails }: OverviewFormProps) {
                   />
                 </dd>
               </div>
-            </dl>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
-              <dt className="leading-6" />
-              <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 sm:w-2/3">
-                <Button type="submit" className="w-full" disabled={isSubmitting}>
+              <div className="flex justify-end items-center px-4 py-6 sm:px-0">
+                <Button type="submit" className="px-10" disabled={isSubmitting}>
                   {isSubmitting && (
                     <ImSpinner8 className="mr-2 h-4 w-4 animate-spin" />
                   )}
                   Save Changes
                 </Button>
-              </dd>
-            </div>
+              </div>
+            </dl>
           </form>
         </Form>
       </div>

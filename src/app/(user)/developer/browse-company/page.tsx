@@ -20,17 +20,11 @@ async function CompaniesPage() {
 
   return (
     <>
-      <NavBar />
-      <section className="bg-neutrals-300 dark:bg-background dark:border-b dark:border-neutrals-800">
-        <div className="container flex flex-col justify-center items-center py-10 sm:py-20 space-y-7">
-          <Title titleText={"Find your"} highlightText={"dream companies"} />
-          <div className="text-xl leading-8 font-Epilogue max-md:max-w-full">
-            Find the dream companies you dream work for
-          </div>
+      <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10">
+        <div className="flex flex-col justify-start items-start space-y-2">
+          <h3 className="text-sm font-clash font-semibold md:text-2xl">Find your dream job</h3>
         </div>
-      </section>
-      <section className="container">
-        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <section className="py-16">
           <h2 className="text-2xl font-bold tracking-tight font-clash">All Companies</h2>
 
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
@@ -65,9 +59,8 @@ async function CompaniesPage() {
               </>
             ))}
           </div>
-        </div>
-      </section>
-      <Footer />
+        </section>
+      </main>
     </>
   )
 }

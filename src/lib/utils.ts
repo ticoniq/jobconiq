@@ -49,3 +49,29 @@ export function toSlug(str: string) {
 export function removeHttpsWww(url: String) {
   return url.replace(/^https?:\/\/(www\.)?/i, '');
 }
+
+export function truncateBio(bio: string | undefined | null, wordCount: number = 10): string {
+  if (!bio) return 'No bio available';
+  
+  const words = bio.split(/\s+/);
+  if (words.length <= wordCount) return bio;
+  
+  return words.slice(0, wordCount).join(' ') + '...';
+}
+
+export function getGreeting(name: string): string {
+  const currentHour = new Date().getHours();
+  let timeGreeting: string;
+
+  if (currentHour >= 5 && currentHour < 12) {
+    timeGreeting = "Good morning";
+  } else if (currentHour >= 12 && currentHour < 18) {
+    timeGreeting = "Good afternoon";
+  } else if (currentHour >= 18 && currentHour < 22) {
+    timeGreeting = "Good evening";
+  } else {
+    timeGreeting = "Good night";
+  }
+
+  return `${timeGreeting}, ${name}!`;
+}

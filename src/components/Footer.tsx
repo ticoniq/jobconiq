@@ -74,7 +74,7 @@ export default function Footer({ }: Props) {
               </p>
               <form action="">
                 <div className="flex items-center gap-2">
-                  <Input type="text" />
+                  <Input type="text" placeholder="Email Address" />
                   <Button>Subscribe</Button>
                 </div>
               </form>

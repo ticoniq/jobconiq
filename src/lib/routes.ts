@@ -9,7 +9,8 @@ export const publicRoutes: string[] = [
   "/confirm",
   "/jobs",
   "/jobs/.+",
-  "/companies"
+  "/companies",
+  "/companies/.+",
 ];
 
 

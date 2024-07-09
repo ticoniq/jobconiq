@@ -70,11 +70,11 @@ export function NavBar() {
           <div className="hidden lg:flex lg:gap-5">
             {user ? (
               <>
-                {user.role === UserRole.DEVELOPER && <UserButton user={user} 
+                {user.role === UserRole.DEVELOPER && <UserButton user={user}
                   dashboard="/developer/dashboard" settings="/developer/settings" />}
-                {user.role === UserRole.COMPANY && <UserButton user={user} 
+                {user.role === UserRole.COMPANY && <UserButton user={user}
                   dashboard="/company/dashboard" settings="/company/settings" />}
-                {user.role === UserRole.ADMIN && <UserButton user={user}  
+                {user.role === UserRole.ADMIN && <UserButton user={user}
                   dashboard="/admin/dashboard" settings="/admin/settings" />}
                 {!["DEVELOPER", "ADMIN", "COMPANY"].includes(user.role) && (
                   <p>Access Denied</p>
@@ -118,12 +118,29 @@ export function NavBar() {
                 ))}
               </nav>
               <div className="flex flex-col gap-5">
-                <Button variant="link" asChild>
-                  <Link href="/login">Login</Link>
-                </Button>
-                <Button asChild>
-                  <Link href="/signup">Sign Up</Link>
-                </Button>
+                {user ? (
+                  <>
+                    {user.role === UserRole.DEVELOPER && <UserButton user={user}
+                      dashboard="/developer/dashboard" settings="/developer/settings" />}
+                    {user.role === UserRole.COMPANY && <UserButton user={user}
+                      dashboard="/company/dashboard" settings="/company/settings" />}
+                    {user.role === UserRole.ADMIN && <UserButton user={user}
+                      dashboard="/admin/dashboard" settings="/admin/settings" />}
+                    {!["DEVELOPER", "ADMIN", "COMPANY"].includes(user.role) && (
+                      <p>Access Denied</p>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <Button variant="link" className="border-r-2 border-gray-300" asChild>
+                      <Link href="/login">Login</Link>
+                    </Button>
+                    <div className="bg-gray-500 w-full h-[1px] lg:hidden"></div>
+                    <Button asChild>
+                      <Link href="/signup">Sign Up</Link>
+                    </Button>
+                  </>
+                )}
               </div>
             </aside>
           </SheetContent>

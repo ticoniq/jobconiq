@@ -16,7 +16,6 @@ export function SocialLogin() {
         callbackUrl: DEFAULT_LOGIN_REDIRECT,
       });
     } catch (error) {
-      console.error("Sign-in error:", error);
       setIsPending(false);
     }
   };
