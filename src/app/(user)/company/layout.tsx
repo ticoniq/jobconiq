@@ -34,9 +34,6 @@ export default function DashboardLayout({ children }: DashboardProps) {
           <div className="flex-1">
             <div className="flex flex-col justify-between space-y-10 items-center h-full">
               <SideBar />
-              <div className="mx-auto p-2">
-                
-              </div>
             </div>
           </div>
         </div>
