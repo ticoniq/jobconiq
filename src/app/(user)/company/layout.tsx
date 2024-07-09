@@ -16,13 +16,23 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { Logo } from "@/components/logo"
 import UserButton from "@/components/company/userButton"
 import { SideBar } from "@/components/company/SideBar";
+import { redirect } from "next/navigation"
+import { UserRole } from "@prisma/client"
+import { currentRole } from "@/lib/auths"
 import Link from "next/link"
 
 interface DashboardProps {
   children: React.ReactNode;
 }
 
-export default function DashboardLayout({ children }: DashboardProps) {
+export default async function DashboardLayout({ children }: DashboardProps) {
+  const role = await currentRole();
+  if (role === UserRole.DEVELOPER) {
+    redirect("/developer/dashboard");
+  }
+  if (role === UserRole.ADMIN) {
+    redirect("/admin/dashboard");
+  }
 
   return (
     <section className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[230px_1fr]">

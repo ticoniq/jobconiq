@@ -58,3 +58,20 @@ export function truncateBio(bio: string | undefined | null, wordCount: number = 
   
   return words.slice(0, wordCount).join(' ') + '...';
 }
+
+export function getGreeting(name: string): string {
+  const currentHour = new Date().getHours();
+  let timeGreeting: string;
+
+  if (currentHour >= 5 && currentHour < 12) {
+    timeGreeting = "Good morning";
+  } else if (currentHour >= 12 && currentHour < 18) {
+    timeGreeting = "Good afternoon";
+  } else if (currentHour >= 18 && currentHour < 22) {
+    timeGreeting = "Good evening";
+  } else {
+    timeGreeting = "Good night";
+  }
+
+  return `${timeGreeting}, ${name}!`;
+}
