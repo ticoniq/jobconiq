@@ -130,17 +130,6 @@ async function ProfilePage() {
               </aside>
             </div>
           </div>
-          {/* <aside className="flex gap-5">
-            <Button
-              asChild
-              variant={"outline"}
-            >
-              <Link href={"/jobs/apply/"} className="space-x-2">
-                <SettingsIcon className="w-5 h-5" />
-                <span>Profile Settings</span>
-              </Link>
-            </Button>
-          </aside> */}
         </div>
       </div>
       <div className="grid gap-8 md:gap-8 lg:grid-cols-1 xl:grid-cols-3">
