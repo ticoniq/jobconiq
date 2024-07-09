@@ -343,8 +343,8 @@ export default function OverviewForm({ companyDetails }: OverviewFormProps) {
                   />
                 </dd>
               </div>
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
-                <Button type="submit" className="w-full " disabled={isSubmitting}>
+              <div className="flex justify-end items-center px-4 py-6 sm:px-0">
+                <Button type="submit" className="px-10" disabled={isSubmitting}>
                   {isSubmitting && (
                     <ImSpinner8 className="mr-2 h-4 w-4 animate-spin" />
                   )}

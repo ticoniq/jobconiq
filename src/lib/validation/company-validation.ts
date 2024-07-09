@@ -49,3 +49,11 @@ export const companySchema = z.object({
     .min(1, "Description is required")
     .max(5000, "Description can't be longer than 5000 characters"),
 });
+
+export const companySocialSchema = z.object({
+  linkedin: z.string().url().optional().or(z.literal('')),
+  twitter: z.string().url().optional().or(z.literal('')),
+  facebook: z.string().url().optional().or(z.literal('')),
+  instagram: z.string().url().optional().or(z.literal('')),
+  youtube: z.string().url().optional().or(z.literal('')),
+});

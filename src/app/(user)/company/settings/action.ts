@@ -1,6 +1,6 @@
 "use server";
+
 import path from "path";
-import * as z from "zod";
 import { nanoid } from "nanoid";
 import { put, del } from "@vercel/blob";
 import { toSlug } from "@/lib/utils";
@@ -11,36 +11,25 @@ import { revalidatePath } from "next/cache";
 
 export const UpdateCompanyDetails = async (formData: FormData) => {
   try {
-    const values = Object.fromEntries(formData.entries());
-    
-    // Parse techstack separately
-    const techstackString = formData.get('techstack') as string;
-    const techstack = techstackString ? JSON.parse(techstackString) : [];
-
-    // Parse date
-    const dateString = formData.get('date') as string;
-    const date = dateString ? new Date(dateString) : undefined;
-
-    // Merge parsed values
-    const parsedValues = {
-      ...values,
-      techstack,
-      date,
-    };
-
-    const validatedFields = companySchema.safeParse(parsedValues);
-
-    if (!validatedFields.success) {
-      console.error('Validation errors:', validatedFields.error.errors);
-      return { error: "Invalid fields" };
+    const user = await currentUser();
+    if (!user?.id) {
+      return { error: "User not authenticated" };
     }
 
-    const user = await currentUser();
-    const userId = user?.id;
-    const userName = user?.name || "";
+    const values = Object.fromEntries(formData.entries());
+    const techstackString = formData.get('techstack') as string;
+    const dateString = formData.get('date') as string;
 
-    if (!userId) {
-      return { error: "User not found" };
+    const parsedValues = {
+      ...values,
+      techstack: techstackString ? JSON.parse(techstackString) : [],
+      date: dateString ? new Date(dateString) : undefined,
+    };
+
+    const validationResult = companySchema.safeParse(parsedValues);
+
+    if (!validationResult.success) {
+      return { error: "Invalid fields", details: validationResult.error.errors };
     }
 
     const {
@@ -50,17 +39,15 @@ export const UpdateCompanyDetails = async (formData: FormData) => {
       size,
       industry,
       location,
+      techstack,
+      date,
       bio,
-    } = validatedFields.data;
+    } = validationResult.data;
 
-    if (user?.image) {
-      await del(user?.image);
-    }
+    let imageUrl: string | undefined = undefined;
 
-    const slug = `${toSlug(userName)}-${nanoid(10)}`;
-    let image: string | undefined = undefined;
-
-    if (imageurl) {
+    if (imageurl instanceof File) {
+      const slug = `${toSlug(user.name || "")}-${nanoid(10)}`;
       const blob = await put(
         `company_logo_img/${slug}${path.extname(imageurl.name)}`,
         imageurl,
@@ -69,40 +56,40 @@ export const UpdateCompanyDetails = async (formData: FormData) => {
           addRandomSuffix: false,
         }
       );
-      image = blob.url;
+      imageUrl = blob.url;
+
+      // Delete old image if it exists
+      if (user.image) {
+        // await del(user.image).catch(console.error);
+        await del(user.image);
+      }
     }
 
-    await prisma.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        name,
-        image,
-      },
-    });
-
-    await prisma.company.update({
-      where: {
-        userId: userId,
-      },
-      data: {
-        website,
-        size,
-        industry,
-        location,
-        techStack: techstack,
-        dateFounded: date,
-        bio,
-      },
-    });
+    await prisma.$transaction([
+      prisma.user.update({
+        where: { id: user.id },
+        data: {
+          name,
+          image: imageUrl,
+        },
+      }),
+      prisma.company.update({
+        where: { userId: user.id },
+        data: {
+          website,
+          size,
+          industry,
+          location,
+          techStack: techstack,
+          dateFounded: date,
+          bio,
+        },
+      }),
+    ]);
 
     revalidatePath("/company/settings");
     return { success: "Company details updated successfully" };
   } catch (error) {
-    if (error instanceof Error) {
-      return { error: "Unecpected error" };
-    }
+    return { error: "Unexpected error occurred" };
   }
-  return { success: "Company details updated successfully" };
 };
