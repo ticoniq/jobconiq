@@ -55,7 +55,7 @@ async function Dashboardpage() {
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
       <div className="flex flex-col justify-start items-start">
-        <h3 className="text-sm font-clash font-semibold md:text-2xl">{getGreeting(getLastWord(user?.name))}</h3>
+        <h3 className="text-lg font-clash font-semibold md:text-2xl">{getGreeting(getLastWord(user?.name))}</h3>
         <p>Here is what’s happening with your job search applications.</p>
       </div>
       <div

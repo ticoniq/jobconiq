@@ -22,7 +22,7 @@ async function CompaniesPage() {
     <>
       <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10">
         <div className="flex flex-col justify-start items-start space-y-2">
-          <h3 className="text-sm font-clash font-semibold md:text-2xl">Find your dream job</h3>
+          <h3 className="text-lg font-clash font-semibold md:text-2xl">Find your dream job</h3>
         </div>
         <section className="py-16">
           <h2 className="text-2xl font-bold tracking-tight font-clash">All Companies</h2>

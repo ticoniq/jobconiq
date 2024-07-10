@@ -23,7 +23,7 @@ async function HelpPage() {
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10">
       <div className="flex flex-col justify-start items-start space-y-2">
-        <p className="text-sm font-clash font-semibold md:text-2xl">Help Center</p>
+        <p className="text-lg font-clash font-semibold md:text-2xl">Help Center</p>
       </div>
       <Tabs defaultValue="getting_starting" className="w-full">
         <div className="divide-y divide-gray-100 grid gap-8 md:gap-8 lg:grid-cols-1 xl:grid-cols-3">
