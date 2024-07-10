@@ -1,16 +1,30 @@
 "use server";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import CustomLink from "@/components/ui/custom-link";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
 import { currentUser } from "@/lib/auths";
 import prisma from "@/lib/prisma";
 import { formatDate, getGreeting, getLastWord } from "@/lib/utils";
 import { Dot, FileIcon, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
+import { Component } from "./JobAppliedChart"
 
 const getBadgeClasses = (status: string) => {
   const baseClasses = "px-2 py-1 rounded-full text-xs font-semibold";
@@ -52,6 +66,13 @@ async function Dashboardpage() {
     },
   })
 
+  const isInterviewing = await prisma.jobApplication.count({
+    where: {
+      userId: user?.id,
+      status: "Interviewing",
+    },
+  });
+
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
       <div className="flex flex-col justify-start items-start">
@@ -71,46 +92,45 @@ async function Dashboardpage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <div className="text-2xl font-bold">4</div>
-                  <p className="text-xs text-muted-foreground">
-                    +20.1% from last month
-                  </p>
+                  <p className="text-6xl font-bold">{jobCount ? jobCount : "0"}</p>
                 </CardContent>
               </Card>
               <Card className="space-y-4 p-4 group rounded-none bg-transparent border border-brand-secondary">
                 <CardHeader className="p-0 flex flex-row items-center justify-between space-y-0">
                   <CardTitle className="text-lg font-medium">
-                    Total Jobs Applied
+                    Interviewed
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <div className="text-white overflow-hidden">
-                    <p className="text-6xl font-bold">{jobCount || "0"}</p>
-                    <FileIcon className="m-auto relative -bottom-3 -right-20 opacity-10 w-20 h-auto" />
-                  </div>
+                  <p className="text-6xl font-bold">{isInterviewing ? isInterviewing : "0"}</p>
                 </CardContent>
               </Card>
             </div>
-            <Card className="space-y-4 p-4 group rounded-none bg-transparent border border-brand-secondary">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total Revenue
+            <Card className="space-y-2 p-4 group rounded-none bg-transparent border border-brand-secondary">
+              <CardHeader className="p-0 flex flex-row items-center justify-between space-y-0">
+                <CardTitle className="text-lg font-medium">
+                  Jobs Applied Status
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">$45,231.89</div>
-                <p className="text-xs text-muted-foreground">
-                  +20.1% from last month
-                </p>
+              <CardContent className="p-0">
+                <Component jobCount={jobCount} />
               </CardContent>
+              <CardFooter className="p-0">
+                <CustomLink
+                  href={"/developer/application-history"}
+                  textarea={"View All Applications"}
+                  className="text-brand-primary"
+                  divClassName="bg-brand-primary"
+                />
+              </CardFooter>
             </Card>
             <Card className="space-y-4 p-4 group rounded-none bg-transparent border border-brand-secondary">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total Revenue
+              <CardHeader className="p-0 flex flex-row items-center justify-between space-y-0">
+                <CardTitle className="text-lg font-medium">
+                  Upcomming Interviews
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-0">
                 <div className="text-2xl font-bold">$45,231.89</div>
                 <p className="text-xs text-muted-foreground">
                   +20.1% from last month
