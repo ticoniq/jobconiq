@@ -1,22 +1,26 @@
 import Link from "next/link"
 import prisma from "@/lib/prisma"
-import Footer from "@/components/Footer"
 import { UserRole } from "@prisma/client"
-import Title from "@/components/ui/title"
-import { NavBar } from "@/components/NavBar"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { truncateBio } from "@/lib/utils"
+import { cache } from "react"
 
-async function CompaniesPage() {
+const getCompaniesData = cache(async () => {
   const companies = await prisma.user.findMany({
     where: { role: UserRole.COMPANY },
     include: {
       companies: true,
       jobs: true,
     },
-  })
+  });
+
+  return companies;
+});
+
+async function CompaniesPage() {
+  const companies = await getCompaniesData();
 
   return (
     <>

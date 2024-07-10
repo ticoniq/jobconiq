@@ -25,6 +25,7 @@ import { formatDate, getGreeting, getLastWord } from "@/lib/utils";
 import { Dot, FileIcon, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
 import { Component } from "./JobAppliedChart"
+import { cache } from "react";
 
 const getBadgeClasses = (status: string) => {
   const baseClasses = "px-2 py-1 rounded-full text-xs font-semibold";
@@ -44,34 +45,46 @@ const getBadgeClasses = (status: string) => {
   }
 };
 
-async function Dashboardpage() {
+const getUserData = cache(async () => {
   const user = await currentUser();
 
-  const jobsApplied = await prisma.jobApplication.findMany({
-    where: {
-      userId: user?.id,
-    },
-    include: {
-      job: {
-        include: {
-          user: true,
+  if (!user?.id) {
+    return { user: null, jobsApplied: [], jobCount: 0, isInterviewing: 0 };
+  }
+
+  const [jobsApplied, jobCount, isInterviewing] = await Promise.all([
+    prisma.jobApplication.findMany({
+      where: {
+        userId: user.id,
+      },
+      include: {
+        job: {
+          include: {
+            user: true,
+          }
         }
-      }
-    },
-  });
+      },
+    }),
 
-  const jobCount = await prisma.jobApplication.count({
-    where: {
-      userId: user?.id,
-    },
-  })
+    prisma.jobApplication.count({
+      where: {
+        userId: user.id,
+      },
+    }),
 
-  const isInterviewing = await prisma.jobApplication.count({
-    where: {
-      userId: user?.id,
-      status: "Interviewing",
-    },
-  });
+    prisma.jobApplication.count({
+      where: {
+        userId: user.id,
+        status: "Interviewing",
+      },
+    })
+  ]);
+
+  return { user, jobsApplied, jobCount, isInterviewing };
+});
+
+async function Dashboardpage() {
+  const { user, jobsApplied, jobCount, isInterviewing } = await getUserData();
 
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
@@ -131,10 +144,7 @@ async function Dashboardpage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-0">
-                <div className="text-2xl font-bold">$45,231.89</div>
-                <p className="text-xs text-muted-foreground">
-                  +20.1% from last month
-                </p>
+                <div className="text-2xl font-bold">Coming Soon</div>
               </CardContent>
             </Card>
           </div>
