@@ -10,7 +10,7 @@ import prisma from "@/lib/prisma";
 import { formatDate, removeHttpsWww } from "@/lib/utils";
 import { Facebook, Flame, Instagram, Linkedin, Mail, SettingsIcon, Twitter, Youtube } from "lucide-react";
 import Link from "next/link";
-import React from 'react'
+import React, { cache } from 'react'
 
 interface Props {
   params: {
@@ -18,14 +18,24 @@ interface Props {
   }
 }
 
-async function page({ params: { id } }: Props) {
+const getCompanyDetails = cache(async (id: string) => {
   const companyDetails = await prisma.user.findUnique({
-    where: { id: id },
+    where: { id },
     include: {
       companies: true,
       jobs: true,
     },
-  })
+  });
+
+  if (!companyDetails) {
+    throw new Error('Company not found');
+  }
+
+  return companyDetails;
+});
+
+async function page({ params: { id } }: Props) {
+  const companyDetails = await getCompanyDetails(id);
 
   return (
     <>
