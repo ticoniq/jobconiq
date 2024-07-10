@@ -85,7 +85,7 @@ async function Dashboardpage() {
                 </CardHeader>
                 <CardContent className="p-0">
                   <div className="text-white overflow-hidden">
-                    <p className="text-6xl font-bold">{jobCount}</p>
+                    <p className="text-6xl font-bold">{jobCount || "0"}</p>
                     <FileIcon className="m-auto relative -bottom-3 -right-20 opacity-10 w-20 h-auto" />
                   </div>
                 </CardContent>
@@ -123,75 +123,86 @@ async function Dashboardpage() {
               <CardTitle className="font-clash font-semibold text-xl">Recent Applications History</CardTitle>
             </CardHeader>
             <CardContent className="p-4 space-y-4">
-              {jobsApplied.map((job) => (
-                <Card key={job.id} className="rounded-none p-4 bg-inherit dark:border-neutrals-900 border-border">
-                  <CardContent className="p-0 space-y-5 flex flex-col items-start justify-between sm:flex-row sm:space-y-0">
-                    <div className="flex flex-wrap flex-row justify-start items-start gap-5 md:w-2/4">
-                      <Avatar className="h-14 w-14 sm:flex rounded-none">
-                        <AvatarImage
-                          src={job.job.user?.image || "/avatars/01.png"}
-                          className="rounded-none"
-                          alt="Avatar"
-                        />
-                        <AvatarFallback className="rounded-none">JC</AvatarFallback>
-                      </Avatar>
-                      <div className="grid gap-y-2  text-start">
-                        <p className="text-xl font-semibold leading-none">
-                          {job.job.title}
-                        </p>
-                        <Breadcrumb className="font-normal">
-                          <BreadcrumbList>
-                            <BreadcrumbItem>
-                              <BreadcrumbLink>{job.job.user.name}</BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator>
-                              <Dot />
-                            </BreadcrumbSeparator>
-                            <BreadcrumbItem>
-                              <BreadcrumbLink>{job.job.location || "Worldwide"}</BreadcrumbLink>
-                            </BreadcrumbItem>
-                          </BreadcrumbList>
-                        </Breadcrumb>
-                      </div>
-                    </div>
-                    <div className="md:w-1/4">
-                      <dl>
-                        <dt>Date Applied</dt>
-                        <dd>{formatDate(job.createdAt)}</dd>
-                      </dl>
-                    </div>
-                    <div className="flex justify-between items-center md:w-1/4">
-                      <Badge className={getBadgeClasses(job.status)}>{job.status}</Badge>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem>
-                            <Link href={`/developer/application-history/${job.slug}`}>
-                              View job details
-                            </Link>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>Edit job</DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-              <CardFooter className="p-0 flex justify-center items-center">
-                <CustomLink
-                  href={"/developer/application-history"}
-                  textarea={"View all applications history"}
-                  className="text-brand-primary text-center"
-                  divClassName="bg-brand-primary"
-                />
-              </CardFooter>
+              {jobsApplied.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-lg font-semibold">No jobs applied yet</p>
+                  <p className="text-muted-foreground">Start your job search journey by applying to some positions!</p>
+                </div>
+              ) : (
+                <>
+                  {jobsApplied.map((job) => (
+                    <Card key={job.id} className="rounded-none p-4 bg-inherit dark:border-neutrals-900 border-border">
+                      <CardContent className="p-0 space-y-5 flex flex-col items-start justify-between sm:flex-row sm:space-y-0">
+                        <div className="flex flex-wrap flex-row justify-start items-start gap-5 md:w-2/4">
+                          <Avatar className="h-14 w-14 sm:flex rounded-none">
+                            <AvatarImage
+                              src={job.job.user?.image || "/avatars/01.png"}
+                              className="rounded-none"
+                              alt="Avatar"
+                            />
+                            <AvatarFallback className="rounded-none">JC</AvatarFallback>
+                          </Avatar>
+                          <div className="grid gap-y-2  text-start">
+                            <p className="text-xl font-semibold leading-none">
+                              {job.job.title}
+                            </p>
+                            <Breadcrumb className="font-normal">
+                              <BreadcrumbList>
+                                <BreadcrumbItem>
+                                  <BreadcrumbLink>{job.job.user.name}</BreadcrumbLink>
+                                </BreadcrumbItem>
+                                <BreadcrumbSeparator>
+                                  <Dot />
+                                </BreadcrumbSeparator>
+                                <BreadcrumbItem>
+                                  <BreadcrumbLink>{job.job.location || "Worldwide"}</BreadcrumbLink>
+                                </BreadcrumbItem>
+                              </BreadcrumbList>
+                            </Breadcrumb>
+                          </div>
+                        </div>
+                        <div className="md:w-1/4">
+                          <dl>
+                            <dt>Date Applied</dt>
+                            <dd>{formatDate(job.createdAt)}</dd>
+                          </dl>
+                        </div>
+                        <div className="flex justify-between items-center md:w-1/4">
+                          <Badge className={getBadgeClasses(job.status)}>{job.status}</Badge>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" className="h-8 w-8 p-0">
+                                <span className="sr-only">Open menu</span>
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem>
+                                <Link href={`/developer/application-history/${job.slug}`}>
+                                  View job details
+                                </Link>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem>Edit job</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                  {jobCount > 3 && (
+                    <CardFooter className="p-0 flex justify-center items-center">
+                      <CustomLink
+                        href={"/developer/application-history"}
+                        textarea={"View all applications history"}
+                        className="text-brand-primary text-center"
+                        divClassName="bg-brand-primary"
+                      />
+                    </CardFooter>
+                  )}
+                </>
+              )}
             </CardContent>
           </Card>
         </section>
