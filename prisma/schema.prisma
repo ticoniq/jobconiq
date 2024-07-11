@@ -134,6 +134,7 @@ model Job {
   skills          String[]
   userId          String
   jobapplications JobApplication[]
+  viewCounts      JobViewCount[]
   approved        Boolean          @default(false)
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
@@ -141,6 +142,16 @@ model Job {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("jobs")
+}
+
+model JobViewCount {
+  id        String   @id @default(cuid())
+  jobId     String
+  viewedAt  DateTime @default(now())
+
+  job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@map("jobviewcounts")
 }
 
 model JobApplication {

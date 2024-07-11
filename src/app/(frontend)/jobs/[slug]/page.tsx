@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
+import { incrementJobViewCount } from "../incrementJobViewCount";
 
 interface PageProps {
   params: { slug: string };
@@ -49,6 +50,8 @@ export async function generateMetadata({
 
 async function Page({ params: { slug } }: PageProps) {
   const job = await getJob(slug);
+  
+  await incrementJobViewCount(slug)
 
   return (
     <>

@@ -61,7 +61,7 @@ export default async function Page({ params: { slug } }: PageProps) {
           className="flex items-center gap-2"
         >
           <ArrowLeft />
-          <p className="text-sm font-clash font-semibold md:text-2xl">{job.title}</p>
+          <p className="text-lg font-clash font-semibold md:text-2xl">{job.title}</p>
         </Link>
         <p>Here is your jobs listing status</p>
       </div>
