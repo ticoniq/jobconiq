@@ -13,7 +13,7 @@ import React, { cache, Fragment } from "react"
 import prisma from "@/lib/prisma"
 import Image from "next/image"
 import Link from "next/link"
-import { Github, Globe, Languages, Linkedin, Mail, PenSquare, Smartphone } from "lucide-react"
+import { Flag, Github, Globe, Languages, Linkedin, Mail, MapPin, PenSquare, Smartphone } from "lucide-react"
 import Markdown from "@/components/Markdown"
 import { Experiences } from "./Experiences"
 import { Educations } from "./Educations"
@@ -49,7 +49,7 @@ async function ProfilePage() {
         <div className="xl:col-span-2 space-y-4">
           <Card className="bg-transparent rounded-none border border-brand-secondary">
             <CardHeader className="p-0">
-              <div className="relative pt-16 pb-16">
+              <div className="relative pt-16">
                 <div className="w-full absolute top-0 left-0 z-0 h-36 bg-gradient-to-r from-teal-400 to-yellow-200" />
                 <div className="px-6 md:px-8">
                   <div className="flex items-center justify-center sm:justify-start relative z-10 mb-5">
@@ -62,7 +62,27 @@ async function ProfilePage() {
               </div>
             </CardHeader>
             <CardContent>
-              Hola mundo
+              <article className="flex flex-row items-start justify-between">
+                <CardTitle className="font-clash tracking-wider">{user?.name}</CardTitle>
+                <Button asChild variant="outline" className="font-medium">
+                  <Link href="/developer/settings">
+                    Edit Profile
+                  </Link>
+                </Button>
+              </article>
+              <dl className="space-y-3">
+                <dt>{userDetails?.title ? userDetails.title : "Not specified"}</dt>
+                <dd className="flex gap-1">
+                  <MapPin />
+                  <p>
+                    {user?.email ? user.email : "Not specified"}
+                  </p>
+                </dd>
+                <Badge variant="secondary" className="py-1 rounded-none flex justify-center gap-4 text-base max-w-72">
+                  <Flag />
+                  <p>OPEN FOR OPPORTUNITIES</p>
+                </Badge>
+              </dl>
             </CardContent>
           </Card>
           <Card className="bg-transparent rounded-none border border-brand-secondary">
