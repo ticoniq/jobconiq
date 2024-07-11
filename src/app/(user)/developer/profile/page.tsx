@@ -69,7 +69,11 @@ async function ProfilePage() {
               <CardTitle className="font-clash">About Me</CardTitle>
             </CardHeader>
             <CardContent>
-              {userDetails?.bio && <Markdown>{userDetails?.bio}</Markdown>}
+              {userDetails?.bio ? (
+                <>{userDetails?.bio && <Markdown>{userDetails?.bio}</Markdown>}</>
+              ) : (
+                <>{"Not available."}</>
+              )}
             </CardContent>
           </Card>
           <Card className="bg-transparent rounded-none border border-brand-secondary">
@@ -113,7 +117,7 @@ async function ProfilePage() {
                     ))}
                   </>
                 ) : (
-                  <>{"No bio available."}</>
+                  <>{"No skill available."}</>
                 )}
               </div>
             </CardContent>
