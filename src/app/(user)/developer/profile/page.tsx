@@ -17,6 +17,7 @@ import { Github, Globe, Languages, Linkedin, Mail, PenSquare, Smartphone } from 
 import Markdown from "@/components/Markdown"
 import { Experiences } from "./Experiences"
 import { Educations } from "./Educations"
+import { Portfolios } from "./Portfolios"
 
 const getCachedUserDetails = cache(async (uid: string) => {
   return await prisma.developer.findUnique({
@@ -110,7 +111,7 @@ async function ProfilePage() {
                       <Badge
                         key={skill}
                         variant="info"
-                        className="rounded-none whitespace-nowrap text-ellipsis px-2 text-blue-700"
+                        className="rounded-none whitespace-nowrap text-ellipsis px-2 text-brand-primary"
                       >
                         {skill}
                       </Badge>
@@ -123,8 +124,9 @@ async function ProfilePage() {
             </CardContent>
           </Card>
           <Card className="bg-transparent rounded-none border border-brand-secondary">
-            <CardHeader>
+            <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle className="font-clash">Portfolios</CardTitle>
+              <Portfolios />
             </CardHeader>
             <CardContent>
               <CardDescription>

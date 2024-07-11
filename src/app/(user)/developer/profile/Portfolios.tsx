@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/drawer"
 import { Plus } from "lucide-react";
 
-export function Educations() {
+export function Portfolios() {
 
   return (
     <Drawer>
@@ -24,7 +24,7 @@ export function Educations() {
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
-            <DrawerTitle>Educations</DrawerTitle>
+            <DrawerTitle>Portfolios</DrawerTitle>
             <DrawerDescription>Set your daily activity goal.</DrawerDescription>
           </DrawerHeader>
           <div className="p-4 pb-0">
