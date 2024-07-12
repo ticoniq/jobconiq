@@ -17,12 +17,12 @@ export const UpdateDeveloperDetails = async (formData: FormData) => {
 
     const values = Object.fromEntries(formData.entries());
     // const techstackString = formData.get('techstack') as string;
-    // const dateString = formData.get('date') as string;
+    const dateString = formData.get('date') as string;
 
     const parsedValues = {
       ...values,
       // techstack: techstackString ? JSON.parse(techstackString) : [],
-      // date: dateString ? new Date(dateString) : undefined,
+      date: dateString ? new Date(dateString) : undefined,
     };
 
     const validationResult = developerSchema.safeParse(parsedValues);
@@ -33,6 +33,14 @@ export const UpdateDeveloperDetails = async (formData: FormData) => {
 
     const {
       imageurl,
+      name,
+      title,
+      number,
+      date,
+      gender,
+      website,
+      linkedin,
+      github,
     } = validationResult.data;
 
     let imageUrl: string | undefined = undefined;
@@ -59,7 +67,20 @@ export const UpdateDeveloperDetails = async (formData: FormData) => {
       prisma.user.update({
         where: { id: user.id },
         data: {
+          name,
           image: imageUrl,
+        },
+      }),
+      prisma.developer.update({
+        where: { userId: user.id },
+        data: {
+          title,
+          phone: number,
+          gender,
+          dob: date,
+          website,
+          linkedin,
+          github
         },
       }),
       // prisma.company.update({

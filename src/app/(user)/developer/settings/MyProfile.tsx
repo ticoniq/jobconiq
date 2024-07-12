@@ -1,6 +1,5 @@
 "use client";
 import * as z from 'zod';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -9,6 +8,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { developerSchema } from "@/lib/validation/developer-validation";
 import { UpdateDeveloperDetails } from "./profileAction";
@@ -33,6 +41,14 @@ export function MyProfile({ userDetails }: MyProfileProps) {
     resolver: zodResolver(developerSchema),
     defaultValues: {
       imageurl: undefined,
+      name: userDetails.user?.name || "",
+      title: userDetails.title || "",
+      number: userDetails.phone || "",
+      gender: userDetails.gender || "",
+      date: userDetails.dob ? new Date(userDetails.dob) : undefined,
+      website: userDetails.website || "",
+      linkedin: userDetails.linkedin || "",
+      github: userDetails.github || "",
     }
   });
 
@@ -44,13 +60,17 @@ export function MyProfile({ userDetails }: MyProfileProps) {
 
   const onSubmit = async (values: z.infer<typeof developerSchema>) => {
     const formData = new FormData();
-    
+
     Object.entries(values).forEach(([key, value]) => {
-      if (value) {
-        formData.append(key, value);
+      if (value !== undefined && value !== null) {
+        if (value instanceof File) {
+          formData.append(key, value);
+        } else {
+          formData.append(key, value.toString());
+        }
       }
     });
-    
+
     try {
       const data = await UpdateDeveloperDetails(formData);
       if (data?.error) {
@@ -131,9 +151,153 @@ export function MyProfile({ userDetails }: MyProfileProps) {
                       </FormItem>
                     )}
                   />
-                  
                 </dd>
               </div>
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
+                <dt className="leading-6">
+                  <h3 className="font-medium leading-7">Personal Details</h3>
+                </dt>
+                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 md:w-2/3 space-y-6">
+                  <FormField
+                    control={control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Full Name <span className="text-red-500">*</span></FormLabel>
+                        <FormControl>
+                          <Input type="text" {...field} placeholder="Full Name" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={control}
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Job Title <span className="text-red-500">*</span></FormLabel>
+                        <FormControl>
+                          <Input type="text" {...field} placeholder="Job title" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={control}
+                    name="number"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Phone Number <span className="text-red-500">*</span></FormLabel>
+                        <FormControl>
+                          <Input type="text" {...field} placeholder="Phone number" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="flex w-full space-y-5 md:gap-4 md:space-y-0">
+                    <FormField
+                      control={control}
+                      name="date"
+                      render={({ field }) => (
+                        <FormItem className="w-full md:1/2">
+                          <FormLabel>Date of Birth <span className="text-red-500">*</span></FormLabel>
+                          <FormControl>
+                            <Input
+                              type="date"
+                              {...field}
+                              value={field.value instanceof Date ? field.value.toISOString().split('T')[0] : ''}
+                              onChange={(e) => {
+                                const date = new Date(e.target.value);
+                                field.onChange(isNaN(date.getTime()) ? undefined : date);
+                              }}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="gender"
+                      render={({ field }) => (
+                        <FormItem className="w-full md:1/2">
+                          <Select
+                            {...field}
+                            defaultValue=""
+                            onValueChange={field.onChange}
+                          >
+                            <FormLabel>Gender <span className="text-red-500">*</span></FormLabel>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select Gender" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectItem value="Male">Male</SelectItem>
+                                <SelectItem value="Female">Female</SelectItem>
+                                <SelectItem value="Others">Others</SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </dd>
+              </div>
+
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
+                <dt className="leading-6">
+                  <h3 className="font-medium leading-7">Social Details</h3>
+                </dt>
+                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 md:w-2/3 space-y-6">
+                  <FormField
+                    control={control}
+                    name="website"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Portfolio <span className="text-red-500">*</span></FormLabel>
+                        <FormControl>
+                          <Input type="text" {...field} placeholder="eg. https://portfolio.com" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={control}
+                    name="linkedin"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>LinkedIn <span className="text-red-500">*</span></FormLabel>
+                        <FormControl>
+                          <Input type="text" {...field} placeholder="eg. https://linkedin.com/in/developer" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={control}
+                    name="github"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Github <span className="text-red-500">*</span></FormLabel>
+                        <FormControl>
+                          <Input type="text" {...field} placeholder="eg. https://github.com/developer" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </dd>
+              </div>
+
               <div className="flex justify-end items-center px-4 py-6 sm:px-0">
                 <Button type="submit" className="px-10" disabled={isSubmitting}>
                   {isSubmitting && (
