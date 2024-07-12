@@ -251,7 +251,7 @@ export function MyProfile({ userDetails }: MyProfileProps) {
                 </dd>
               </div>
 
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
+              <div className="py-6 sm:grid sm:grid-cols-3 sm:gap-20">
                 <dt className="leading-6">
                   <h3 className="font-medium leading-7">Social Details</h3>
                 </dt>
