@@ -1,13 +1,18 @@
 "use client";
 import { logout } from '@/actions/developer/auth/logout';
 
-interface logoutButtonProps {
+interface LogoutButtonProps {
   children?: React.ReactNode
 }
 
-function logoutButton({ children }: logoutButtonProps) {
-  const onClick = () => {
-    logout();
+function LogoutButton({ children }: LogoutButtonProps) {
+  const onClick = async () => {
+    try {
+      await logout();
+      window.location.href = '/login';
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   }
 
   return (
@@ -20,4 +25,4 @@ function logoutButton({ children }: logoutButtonProps) {
   )
 }
 
-export default logoutButton
+export default LogoutButton
