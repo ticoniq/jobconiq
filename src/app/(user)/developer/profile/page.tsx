@@ -53,7 +53,7 @@ async function ProfilePage() {
                 <div className="w-full absolute top-0 left-0 z-0 h-36 bg-gradient-to-r from-teal-400 to-yellow-200" />
                 <div className="px-6 md:px-8">
                   <div className="flex items-center justify-center sm:justify-start relative z-10 mb-5">
-                    <Avatar className="h-40 w-40 border-8 border-solid border-background rounded-full">
+                    <Avatar className="h-40 w-40 border-8 border-solid border-background bg-background rounded-full">
                       <AvatarImage src={user?.image || ""} />
                       <AvatarFallback>JC</AvatarFallback>
                     </Avatar>

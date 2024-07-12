@@ -36,14 +36,18 @@ const imageSchema = z.instanceof(File).superRefine((f, ctx) => {
 
 export const developerSchema = z.object({
   imageurl: imageSchema.optional(),
-  // name: z.string().min(1, "Company name field is required").max(30, "Maximum character 30"),
-  // website: z.string().url().min(1, "Website URL field is required").max(30, "Maximum character 50"),
+  name: z.string().min(1, "Full Name is required").max(30, "Maximum character 30"),
   // size: z.string().min(1, "This field is required"),
   // industry: z.string().min(1, "industry field is required"),
   // location: z.string().min(1, "Location field is required").max(30, "Maximum character 100"),
   // techstack: z.array(z.string()).min(1, "Please select at least one skill."),
-  // date: z.date(),
-
+  title: z.string().min(1, "title field is required"),
+  number: z.string().min(1, "Number field is required"),
+  gender: z.string().min(1, "Gender field is required"),
+  date: z.date(),
+  website: z.string().url().min(1, "Website URL field is required").max(30, "Maximum character 50"),
+  linkedin: z.string().url().optional().or(z.literal("")),
+  github: z.string().url().optional().or(z.literal("")),
   // bio: z
   //   .string()
   //   .min(1, "Description is required")
