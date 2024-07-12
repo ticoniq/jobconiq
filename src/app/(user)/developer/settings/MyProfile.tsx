@@ -94,7 +94,7 @@ export function MyProfile({ userDetails }: MyProfileProps) {
         <Form {...form}>
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <dl className="divide-y divide-gray-100">
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
+              <div className="py-6 sm:grid sm:grid-cols-3 sm:gap-20">
                 <dt className="leading-6">
                   <h3 className="font-medium leading-7">Profile Photo</h3>
                   <p className="mt-1">This image will be shown publicly as your profile picture, it will help recruiters recognize you!</p>
@@ -153,7 +153,7 @@ export function MyProfile({ userDetails }: MyProfileProps) {
                   />
                 </dd>
               </div>
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
+              <div className="py-6 sm:grid sm:grid-cols-3 sm:gap-20">
                 <dt className="leading-6">
                   <h3 className="font-medium leading-7">Personal Details</h3>
                 </dt>
