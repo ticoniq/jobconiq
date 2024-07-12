@@ -197,7 +197,7 @@ export function MyProfile({ userDetails }: MyProfileProps) {
                       </FormItem>
                     )}
                   />
-                  <div className="flex w-full space-y-5 md:gap-4 md:space-y-0">
+                  <div className="flex flex-col w-full space-y-5 md:gap-4 md:space-y-0 md:flex-row">
                     <FormField
                       control={control}
                       name="date"
