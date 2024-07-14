@@ -299,7 +299,7 @@ export function MyProfile({ userDetails }: MyProfileProps) {
                   />
                 </dd>
               </div>
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
+              <div className="py-6 sm:grid sm:grid-cols-3 sm:gap-20">
                 <dt className="leading-6">
                   <h3 className="font-semibold leading-7">About Company</h3>
                   <p className="mt-1">Brief description for your company. URLs are hyperlinked.</p>

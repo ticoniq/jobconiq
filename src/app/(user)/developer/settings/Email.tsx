@@ -53,7 +53,7 @@ export function Email({ userDetails }: LoginDetailsProps) {
     <Form {...form}>
       <form onSubmit={handleSubmit(onEmailSubmit)} noValidate>
         <dl className="divide-y divide-gray-100">
-          <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
+          <div className="py-6 sm:grid sm:grid-cols-3 sm:gap-20">
             <dt className="leading-6">
               <h3 className="text-lg font-semibold leading-7">Update Email</h3>
               <p className="mt-1">Update your email address to make sure it is safe</p>
@@ -79,7 +79,7 @@ export function Email({ userDetails }: LoginDetailsProps) {
                   </FormItem>
                 )}
               />
-              <div className="flex justify-start items-center px-4 sm:px-0">
+              <div className="flex justify-start items-center sm:px-0">
                 <Button type="submit" className="px-10" disabled={isSubmitting}>
                   {isSubmitting && (
                     <ImSpinner8 className="mr-2 h-4 w-4 animate-spin" />
