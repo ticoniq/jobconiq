@@ -3,6 +3,7 @@ import * as z from 'zod';
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -49,6 +50,7 @@ export function MyProfile({ userDetails }: MyProfileProps) {
       website: userDetails.website || "",
       linkedin: userDetails.linkedin || "",
       github: userDetails.github || "",
+      bio: userDetails.bio || "",
     }
   });
 
@@ -297,7 +299,39 @@ export function MyProfile({ userDetails }: MyProfileProps) {
                   />
                 </dd>
               </div>
-
+              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-20 sm:px-0">
+                <dt className="leading-6">
+                  <h3 className="font-semibold leading-7">About Company</h3>
+                  <p className="mt-1">Brief description for your company. URLs are hyperlinked.</p>
+                </dt>
+                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0">
+                  <FormField
+                    control={form.control}
+                    name="bio"
+                    render={({ field, fieldState }) => (
+                      <FormItem>
+                        <FormLabel>Description</FormLabel>
+                        <FormControl>
+                          <textarea
+                            className="w-full bg-transparent border-2 border-brand-secondary text-base p-4 focus:ring-brand-primary focus:border-brand-primary"
+                            rows={5}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormDescription className="flex flex-col justify-between items-center md:flex-row">
+                          {field.value ? field.value.length : 0} / 5000 characters
+                          {field.value && field.value.length > 5000 && (
+                            <p className="text-red-500 text-sm mt-1">
+                              Bio cannot exceed 5000 characters
+                            </p>
+                          )}
+                        </FormDescription>
+                        <FormMessage>{fieldState.error?.message}</FormMessage>
+                      </FormItem>
+                    )}
+                  />
+                </dd>
+              </div>
               <div className="flex justify-end items-center px-4 py-6 sm:px-0">
                 <Button type="submit" className="px-10" disabled={isSubmitting}>
                   {isSubmitting && (

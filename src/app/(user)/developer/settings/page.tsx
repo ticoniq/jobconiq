@@ -14,6 +14,7 @@ import {
 import { MyProfile } from "./MyProfile";
 import { currentUser } from "@/lib/auths";
 import prisma from "@/lib/prisma";
+import { LoginDetails } from "./LoginDetails";
 
 type Props = {}
 
@@ -46,11 +47,7 @@ export default async function page({ }: Props) {
               <MyProfile userDetails={userDetails} />
             </TabsContent>
             <TabsContent value="login_details" className="">
-              <Card className="rounded-none bg-transparent border-none shadow-none">
-                <CardContent className="p-0">
-                  <p>login_details</p>
-                </CardContent>
-              </Card>
+              <LoginDetails userDetails={userDetails} />
             </TabsContent>
             <TabsContent value="notifications">
               <Card className="rounded-none bg-transparent border-none shadow-none">

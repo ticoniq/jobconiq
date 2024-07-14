@@ -48,16 +48,36 @@ export const developerSchema = z.object({
   website: z.string().url().min(1, "Website URL field is required").max(30, "Maximum character 50"),
   linkedin: z.string().url().optional().or(z.literal("")),
   github: z.string().url().optional().or(z.literal("")),
-  // bio: z
-  //   .string()
-  //   .min(1, "Description is required")
-  //   .max(5000, "Description can't be longer than 5000 characters"),
+  bio: z
+    .string()
+    .min(1, "Description is required")
+    .max(5000, "Description can't be longer than 5000 characters"),
 });
 
-export const companySocialSchema = z.object({
-  linkedin: z.string().url().optional().or(z.literal('')),
-  twitter: z.string().url().optional().or(z.literal('')),
-  facebook: z.string().url().optional().or(z.literal('')),
-  instagram: z.string().url().optional().or(z.literal('')),
-  youtube: z.string().url().optional().or(z.literal('')),
+export const ChangePasswordSchema = z
+  .object({
+    oldPassword: z.string().min(1, "Current password is required"),
+    newPassword: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+      .regex(/[0-9]/, "Password must contain at least one number")
+      .regex(
+        /[@$!%*?&#]/,
+        "Password must contain at least one special character (@$!%*?&#)"
+      ),
+    confirmPassword: z.string().min(1, "Please confirm your new password"),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  })
+  .refine((data) => data.oldPassword !== data.newPassword, {
+    message: "New password must be different from the current password",
+    path: ["newPassword"],
+  });
+
+export const updateEmailSchema = z.object({
+  email: z.string().email("Invalid email address"),
 });

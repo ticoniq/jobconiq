@@ -41,6 +41,7 @@ export const UpdateDeveloperDetails = async (formData: FormData) => {
       website,
       linkedin,
       github,
+      bio,
     } = validationResult.data;
 
     let imageUrl: string | undefined = undefined;
@@ -80,21 +81,10 @@ export const UpdateDeveloperDetails = async (formData: FormData) => {
           dob: date,
           website,
           linkedin,
-          github
+          github,
+          bio,
         },
       }),
-      // prisma.company.update({
-      //   where: { userId: user.id },
-      //   data: {
-      //     website,
-      //     size,
-      //     industry,
-      //     location,
-      //     techStack: techstack,
-      //     dateFounded: date,
-      //     bio,
-      //   },
-      // }),
     ]);
 
     revalidatePath("/company/settings");
