@@ -27,7 +27,7 @@ export default async function page({ }: Props) {
       user: true,
     }
   });
-  
+
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10">
       <div className="flex flex-col justify-start items-start space-y-2">
@@ -38,7 +38,9 @@ export default async function page({ }: Props) {
           <CardHeader className="p-0 border-b border-b-card-foreground">
             <TabsList className="w-full">
               <TabsTrigger value="my-profile" className="shadow-none bg-transparent">My Profile</TabsTrigger>
-              <TabsTrigger value="login_details" className="shadow-none bg-transparent">Login Details</TabsTrigger>
+              {activeUser?.isOAuth === false && (
+                <TabsTrigger value="login_details" className="shadow-none bg-transparent">Login Details</TabsTrigger>
+              )}
               <TabsTrigger value="notifications" className="shadow-none bg-transparent">Notifications</TabsTrigger>
             </TabsList>
           </CardHeader>
@@ -46,9 +48,11 @@ export default async function page({ }: Props) {
             <TabsContent value="my-profile">
               <MyProfile userDetails={userDetails} />
             </TabsContent>
-            <TabsContent value="login_details" className="">
-              <LoginDetails userDetails={userDetails} />
-            </TabsContent>
+            {activeUser?.isOAuth === false && (
+              <TabsContent value="login_details" className="">
+                <LoginDetails userDetails={userDetails} />
+              </TabsContent>
+            )}
             <TabsContent value="notifications">
               <Card className="rounded-none bg-transparent border-none shadow-none">
                 <CardHeader>
