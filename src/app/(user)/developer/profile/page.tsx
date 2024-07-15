@@ -75,7 +75,7 @@ async function ProfilePage() {
                 <dd className="flex gap-1">
                   <MapPin />
                   <p>
-                    {user?.email ? user.email : "Not specified"}
+                    {userDetails.location ? userDetails.location : "Not specified"}
                   </p>
                 </dd>
                 <Badge variant="secondary" className="py-1 rounded-none flex justify-center gap-4 text-base max-w-72">
@@ -193,7 +193,7 @@ async function ProfilePage() {
                       ))}
                     </>
                   ) : (
-                    <p>{"No skills available."}</p>
+                    <p>{"No Specifield."}</p>
                   )}
                 </aside>
               </div>

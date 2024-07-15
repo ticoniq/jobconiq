@@ -47,6 +47,7 @@ export function MyProfile({ userDetails }: MyProfileProps) {
       number: userDetails.phone || "",
       gender: userDetails.gender || "",
       date: userDetails.dob ? new Date(userDetails.dob) : undefined,
+      location: userDetails.location || "",
       website: userDetails.website || "",
       linkedin: userDetails.linkedin || "",
       github: userDetails.github || "",
@@ -199,6 +200,19 @@ export function MyProfile({ userDetails }: MyProfileProps) {
                       </FormItem>
                     )}
                   />
+                  <FormField
+                    control={control}
+                    name="location"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Location <span className="text-red-500">*</span></FormLabel>
+                        <FormControl>
+                          <Input type="text" {...field} placeholder="Enter your location" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   <div className="flex flex-col w-full space-y-5 md:gap-4 md:space-y-0 md:flex-row">
                     <FormField
                       control={control}
@@ -301,8 +315,8 @@ export function MyProfile({ userDetails }: MyProfileProps) {
               </div>
               <div className="py-6 sm:grid sm:grid-cols-3 sm:gap-20">
                 <dt className="leading-6">
-                  <h3 className="font-semibold leading-7">About Company</h3>
-                  <p className="mt-1">Brief description for your company. URLs are hyperlinked.</p>
+                  <h3 className="font-semibold leading-7">About </h3>
+                  <p className="mt-1">Brief description for yourself.</p>
                 </dt>
                 <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0">
                   <FormField
@@ -332,7 +346,7 @@ export function MyProfile({ userDetails }: MyProfileProps) {
                   />
                 </dd>
               </div>
-              <div className="flex justify-end items-center px-4 py-6 sm:px-0">
+              <div className="flex justify-end items-center py-6">
                 <Button type="submit" className="px-10" disabled={isSubmitting}>
                   {isSubmitting && (
                     <ImSpinner8 className="mr-2 h-4 w-4 animate-spin" />

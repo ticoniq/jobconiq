@@ -15,6 +15,7 @@ import { MyProfile } from "./MyProfile";
 import { currentUser } from "@/lib/auths";
 import prisma from "@/lib/prisma";
 import { LoginDetails } from "./LoginDetails";
+import { Profession } from "./Profession";
 
 type Props = {}
 
@@ -36,8 +37,9 @@ export default async function page({ }: Props) {
       <Card className="xl:col-span-2 rounded-none bg-transparent border-0 shadow-none px-0">
         <Tabs defaultValue="my-profile">
           <CardHeader className="p-0 border-b border-b-card-foreground">
-            <TabsList className="w-full">
+            <TabsList className="w-full flex">
               <TabsTrigger value="my-profile" className="shadow-none bg-transparent">My Profile</TabsTrigger>
+              <TabsTrigger value="professional_details" className="shadow-none bg-transparent">Professional</TabsTrigger>
               {activeUser?.isOAuth === false && (
                 <TabsTrigger value="login_details" className="shadow-none bg-transparent">Login Details</TabsTrigger>
               )}
@@ -47,6 +49,9 @@ export default async function page({ }: Props) {
           <CardContent className="p-0">
             <TabsContent value="my-profile">
               <MyProfile userDetails={userDetails} />
+            </TabsContent>
+            <TabsContent value="professional_details">
+              <Profession userDetails={userDetails} />
             </TabsContent>
             {activeUser?.isOAuth === false && (
               <TabsContent value="login_details" className="">
