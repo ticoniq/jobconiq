@@ -1,28 +1,32 @@
 import Link from "next/link"
 import prisma from "@/lib/prisma"
-import Footer from "@/components/Footer"
 import { UserRole } from "@prisma/client"
-import Title from "@/components/ui/title"
-import { NavBar } from "@/components/NavBar"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { truncateBio } from "@/lib/utils"
+import { cache } from "react"
 
-async function CompaniesPage() {
+const getCompaniesData = cache(async () => {
   const companies = await prisma.user.findMany({
     where: { role: UserRole.COMPANY },
     include: {
       companies: true,
       jobs: true,
     },
-  })
+  });
+
+  return companies;
+});
+
+async function CompaniesPage() {
+  const companies = await getCompaniesData();
 
   return (
     <>
       <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10">
         <div className="flex flex-col justify-start items-start space-y-2">
-          <h3 className="text-sm font-clash font-semibold md:text-2xl">Find your dream job</h3>
+          <h3 className="text-lg font-clash font-semibold md:text-2xl">Find your dream job</h3>
         </div>
         <section className="py-16">
           <h2 className="text-2xl font-bold tracking-tight font-clash">All Companies</h2>

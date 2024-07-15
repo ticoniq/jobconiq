@@ -38,7 +38,7 @@ export default async function Page({ params: { slug } }: PageProps) {
       <div className="flex flex-col justify-start items-start space-y-2">
         <Link href="/company/applicants/" className="flex items-center gap-2">
           <ArrowLeft />
-          <p className="text-sm font-clash font-semibold md:text-2xl">Applicant Details</p>
+          <p className="text-lg font-clash font-semibold md:text-2xl">Applicant Details</p>
         </Link>
       </div>
       <div className="grid gap-4 md:gap-8 lg:grid-cols-1 xl:grid-cols-3">

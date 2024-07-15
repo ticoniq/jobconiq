@@ -42,7 +42,7 @@ export function generateMetadata({
   };
 }
 
-function JobsPage({
+async function JobsPage({
   searchParams: { q, type, location, remote, page },
 }: PageProps) {
   const filterValues: JobFilterValues = {
