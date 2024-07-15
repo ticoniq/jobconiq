@@ -50,7 +50,7 @@ async function ApplicantsPage() {
   return (
     <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-10">
       <div className="flex flex-col justify-start items-start space-y-2">
-        <h3 className="text-sm font-clash font-semibold md:text-2xl">Total Applicants: {applicantCount}</h3>
+        <h3 className="text-lg font-clash font-semibold md:text-2xl">Total Applicants: {applicantCount}</h3>
       </div>
       <ApplicantDataTable applicants={applicants} />
     </main>
