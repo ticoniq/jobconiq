@@ -11,6 +11,14 @@ import {
   SheetHeader,
   SheetDescription,
 } from '@/components/ui/sheet';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Logo } from '@/components/logo';
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import UserButton from "@/components/frontend/UserButton";
@@ -86,9 +94,21 @@ export function NavBar() {
                   <Link href="/login">Login</Link>
                 </Button>
                 <div className="bg-gray-500 w-full h-[1px] lg:hidden"></div>
-                <Button asChild>
-                  <Link href="/signup">Sign Up</Link>
-                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <Button asChild className="w-full">
+                      <Link href="/signup">Sign Up</Link>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>
+                      <Link href="/register" className="text-base">For Developer</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link href="/signup" className="text-base">For Company</Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </>
             )}
           </div>
@@ -132,13 +152,25 @@ export function NavBar() {
                   </>
                 ) : (
                   <>
-                    <Button variant="link" className="border-r-2 border-gray-300" asChild>
+                    <Button variant="link" className="lg:border-r-2 border-gray-300" asChild>
                       <Link href="/login">Login</Link>
                     </Button>
                     <div className="bg-gray-500 w-full h-[1px] lg:hidden"></div>
-                    <Button asChild>
-                      <Link href="/signup">Sign Up</Link>
-                    </Button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger>
+                        <Button asChild className="w-full">
+                          <Link href="/signup">Sign Up</Link>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem>
+                          <Link href="/register" className="text-base">For Developer</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Link href="/signup" className="text-base">For Company</Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </>
                 )}
               </div>

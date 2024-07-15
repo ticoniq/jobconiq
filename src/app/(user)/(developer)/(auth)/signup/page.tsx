@@ -12,7 +12,7 @@ export default function RegisterPage({ }: RegisterPageProps) {
           <Logo />
         </div>
         <h1 className="text-center font-clash text-2xl font-semibold lg:text-3xl">
-          Get more opportunities
+          Company Registration
         </h1>
         <RegisterForm />
         <p className="text-base text-muted-foreground">
