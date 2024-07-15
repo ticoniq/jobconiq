@@ -97,65 +97,67 @@ export function MyProfile({ userDetails }: MyProfileProps) {
         <Form {...form}>
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <dl className="divide-y divide-gray-100">
-              <div className="py-6 sm:grid sm:grid-cols-3 sm:gap-20">
-                <dt className="leading-6">
-                  <h3 className="font-medium leading-7">Profile Photo</h3>
-                  <p className="mt-1">This image will be shown publicly as your profile picture, it will help recruiters recognize you!</p>
-                </dt>
-                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 md:w-2/3">
-                  <FormField
-                    control={control}
-                    name="imageurl"
-                    render={({ field: { value, ...fieldValues } }) => (
-                      <FormItem>
-                        <div className="flex flex-col justify-between items-start gap-x-4 space-y-2 sm:items-center md:flex-row">
-                          <Avatar className="h-28 w-28 sm:flex bg-transparent">
-                            <AvatarImage
-                              src={userDetails.user?.image || ""}
-                              className="rounded-none bg-transparent"
-                              alt="Avatar"
-                            />
-                            <AvatarFallback className="rounded-none uppercase bg-transparent">
-                              {userDetails.user?.name?.charAt(0) || "U"}
-                            </AvatarFallback>
-                          </Avatar>
-                          <FormControl>
-                            <Label className="w-full flex flex-col items-center justify-center border-2 border-brand-primary border-dashed rounded-lg cursor-pointer bg-neutrals-300 hover:bg-neutrals-700 sm:w-3/5">
-                              <div className="py-4 flex flex-col items-center justify-center space-y-2">
-                                <ImageIcon className="h-6 w-6 text-brand-primary" />
-                                <p className="text-md font-semibold text-neutrals-900">
-                                  <span className="text-brand-primary">Click to replace</span> or drag and drop
-                                </p>
-                                <p className="text-neutrals-900">SVG, PNG, JPG or GIF (max. 400 x 400px)</p>
-                                {fileName && (
-                                  <p className="text-neutrals-900 text-center">
-                                    Selected file: {fileName}
-                                  </p>
-                                )}
-                              </div>
-                              <Input
-                                id="dropzone-file"
-                                {...fieldValues}
-                                type="file"
-                                accept="image/gif, image/jpeg, image/png, image/svg+xml, image/svg"
-                                onChange={(e) => {
-                                  const file = e.target.files?.[0];
-                                  if (file) {
-                                    setFileName(file.name);
-                                    fieldValues.onChange(file);
-                                  }
-                                }}
-                                className="hidden"
+              {userDetails.user?.isOAuth === false && (
+                <div className="py-6 sm:grid sm:grid-cols-3 sm:gap-20">
+                  <dt className="leading-6">
+                    <h3 className="font-medium leading-7">Profile Photo</h3>
+                    <p className="mt-1">This image will be shown publicly as your profile picture, it will help recruiters recognize you!</p>
+                  </dt>
+                  <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 md:w-2/3">
+                    <FormField
+                      control={control}
+                      name="imageurl"
+                      render={({ field: { value, ...fieldValues } }) => (
+                        <FormItem>
+                          <div className="flex flex-col justify-between items-start gap-x-4 space-y-2 sm:items-center md:flex-row">
+                            <Avatar className="h-28 w-28 sm:flex bg-transparent">
+                              <AvatarImage
+                                src={userDetails.user?.image || ""}
+                                className="rounded-none bg-transparent"
+                                alt="Avatar"
                               />
-                            </Label>
-                          </FormControl>
-                        </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </dd>
-              </div>
+                              <AvatarFallback className="rounded-none uppercase bg-transparent">
+                                {userDetails.user?.name?.charAt(0) || "U"}
+                              </AvatarFallback>
+                            </Avatar>
+                            <FormControl>
+                              <Label className="w-full flex flex-col items-center justify-center border-2 border-brand-primary border-dashed rounded-lg cursor-pointer bg-neutrals-300 hover:bg-neutrals-700 sm:w-3/5">
+                                <div className="py-4 flex flex-col items-center justify-center space-y-2">
+                                  <ImageIcon className="h-6 w-6 text-brand-primary" />
+                                  <p className="text-md font-semibold text-neutrals-900">
+                                    <span className="text-brand-primary">Click to replace</span> or drag and drop
+                                  </p>
+                                  <p className="text-neutrals-900">SVG, PNG, JPG or GIF (max. 400 x 400px)</p>
+                                  {fileName && (
+                                    <p className="text-neutrals-900 text-center">
+                                      Selected file: {fileName}
+                                    </p>
+                                  )}
+                                </div>
+                                <Input
+                                  id="dropzone-file"
+                                  {...fieldValues}
+                                  type="file"
+                                  accept="image/gif, image/jpeg, image/png, image/svg+xml, image/svg"
+                                  onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (file) {
+                                      setFileName(file.name);
+                                      fieldValues.onChange(file);
+                                    }
+                                  }}
+                                  className="hidden"
+                                />
+                              </Label>
+                            </FormControl>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </dd>
+                </div>
+              )}
               <div className="py-6 sm:grid sm:grid-cols-3 sm:gap-20">
                 <dt className="leading-6">
                   <h3 className="font-medium leading-7">Personal Details</h3>
@@ -279,7 +281,7 @@ export function MyProfile({ userDetails }: MyProfileProps) {
                       <FormItem>
                         <FormLabel>Portfolio <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
-                          <Input type="text" {...field} placeholder="eg. https://portfolio.com" />
+                          <Input type="url" {...field} placeholder="eg. https://portfolio.com" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -292,7 +294,7 @@ export function MyProfile({ userDetails }: MyProfileProps) {
                       <FormItem>
                         <FormLabel>LinkedIn <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
-                          <Input type="text" {...field} placeholder="eg. https://linkedin.com/in/developer" />
+                          <Input type="url" {...field} placeholder="eg. https://linkedin.com/in/developer" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -305,7 +307,7 @@ export function MyProfile({ userDetails }: MyProfileProps) {
                       <FormItem>
                         <FormLabel>Github <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
-                          <Input type="text" {...field} placeholder="eg. https://github.com/developer" />
+                          <Input type="url" {...field} placeholder="eg. https://github.com/developer" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

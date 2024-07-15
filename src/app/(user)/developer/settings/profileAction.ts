@@ -89,8 +89,8 @@ export const UpdateDeveloperDetails = async (formData: FormData) => {
       }),
     ]);
 
-    revalidatePath("/company/settings");
-    return { success: "Company details updated successfully" };
+    revalidatePath("/developer/settings");
+    return { success: "Developer details updated successfully" };
   } catch (error) {
     return { error: "Unexpected error occurred" };
   }

@@ -18,18 +18,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { developerSchema } from "@/lib/validation/developer-validation";
-import { UpdateDeveloperDetails } from "./profileAction";
+import { professionalSchema } from "@/lib/validation/developer-validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ImSpinner8 } from "react-icons/im";
 import { useForm } from "react-hook-form";
-import { FileIcon, ImageIcon } from "lucide-react";
+import { FileIcon, Languages } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { MultiSelect } from "@/components/MultiSelect";
+import { skillList, languages } from "@/lib/job-types";
+import { UpdateProfessionDetails } from "./Professional";
 
 interface ProfessionProps {
   userDetails: any;
@@ -38,19 +39,14 @@ interface ProfessionProps {
 export function Profession({ userDetails }: ProfessionProps) {
   const [fileName, setFileName] = useState("");
 
-  const form = useForm<z.infer<typeof developerSchema>>({
-    resolver: zodResolver(developerSchema),
+  const form = useForm<z.infer<typeof professionalSchema>>({
+    resolver: zodResolver(professionalSchema),
     defaultValues: {
-      imageurl: undefined,
-      name: userDetails.user?.name || "",
-      title: userDetails.title || "",
-      number: userDetails.phone || "",
-      gender: userDetails.gender || "",
-      date: userDetails.dob ? new Date(userDetails.dob) : undefined,
-      website: userDetails.website || "",
-      linkedin: userDetails.linkedin || "",
-      github: userDetails.github || "",
-      bio: userDetails.bio || "",
+      resumeAttachmentUrl: undefined,
+      experience: userDetails?.experience || "",
+      qualification: userDetails?.qualification || "",
+      skills: userDetails?.skills || [],
+      languages: userDetails?.languages || [],
     }
   });
 
@@ -60,21 +56,22 @@ export function Profession({ userDetails }: ProfessionProps) {
     formState: { isSubmitting },
   } = form;
 
-  const onSubmit = async (values: z.infer<typeof developerSchema>) => {
+  const onSubmit = async (values: z.infer<typeof professionalSchema>) => {
     const formData = new FormData();
 
     Object.entries(values).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
-        if (value instanceof File) {
+        if (key === 'skills') formData.append(key, JSON.stringify(value));
+        else if (key === 'languages') formData.append(key, JSON.stringify(value));
+        else if (key === 'resumeAttachmentUrl' && value instanceof File) {
           formData.append(key, value);
-        } else {
-          formData.append(key, value.toString());
         }
+        else formData.append(key, value.toString());
       }
     });
 
     try {
-      const data = await UpdateDeveloperDetails(formData);
+      const data = await UpdateProfessionDetails(formData);
       if (data?.error) {
         toast.error(data.error);
       } else {
@@ -104,7 +101,7 @@ export function Profession({ userDetails }: ProfessionProps) {
                 <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 md:w-2/3">
                   <FormField
                     control={control}
-                    name="imageurl"
+                    name="resumeAttachmentUrl"
                     render={({ field: { value, ...fieldValues } }) => (
                       <FormItem>
                         <div className="flex flex-col items-start space-y-2">
@@ -151,38 +148,84 @@ export function Profession({ userDetails }: ProfessionProps) {
                 <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 md:w-2/3 space-y-6">
                   <FormField
                     control={control}
-                    name="name"
+                    name="qualification"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Full Name <span className="text-red-500">*</span></FormLabel>
+                        <FormLabel>Qualification <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
-                          <Input type="text" {...field} placeholder="Full Name" />
+                          <Input type="text" {...field} placeholder="eg. Bachelor of Engineering" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                   <FormField
-                    control={control}
-                    name="title"
+                    control={form.control}
+                    name="experience"
+                    render={({ field }) => (
+                      <FormItem className="w-full md:1/2">
+                        <Select
+                          {...field}
+                          defaultValue=""
+                          onValueChange={field.onChange}
+                        >
+                          <FormLabel>Experience <span className="text-red-500">*</span></FormLabel>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select Experience" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectItem value="0-1 years">0-1 years</SelectItem>
+                              <SelectItem value="2-4 years">2-4 years</SelectItem>
+                              <SelectItem value="5+ years">5+ years</SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="skills"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Job Title <span className="text-red-500">*</span></FormLabel>
+                        <FormLabel>Select Tech Stacks</FormLabel>
                         <FormControl>
-                          <Input type="text" {...field} placeholder="Job title" />
+                          <MultiSelect
+                            {...field}
+                            options={skillList}
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                            placeholder="Select Required Skills"
+                            variant="inverted"
+                            animation={2}
+                            maxCount={10}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                   <FormField
-                    control={control}
-                    name="number"
+                    control={form.control}
+                    name="languages"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Phone Number <span className="text-red-500">*</span></FormLabel>
+                        <FormLabel>Select Language</FormLabel>
                         <FormControl>
-                          <Input type="text" {...field} placeholder="Phone number" />
+                          <MultiSelect
+                            {...field}
+                            options={languages}
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                            placeholder="Select Language"
+                            variant="inverted"
+                            animation={2}
+                            maxCount={10}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

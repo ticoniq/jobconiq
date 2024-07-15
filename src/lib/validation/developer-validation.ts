@@ -1,5 +1,4 @@
 import * as z from "zod";
-import { industries } from "../job-types";
 
 const MB_BYTES = 1000000; // Number of bytes in a megabyte.
 
@@ -37,9 +36,6 @@ const imageSchema = z.instanceof(File).superRefine((f, ctx) => {
 export const developerSchema = z.object({
   imageurl: imageSchema.optional(),
   name: z.string().min(1, "Full Name is required").max(30, "Maximum character 30"),
-  // size: z.string().min(1, "This field is required"),
-  // industry: z.string().min(1, "industry field is required"),
-  // techstack: z.array(z.string()).min(1, "Please select at least one skill."),
   location: z.string().min(1, "Location field is required").max(30, "Maximum character 100"),
   title: z.string().min(1, "title field is required"),
   number: z.string().min(1, "Number field is required"),
@@ -80,4 +76,23 @@ export const ChangePasswordSchema = z
 
 export const updateEmailSchema = z.object({
   email: z.string().email("Invalid email address"),
+});
+
+const resumeAttachmentSchema = z
+  .instanceof(File)
+  .refine((file) => file.type === "application/pdf", {
+    message: "Only PDF files are allowed",
+  })
+  .refine((file) => file.size <= 1024 * 1024 * 2, {
+    message: "File must be less than 2MB",
+  })
+  .optional()
+  .nullable();
+
+export const professionalSchema = z.object({
+  resumeAttachmentUrl: resumeAttachmentSchema,
+  experience: z.string().min(1, "Experience is required").max(30, "Maximum character 50"),
+  qualification: z.string().min(1, "Qualification is required").max(30, "Maximum character 30"),
+  skills: z.array(z.string()).min(1, "Please select at least one skill."),
+  languages: z.array(z.string()).min(1, "Please select at least one language."),
 });
