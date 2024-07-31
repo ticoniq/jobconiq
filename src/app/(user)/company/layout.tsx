@@ -71,8 +71,16 @@ export default async function DashboardLayout({ children }: DashboardProps) {
               </SheetHeader>
               <div className="flex flex-col justify-between space-y-10 items-center h-full">
                 <SideBar />
-                <div className="mx-auto p-2">
-                  <UserButton />
+                <div className="w-full">
+                  <Button asChild className="w-full">
+                    <Link
+                      href="/company/create-job"
+                      className="space-x-2"
+                    >
+                      <Plus className="h-5 w-5" />
+                      Post a job
+                    </Link>
+                  </Button>
                 </div>
               </div>
             </SheetContent>

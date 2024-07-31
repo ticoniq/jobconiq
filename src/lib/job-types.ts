@@ -265,3 +265,21 @@ export const industries = [
   { value: "Utilities" },
 ]
 
+export const languages = [
+  { value: "English" },
+  { value: "French" },
+  { value: "German" },
+  { value: "Spanish" },
+  { value: "Italian" },
+  { value: "Mandarin Chinese" },
+  { value: "Hindi" },
+  { value: "Arabic" },
+  { value: "Bengali" },
+  { value: "Portuguese" },
+  { value: "Russian" },
+  { value: "Japanese" },
+  { value: "Urdu" },
+  { value: "Indonesian" },
+  { value: "Turkish" }
+];
+

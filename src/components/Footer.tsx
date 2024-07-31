@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Logo from "@/assets/images/logo-2.png";
 import Link from "next/link";
-import { Facebook } from "lucide-react";
+import { Dribbble, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import CustomLink from "@/components/ui/custom-link";
 import { ModeToggle } from "@/components/ModeToggle";
 import { Button } from "./ui/button";
@@ -81,35 +81,26 @@ export default function Footer({ }: Props) {
             </div>
           </div>
         </div>
-        <div className="mt-12 border-t border-gray-100 pt-6">
-          <div className="text-center sm:flex sm:justify-between sm:text-left">
-            <div className="mb-6 flex items-center gap-4">
-              {/* <aside className="space-x-5">
-                  <Button variant="link" className="p-0">
-                    <Link
-                      className="inline-block text-white transition ease-linear"
-                      href="#"
-                    >
-                      Terms & Conditions
-                    </Link>
-                  </Button>
-                  <Button variant="link" className="p-0">
-                    <Link
-                      className="inline-block text-white transition"
-                      href="#"
-                    >
-                      Privacy Policy
-                    </Link>
-                  </Button>
-                </aside> */}
-              <Link
-                href="#"
-                className="mr-3 flex h-8 w-8 items-center justify-center rounded-full border border-stroke text-dark hover:border-primary sm:mr-4 lg:mr-3 xl:mr-4"
-              >
-                <Facebook />
+        <div className="py-7 border-t border-gray-200">
+          <div className="flex items-center justify-center flex-col lg:justify-between lg:flex-row">
+            <span className="text-sm text-neutrals-600 ">2024 &copy; <Link href="/">JobConiq</Link>. All rights reserved.</span>
+            <div className="flex mt-4 space-x-3 sm:justify-center lg:mt-0 ">
+              <Link href="/" className="w-8 h-8 rounded-full transition-all duration-500 flex justify-center items-center bg-neutrals-800 hover:bg-gray-900">
+                <Facebook className="h-4 w-4" />
+              </Link>
+              <Link href="/" className="w-8 h-8 rounded-full transition-all duration-500 flex justify-center items-center bg-neutrals-800 hover:bg-gray-900">
+                <Instagram className="h-4 w-4" />
+              </Link>
+              <Link href="/" className="w-8 h-8 rounded-full transition-all duration-500 flex justify-center items-center bg-neutrals-800 hover:bg-gray-900">
+                <Dribbble className="h-4 w-4" />
+              </Link>
+              <Link href="/" className="w-8 h-8 rounded-full transition-all duration-500 flex justify-center items-center bg-neutrals-800 hover:bg-gray-900">
+                <Linkedin className="h-4 w-4" />
+              </Link>
+              <Link href="/" className="w-8 h-8 rounded-full transition-all duration-500 flex justify-center items-center bg-neutrals-800 hover:bg-gray-900">
+                <Twitter className="h-4 w-4" />
               </Link>
             </div>
-            <p className="mt-4 text-base text-white sm:order-first sm:mt-0">2024 &copy; <Link href="/">JobConiq</Link>. All rights reserved.</p>
           </div>
         </div>
       </div>

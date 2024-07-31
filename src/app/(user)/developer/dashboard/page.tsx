@@ -24,7 +24,7 @@ import prisma from "@/lib/prisma";
 import { formatDate, getGreeting, getLastWord } from "@/lib/utils";
 import { Dot, FileIcon, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
-import { Component } from "./JobAppliedChart"
+import { CircleChart } from "./JobAppliedChart";
 import { cache } from "react";
 
 const getBadgeClasses = (status: string) => {
@@ -119,24 +119,7 @@ async function Dashboardpage() {
                 </CardContent>
               </Card>
             </div>
-            <Card className="space-y-2 p-4 group rounded-none bg-transparent border border-brand-secondary">
-              <CardHeader className="p-0 flex flex-row items-center justify-between space-y-0">
-                <CardTitle className="text-lg font-medium">
-                  Jobs Applied Status
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-0">
-                <Component jobCount={jobCount} />
-              </CardContent>
-              <CardFooter className="p-0">
-                <CustomLink
-                  href={"/developer/application-history"}
-                  textarea={"View All Applications"}
-                  className="text-brand-primary"
-                  divClassName="bg-brand-primary"
-                />
-              </CardFooter>
-            </Card>
+            <CircleChart jobCount={jobCount} />
             <Card className="space-y-4 p-4 group rounded-none bg-transparent border border-brand-secondary">
               <CardHeader className="p-0 flex flex-row items-center justify-between space-y-0">
                 <CardTitle className="text-lg font-medium">
