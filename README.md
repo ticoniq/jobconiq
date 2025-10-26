@@ -38,8 +38,6 @@
   - Prisma 
   - PostgreSQL 
 
-<!-- Features -->
-
 ## Features
 
 - **Advanced Job Search:** Use filters such as location, industry, salary range, and experience level to find the perfect job.
